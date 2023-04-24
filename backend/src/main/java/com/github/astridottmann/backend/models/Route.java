@@ -4,23 +4,22 @@ public record Route(
         String id,
         String start,
         String destination,
-        float distance,
+        int distance,
         int numberOfPersons,
         boolean oneWay,
         Vehicle vehicle,
-        float co2EmissionRoute
+        double co2EmissionRoute
 ) {
-    Route(
+    public Route(
             String start,
             String destination,
-            float distance,
+            int distance,
             int numberOfPersons,
             boolean oneWay,
             Vehicle vehicle,
-            float co2EmissionRoute
+            double co2EmissionRoute
     ) {
-        this(null, start,
-                destination, distance, numberOfPersons, oneWay, vehicle, co2EmissionRoute);
+        this(null, start, destination, distance, numberOfPersons, oneWay, vehicle, co2EmissionRoute);
     }
 
     public Route withId(String id) {

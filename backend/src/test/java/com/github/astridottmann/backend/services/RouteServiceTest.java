@@ -21,11 +21,11 @@ class RouteServiceTest {
         return new Route(testId,
                 "Hamburg",
                 "Frankfurt",
-                492f,
+                492,
                 1,
                 false,
-                new Car("car", 2.8f, "petrol", "large"),
-                0.0f);
+                new Car("car", 2.8, "petrol", "large"),
+                0.0);
     }
 
     @BeforeEach

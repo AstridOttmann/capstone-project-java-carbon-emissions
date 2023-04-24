@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Vehicle {
     @JsonTypeId
     protected String type;
-    protected float co2Emission;
+    protected double co2Emission;
 
 }
 
