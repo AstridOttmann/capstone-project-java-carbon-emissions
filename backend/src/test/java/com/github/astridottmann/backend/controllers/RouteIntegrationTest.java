@@ -26,7 +26,7 @@ class RouteIntegrationTest {
                                   {"start":"Hamburg",
                                    "destination":"Frankfurt",
                                    "distance": 492,
-                                   "numberOfPersons":1,
+                                   "numberOfPersons": 1,
                                    "oneWay": false,
                                    "vehicle": {
                                    "type": "car", "co2Emission": 2.8,"fuel": "petrol", "carSize": "large"}, 
