@@ -10,9 +10,9 @@ public class Car extends Vehicle {
     private String fuel;
     private String carSize;
 
-   /* public Car(float co2Emission, String fuel, String carSize) {
-        super(co2Emission);
+ public Car(String type, float co2Emission, String fuel, String carSize) {
+        super(type, co2Emission);
         this.fuel = fuel;
         this.carSize = carSize;
-    }*/
+    }
 }
