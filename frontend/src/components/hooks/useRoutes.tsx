@@ -12,12 +12,9 @@ export default function useRoutes() {
                 setRoutes([...routes, response.data])
                 toast("Route successfully added")
             })
-            /*  .then(response => response.data)
-              .then(data => setRoutes([...routes, data]))*/
             .catch((error) => {
                 (toast.error("Error! Try again later" + error))
             })
     }
-
     return {routes, addRoute}
 }
