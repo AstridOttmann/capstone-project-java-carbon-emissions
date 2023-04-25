@@ -1,7 +1,6 @@
 import Form from "./Form";
 import {NewRoute} from "../models/RouteModel";
-import {NavLink} from "react-router-dom";
-
+import {Paper} from "@mui/material";
 
 type HomePageProps = {
     addRoute: (route: NewRoute) => void
@@ -9,9 +8,11 @@ type HomePageProps = {
 
 export default function HomePage(props: HomePageProps) {
     return (
-        <>
+        <Paper sx={{
+            pb: "4rem",
+            backgroundColor: "#282c34"
+        }}>
             <Form addRoute={props.addRoute}/>
-            <NavLink className="start-link" to="/routes">Visit my route collection  ➡️</NavLink>
-        </>
+        </Paper>
     )
 }

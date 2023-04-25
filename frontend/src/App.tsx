@@ -9,6 +9,7 @@ import useRoutes from "./components/hooks/useRoutes";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import RouteCollection from "./components/RouteCollection";
+import NavigationBottom from "./components/NavigationBottom";
 
 function App() {
     const {routes, addRoute} = useRoutes();
@@ -22,6 +23,7 @@ function App() {
                         <Route path="/" element={<HomePage addRoute={addRoute}/>}/>
                         <Route path="/routes" element={<RouteCollection routes={routes}/>}/>
                     </Routes>
+                    <NavigationBottom/>
                 </BrowserRouter>
             </main>
         </Container>

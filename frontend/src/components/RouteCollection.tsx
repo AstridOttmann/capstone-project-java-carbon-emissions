@@ -1,7 +1,6 @@
 import {Card, Paper, Typography} from "@mui/material";
 import {Route} from "../models/RouteModel";
 import './RouteCollection.css'
-import {NavLink} from "react-router-dom";
 
 type RouteCollectionProps = {
     routes: Route[]
@@ -47,7 +46,6 @@ export default function RouteCollection(props: RouteCollectionProps) {
                     )
                 })}
             </ul>
-            <NavLink className="start-link" to="/">⬅️ Back</NavLink>
         </Paper>
     )
 }
