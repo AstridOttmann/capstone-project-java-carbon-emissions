@@ -11,7 +11,7 @@ export default function HomePage(props: HomePageProps) {
     return (
         <>
             <Form addRoute={props.addRoute}/>
-            <NavLink className="start-link" to="/routes">Visit my route collection</NavLink>
+            <NavLink className="start-link" to="/routes">Visit my route collection  ➡️</NavLink>
         </>
     )
 }

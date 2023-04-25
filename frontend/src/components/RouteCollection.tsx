@@ -1,6 +1,7 @@
 import {Card, Paper, Typography} from "@mui/material";
 import {Route} from "../models/RouteModel";
 import './RouteCollection.css'
+import {NavLink} from "react-router-dom";
 
 type RouteCollectionProps = {
     routes: Route[]
@@ -24,6 +25,7 @@ export default function RouteCollection(props: RouteCollectionProps) {
                         <Card sx={{p: "1rem", m: "1rem", border: "1", borderColor: "#3fd44d"}} variant="outlined"
                               key={route.id}>
                             <Typography variant="overline">Route</Typography>
+                            <p>Id: {route.id}</p>
                             <p>From: {route.start}</p>
                             <p>To: {route.destination}</p>
                             <p>Distance: {route.distance} km</p>
@@ -45,6 +47,7 @@ export default function RouteCollection(props: RouteCollectionProps) {
                     )
                 })}
             </ul>
+            <NavLink className="start-link" to="/">⬅️ Back</NavLink>
         </Paper>
     )
 }
