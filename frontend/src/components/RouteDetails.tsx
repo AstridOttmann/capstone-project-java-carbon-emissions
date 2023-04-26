@@ -52,8 +52,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
                 Route Details
             </Typography>
-            <Card sx={sxStyleCard} variant="outlined"
-                  key={props.route.id}>
+            <Card sx={sxStyleCard} variant="outlined">
                 <Typography variant="overline">Route</Typography>
                 <p>Id: {props.route.id}</p>
                 <Stack>

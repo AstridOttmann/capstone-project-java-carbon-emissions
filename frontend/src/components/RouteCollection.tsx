@@ -52,7 +52,7 @@ export default function RouteCollection(props: RouteCollectionProps) {
             <ul className="route-list">
                 {props.routes.map((route) => {
                     return (
-                        <Box sx={sxStyleBox}>
+                        <Box sx={sxStyleBox} key={route.id}>
                             <List>
                                 <ListItem disablePadding>
                                     <ListItemIcon sx={{color: "#3fd44d", justifyContent: "center"}}>
