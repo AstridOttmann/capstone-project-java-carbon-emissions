@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -46,6 +49,33 @@ class RouteServiceTest {
 
         verify(routeRepository).save(routeToAdd);
         verify(idService).createRandomId();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getAllRoutes_shouldReturnListOfRoutes() {
+        Route testRoute = createTestRouteInstance();
+        Mockito.when(routeRepository.findAll())
+                .thenReturn(new ArrayList<>(List.of(testRoute)));
+
+        List<Route> actual = routeService.getAllRoutes();
+
+        verify(routeRepository).findAll();
+        List<Route> expected = new ArrayList<>(List.of(testRoute));
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getAllRoutes_shouldReturnEmptyList_whenRepositoryIsEmpty() {
+        Mockito.when(routeRepository.findAll())
+                .thenReturn(new ArrayList<>());
+
+        List<Route> actual = routeService.getAllRoutes();
+
+        verify(routeRepository).findAll();
+        List<Route> expected = new ArrayList<>();
 
         assertEquals(expected, actual);
     }

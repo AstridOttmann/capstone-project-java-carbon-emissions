@@ -19,6 +19,15 @@ class RouteIntegrationTest {
     MockMvc mockMvc;
 
     @Test
+    void getAllRoutes_shouldReturnEmptyList_whenRepositoryIsEmpty() throws Exception {
+        mockMvc.perform(get("/api/routes"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
+
+    @Test
     void addRoute_shouldReturnAddedRoute() throws Exception {
         mockMvc.perform(post("/api/routes")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -47,13 +56,3 @@ class RouteIntegrationTest {
     }
 }
 
-  /*  Route routeToAdd = new Route(
-            "Hamburg",
-            "Frankfurt",
-            492,
-            1,
-            false,
-            new Car("car", 2.8, "petrol", "large"),
-            0.0);
-
-       String routeToAddJson = objectMapper.writeValueAsString(routeToAdd);*/

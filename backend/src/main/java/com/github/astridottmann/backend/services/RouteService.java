@@ -5,6 +5,8 @@ import com.github.astridottmann.backend.repositories.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RouteService {
@@ -15,5 +17,9 @@ public class RouteService {
     public Route addRoute(Route route) {
         Route routeToAdd = route.withId(idService.createRandomId());
         return routeRepository.save(routeToAdd);
+    }
+
+    public List<Route> getAllRoutes() {
+        return routeRepository.findAll();
     }
 }

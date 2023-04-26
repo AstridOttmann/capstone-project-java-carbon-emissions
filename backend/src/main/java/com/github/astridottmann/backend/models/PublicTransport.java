@@ -13,7 +13,7 @@ public class PublicTransport extends Vehicle {
     String distanceLevel;
     String meansOfTransport;
 
-    public PublicTransport(String type, float co2Emission, String distanceLevel, String meansOfTransport) {
+    public PublicTransport(String type, double co2Emission, String distanceLevel, String meansOfTransport) {
         super(type, co2Emission);
         this.distanceLevel = distanceLevel;
         this.meansOfTransport = meansOfTransport;
