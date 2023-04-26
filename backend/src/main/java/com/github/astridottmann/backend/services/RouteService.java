@@ -25,8 +25,14 @@ public class RouteService {
     }
 
     public Route getRouteById(String id) {
-      String errorMessage = "Route with Id " + id + " not found!";
-      return routeRepository.findById(id)
-              .orElseThrow(()-> new NoSuchElementException(errorMessage));
+        String errorMessage = "Route with Id " + id + " not found!";
+        return routeRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(errorMessage));
+    }
+
+    public void deleteRouteById(String id) {
+        if (routeRepository.existsById(id)) {
+            routeRepository.deleteById(id);
+        } else throw new IllegalArgumentException("Couldn't delete delivery. Id " + id + " doesn't exist");
     }
 }

@@ -15,4 +15,10 @@ public class GlobalExceptionHandler {
         ApiError apiError = new ApiError(e.getMessage(), Instant.now());
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(IllegalAccessError.class)
+    public ResponseEntity<ApiError> handleIllegalArgumentException(IllegalArgumentException e) {
+        ApiError apiError = new ApiError(e.getMessage(), Instant.now());
+        return new ResponseEntity<>(apiError, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }

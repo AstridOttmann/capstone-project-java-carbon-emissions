@@ -28,5 +28,14 @@ public class RouteController {
         return routeService.addRoute(route);
     }
 
+    @DeleteMapping("/{id}")
+    void deleteRouteById(@PathVariable String id){
+        if(id.isBlank()){
+            throw new IllegalArgumentException("Id is empty");
+        }
+        routeService.deleteRouteById(id);
+    }
+
+
 
 }
