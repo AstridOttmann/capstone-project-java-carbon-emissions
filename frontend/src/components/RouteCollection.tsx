@@ -1,10 +1,12 @@
-import {Card, Divider, Paper, Stack, styled, Typography} from "@mui/material";
+import {Button, ButtonGroup, Card, Divider, Paper, Stack, styled, Typography} from "@mui/material";
 import {Route} from "../models/RouteModel";
 import './RouteCollection.css'
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import TrainIcon from '@mui/icons-material/Train';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import FlightIcon from '@mui/icons-material/Flight';
+
+import {useNavigate} from "react-router-dom";
 
 const sxStylePaper = {
     p: "1rem",
@@ -39,6 +41,8 @@ type RouteCollectionProps = {
     routes: Route[]
 }
 export default function RouteCollection(props: RouteCollectionProps) {
+    const navigate = useNavigate();
+
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
@@ -77,6 +81,11 @@ export default function RouteCollection(props: RouteCollectionProps) {
                                     <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
                                     <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
                                 </Stack>}
+                            <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}} variant="text"
+                                         aria-label="text button group">
+                                <Button variant="outlined"
+                                        onClick={() => navigate(`/routes/details/${route.id}`)}>Details</Button>
+                            </ButtonGroup>
                         </Card>
                     )
                 })}

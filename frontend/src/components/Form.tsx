@@ -24,21 +24,12 @@ const sxStyle = {
     elevation: "3"
 }
 type FormProps = {
+    initialStateRoute: Route,
+    route: Route,
+    setRoute: (route: Route)=> void,
     addRoute: (route: NewRoute) => void
 }
 export default function Form(props: FormProps) {
-    const initialState: Route = {
-        co2EmissionRoute: 0,
-        destination: "",
-        distance: 0,
-        id: "",
-        numberOfPersons: 0,
-        oneWay: false,
-        start: "",
-        vehicle:
-            {type: "", co2Emission: 0, fuel: "", carSize: "", distanceLevel: "", meansOfTransport: ""}
-    }
-
     const initialStateVehicle = {
         type: "",
         co2Emission: 0,
@@ -47,7 +38,6 @@ export default function Form(props: FormProps) {
         distanceLevel: "",
         meansOfTransport: "",
     }
-    const [route, setRoute] = useState<Route>(initialState)
     const [vehicle, setVehicle] = useState<Vehicle>(initialStateVehicle)
 
     const handleChangeSelectVehicle = (event: SelectChangeEvent<string>) => {
@@ -59,16 +49,16 @@ export default function Form(props: FormProps) {
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target
-        setRoute({...route, [name]: value})
+        props.setRoute({...props.route, [name]: value})
     }
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const routeToAdd = {...route, vehicle}
+        const routeToAdd = {...props.route, vehicle}
 
         props.addRoute(routeToAdd)
 
-        setRoute(initialState)
+        props.setRoute(props.initialStateRoute)
         setVehicle(initialStateVehicle)
     }
 
@@ -82,35 +72,35 @@ export default function Form(props: FormProps) {
                     label="Start"
                     id="start"
                     name="start"
-                    value={route.start}
+                    value={props.route.start}
                     onChange={handleChange}/>
                 <TextField required
                            type="text"
                            label="Destination"
                            id="destination"
                            name="destination"
-                           value={route.destination}
+                           value={props.route.destination}
                            onChange={handleChange}/>
                 <TextField required
                            type="number"
                            label="Distance"
                            id="distance"
                            name="distance"
-                           value={route.distance}
+                           value={props.route.distance}
                            onChange={handleChange}/>
                 <TextField required
                            type="number"
                            label="Number of persons"
                            id="numberOfPersons"
                            name="numberOfPersons"
-                           value={route.numberOfPersons}
+                           value={props.route.numberOfPersons}
                            onChange={handleChange}/>
                 <FormControl>
                     <RadioGroup
                         sx={{flexDirection: "row"}}
                         id="oneWay"
                         name="oneWay"
-                        value={route.oneWay}
+                        value={props.route.oneWay}
                         onChange={handleChange}
                     >
                         <FormControlLabel value={true} control={<Radio/>} label="One Way"/>

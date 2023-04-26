@@ -1,8 +1,11 @@
 import Form from "./Form";
-import {NewRoute} from "../models/RouteModel";
+import {NewRoute, Route} from "../models/RouteModel";
 import {Paper} from "@mui/material";
 
 type HomePageProps = {
+    initialStateRoute: Route,
+    route: Route,
+    setRoute: (route: Route)=> void,
     addRoute: (route: NewRoute) => void
 }
 
@@ -12,7 +15,10 @@ export default function HomePage(props: HomePageProps) {
             pb: "4rem",
             backgroundColor: "#282c34"
         }}>
-            <Form addRoute={props.addRoute}/>
+            <Form initialStateRoute={props.initialStateRoute}
+                  route={props.route}
+                  setRoute={props.setRoute}
+                  addRoute={props.addRoute}/>
         </Paper>
     )
 }
