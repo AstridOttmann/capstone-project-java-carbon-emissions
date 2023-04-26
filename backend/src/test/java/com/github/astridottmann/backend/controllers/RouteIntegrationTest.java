@@ -56,13 +56,3 @@ class RouteIntegrationTest {
     }
 }
 
-  /*  Route routeToAdd = new Route(
-            "Hamburg",
-            "Frankfurt",
-            492,
-            1,
-            false,
-            new Car("car", 2.8, "petrol", "large"),
-            0.0);
-
-       String routeToAddJson = objectMapper.writeValueAsString(routeToAdd);*/
