@@ -19,6 +19,15 @@ class RouteIntegrationTest {
     MockMvc mockMvc;
 
     @Test
+    void getAllRoutes_shouldReturnEmptyList_whenRepositoryIsEmpty() throws Exception {
+        mockMvc.perform(get("/api/routes"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
+
+    @Test
     void addRoute_shouldReturnAddedRoute() throws Exception {
         mockMvc.perform(post("/api/routes")
                         .contentType(MediaType.APPLICATION_JSON)
