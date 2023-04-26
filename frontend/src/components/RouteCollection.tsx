@@ -24,7 +24,6 @@ const sxStylePaper = {
     backgroundColor: "#282c34",
     elevation: "3"
 }
-
 const sxStyleTitle = {
     fontSize: "2rem",
     p: "1rem",
@@ -67,7 +66,7 @@ export default function RouteCollection(props: RouteCollectionProps) {
                                 </ListItem>
                                 <ListItem disablePadding>
                                     <ListItemText
-                                        primary={route.distance + "km "}/>
+                                        primary={route.distance + "km"}/>
                                     <ListItemText
                                         primary={route.oneWay ? "oneWay" : "Round Trip"}/>
                                     <ListItemText

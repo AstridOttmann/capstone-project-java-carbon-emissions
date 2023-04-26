@@ -21,12 +21,16 @@ function App() {
                     <Header/>
                     <ToastContainer autoClose={3000}/>
                     <Routes>
-                        <Route path="/" element={<HomePage initialStateRoute={initialStateRoute}
-                                                           route={route}
-                                                           setRoute={setRoute}
-                                                           addRoute={addRoute}/>}/>
-                        <Route path="/routes" element={<RouteCollection routes={routes}/>}/>
-                        <Route path="/routes/details/:id" element={<RouteDetails getRouteById={getRouteById} route={route}/>}/>
+                        <Route path="/" element={
+                            <HomePage initialStateRoute={initialStateRoute}
+                                      route={route}
+                                      setRoute={setRoute}
+                                      addRoute={addRoute}/>}/>
+                        <Route path="/routes" element={
+                            <RouteCollection routes={routes}/>}/>
+                        <Route path="/routes/details/:id" element={
+                            <RouteDetails getRouteById={getRouteById}
+                                          route={route}/>}/>
                     </Routes>
                     <NavigationBottom/>
                 </BrowserRouter>
