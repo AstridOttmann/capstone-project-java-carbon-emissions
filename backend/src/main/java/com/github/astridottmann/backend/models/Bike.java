@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Bike extends Vehicle {
-    public Bike(String type, float co2Emission) {
+    public Bike(String type, double co2Emission) {
         super(type, co2Emission);
     }
 }
