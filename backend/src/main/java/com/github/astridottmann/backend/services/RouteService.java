@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,11 @@ public class RouteService {
 
     public List<Route> getAllRoutes() {
         return routeRepository.findAll();
+    }
+
+    public Route getRouteById(String id) {
+      String errorMessage = "Route with Id " + id + " not found!";
+      return routeRepository.findById(id)
+              .orElseThrow(()-> new NoSuchElementException(errorMessage));
     }
 }

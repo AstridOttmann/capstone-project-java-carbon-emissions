@@ -10,6 +10,7 @@ const sxStylePaper = {
     p: "1rem",
     pb: "3rem",
     backgroundColor: "#282c34",
+
     elevation: "3"
 }
 
