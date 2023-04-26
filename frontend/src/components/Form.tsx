@@ -1,0 +1,198 @@
+import {
+    Button,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Paper,
+    Radio,
+    RadioGroup,
+    Select, SelectChangeEvent,
+    TextField,
+    Typography
+} from "@mui/material";
+import './Form.css'
+import {ChangeEvent, FormEvent, useState} from "react";
+import {NewRoute, Route} from "../models/RouteModel";
+import {Vehicle} from "../models/VehicleModel";
+
+const sxStyle = {
+    m: "1rem",
+    p: "1rem",
+    pb: "3rem",
+    textAlign: "center",
+    elevation: "3"
+}
+type FormProps = {
+    addRoute: (route: NewRoute) => void
+}
+export default function Form(props: FormProps) {
+    const initialState: Route = {
+        co2EmissionRoute: 0,
+        destination: "",
+        distance: 0,
+        id: "",
+        numberOfPersons: 0,
+        oneWay: false,
+        start: "",
+        vehicle:
+            {type: "", co2Emission: 0, fuel: "", carSize: "", distanceLevel: "", meansOfTransport: ""}
+    }
+
+    const initialStateVehicle = {
+        type: "",
+        co2Emission: 0,
+        fuel: "",
+        carSize: "",
+        distanceLevel: "",
+        meansOfTransport: "",
+    }
+    const [route, setRoute] = useState<Route>(initialState)
+    const [vehicle, setVehicle] = useState<Vehicle>(initialStateVehicle)
+
+    const handleChangeSelectVehicle = (event: SelectChangeEvent<string>) => {
+        const {name, value} = event.target
+        setVehicle({
+            ...vehicle, [name]: value
+        })
+    }
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = event.target
+        setRoute({...route, [name]: value})
+    }
+
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        const routeToAdd = {...route, vehicle}
+
+        props.addRoute(routeToAdd)
+
+        setRoute(initialState)
+        setVehicle(initialStateVehicle)
+    }
+
+    return (
+        <Paper sx={sxStyle}>
+            <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>
+            <form className="form" onSubmit={handleSubmit}>
+                <TextField
+                    required
+                    type="text"
+                    label="Start"
+                    id="start"
+                    name="start"
+                    value={route.start}
+                    onChange={handleChange}/>
+                <TextField required
+                           type="text"
+                           label="Destination"
+                           id="destination"
+                           name="destination"
+                           value={route.destination}
+                           onChange={handleChange}/>
+                <TextField required
+                           type="number"
+                           label="Distance"
+                           id="distance"
+                           name="distance"
+                           value={route.distance}
+                           onChange={handleChange}/>
+                <TextField required
+                           type="number"
+                           label="Number of persons"
+                           id="numberOfPersons"
+                           name="numberOfPersons"
+                           value={route.numberOfPersons}
+                           onChange={handleChange}/>
+                <FormControl>
+                    <RadioGroup
+                        sx={{flexDirection: "row"}}
+                        id="oneWay"
+                        name="oneWay"
+                        value={route.oneWay}
+                        onChange={handleChange}
+                    >
+                        <FormControlLabel value={true} control={<Radio/>} label="One Way"/>
+                        <FormControlLabel value={false} control={<Radio/>} label="Round Trip"/>
+                    </RadioGroup>
+                </FormControl>
+                <FormControl>
+                    <InputLabel id="type-label">Vehicle</InputLabel>
+                    <Select
+                        labelId="type-label"
+                        id="type"
+                        label="Vehicle"
+                        name="type"
+                        value={vehicle.type}
+                        onChange={handleChangeSelectVehicle}>
+                        <MenuItem value="car">Car</MenuItem>
+                        <MenuItem value="publicTransport">Public Transport</MenuItem>
+                        <MenuItem value="bike">Bike</MenuItem>
+                        <MenuItem value="flight">Flight</MenuItem>
+                    </Select>
+                </FormControl>
+                {vehicle.type === "car" &&
+                    <>
+                        <FormControl>
+                            <InputLabel id="fuel-label">Fuel</InputLabel>
+                            <Select
+                                labelId="fuel-label"
+                                id="fuel"
+                                label="Fuel"
+                                name="fuel"
+                                value={vehicle.fuel}
+                                onChange={handleChangeSelectVehicle}>
+                                <MenuItem value="petrol">petrol</MenuItem>
+                                <MenuItem value="diesel">diesel</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id="carSize-label">Car Size</InputLabel>
+                            <Select
+                                labelId="carSize-label"
+                                id="carSize"
+                                label="Car Size"
+                                name="carSize"
+                                value={vehicle.carSize}
+                                onChange={handleChangeSelectVehicle}>
+                                <MenuItem value="small">small</MenuItem>
+                                <MenuItem value="medium">medium</MenuItem>
+                                <MenuItem value="large">large</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </>}
+                {vehicle.type === "publicTransport" &&
+                    <>
+                        <FormControl>
+                            <InputLabel id="distanceLevel-label">Distance Level</InputLabel>
+                            <Select
+                                labelId="distanceLevel-label"
+                                id="distanceLevel"
+                                label="Distance Level"
+                                value={vehicle.distanceLevel}
+                                name="distanceLevel"
+                                onChange={handleChangeSelectVehicle}>
+                                <MenuItem value="local">local</MenuItem>
+                                <MenuItem value="longDistance">long distance</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id="meansOfTransport-label">Means of Transport</InputLabel>
+                            <Select
+                                labelId="meansOfTransport-label"
+                                id="meansOfTransport"
+                                label="Means of Transport"
+                                value={vehicle.meansOfTransport}
+                                name="meansOfTransport"
+                                onChange={handleChangeSelectVehicle}>
+                                <MenuItem value="train">train</MenuItem>
+                                <MenuItem value="bus">bus</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </>}
+                <Button type="submit" variant="outlined">Submit</Button>
+            </form>
+        </Paper>
+    )
+}
