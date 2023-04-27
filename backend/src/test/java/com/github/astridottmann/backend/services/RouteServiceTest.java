@@ -108,4 +108,30 @@ class RouteServiceTest {
         verify(routeRepository).findById(testId);
         assertEquals(errorMessage, exception.getMessage());
     }
+
+    @Test
+    void deleteRouteById_shouldDeleteRoute(){
+        Mockito.when(routeRepository.existsById(testId))
+                .thenReturn(true);
+
+        routeService.deleteRouteById(testId);
+
+        verify(routeRepository).existsById(testId);
+    }
+
+    @Test
+    void deleteRouteById_shouldThrowException_whenInvalidId(){
+        String id = "123";
+        String errorMessage = "Couldn't delete delivery. Id " + id + " doesn't exist";
+
+        Mockito.when(routeRepository.existsById(id))
+                .thenReturn(false);
+
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                ()-> routeService.deleteRouteById(id));
+
+        verify(routeRepository).existsById(id);
+        assertEquals(errorMessage, exception.getMessage());
+
+    }
 }

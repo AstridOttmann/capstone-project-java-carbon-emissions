@@ -14,12 +14,12 @@ public class RouteController {
     private final RouteService routeService;
 
     @GetMapping
-    public List<Route> getAllRoutes(){
-       return routeService.getAllRoutes();
+    public List<Route> getAllRoutes() {
+        return routeService.getAllRoutes();
     }
 
     @GetMapping("/{id}")
-    public Route getRouteById(@PathVariable String id){
+    public Route getRouteById(@PathVariable String id) {
         return routeService.getRouteById(id);
     }
 
@@ -29,13 +29,10 @@ public class RouteController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteRouteById(@PathVariable String id){
-        if(id.isBlank()){
+    void deleteRouteById(@PathVariable String id) {
+        if (id.isBlank()) {
             throw new IllegalArgumentException("Id is empty");
         }
         routeService.deleteRouteById(id);
     }
-
-
-
 }

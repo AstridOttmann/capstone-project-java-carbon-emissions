@@ -1,6 +1,9 @@
 package com.github.astridottmann.backend.models;
 
+import org.springframework.data.annotation.Id;
+
 public record Route(
+        @Id
         String id,
         String start,
         String destination,
