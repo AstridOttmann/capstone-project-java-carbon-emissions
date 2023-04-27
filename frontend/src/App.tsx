@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 import Header from "./components/Header";
@@ -13,7 +13,8 @@ import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
 
 function App() {
-    const {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute} = useRoutes();
+    const {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute, updateRoute} = useRoutes();
+    const [isEditMode, setIsEditMode] = useState<boolean>(true)
     return (
         <Container maxWidth="lg">
             <main className="App">
@@ -22,19 +23,24 @@ function App() {
                     <ToastContainer autoClose={3000}/>
                     <Routes>
                         <Route path="/" element={
-                            <HomePage initialStateRoute={initialStateRoute}
+                            <HomePage setIsEditMode={setIsEditMode}
+                                      isEditMode={isEditMode}
+                                      initialStateRoute={initialStateRoute}
                                       route={route}
                                       setRoute={setRoute}
-                                      addRoute={addRoute}/>}/>
+                                      addRoute={addRoute}
+                                      updateRoute={updateRoute}/>}/>
                         <Route path="/routes" element={
                             <RouteCollection deleteRoute={deleteRoute} routes={routes}/>}/>
                         <Route path="/routes/details/:id" element={
-                            <RouteDetails setRoute={setRoute}
+                            <RouteDetails setIsEditMode={setIsEditMode}
+                                          setRoute={setRoute}
                                           initialStateRoute={initialStateRoute}
                                           getRouteById={getRouteById}
                                           route={route}/>}/>
                     </Routes>
-                    <NavigationBottom initialStateRoute={initialStateRoute}
+                    <NavigationBottom setIsEditMode={setIsEditMode}
+                                      initialStateRoute={initialStateRoute}
                                       setRoute={setRoute}/>
                 </BrowserRouter>
             </main>

@@ -15,6 +15,7 @@ import './Form.css'
 import {ChangeEvent, FormEvent, useState} from "react";
 import {NewRoute, Route} from "../models/RouteModel";
 import {Vehicle} from "../models/VehicleModel";
+import {useNavigate} from "react-router-dom";
 
 const sxStyle = {
     m: "1rem",
@@ -27,10 +28,13 @@ type FormProps = {
     initialStateRoute: Route,
     route: Route,
     setRoute: (route: Route) => void,
-    addRoute: (route: NewRoute) => void
+    addRoute: (route: NewRoute) => void,
+    isEditMode: boolean,
+    setIsEditMode: (arg0: boolean) => void,
+    updateRoute: (id: string, route: Route) => void
 }
 export default function Form(props: FormProps) {
-    const initialStateVehicle = {
+    const initialStateVehicle = props.isEditMode ? props.route.vehicle : {
         type: "",
         co2Emission: 0,
         fuel: "",
@@ -39,6 +43,7 @@ export default function Form(props: FormProps) {
         meansOfTransport: "",
     }
     const [vehicle, setVehicle] = useState<Vehicle>(initialStateVehicle)
+    const navigate = useNavigate();
 
     const handleChangeSelectVehicle = (event: SelectChangeEvent<string>) => {
         const {name, value} = event.target
@@ -54,17 +59,24 @@ export default function Form(props: FormProps) {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const routeToAdd = {...props.route, vehicle}
 
-        props.addRoute(routeToAdd)
-
+        if (props.isEditMode) {
+            const updatedRoute: Route = {...props.route, vehicle}
+            props.updateRoute(updatedRoute.id, updatedRoute);
+            navigate(-1);
+        } else {
+            const routeToAdd = {...props.route, vehicle}
+            props.addRoute(routeToAdd)
+        }
         props.setRoute(props.initialStateRoute)
         setVehicle(initialStateVehicle)
+        props.setIsEditMode(false)
     }
 
     return (
         <Paper sx={sxStyle}>
-            <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>
+            <Typography variant="h2" sx={{fontSize: "2rem"}}>
+                {props.isEditMode ? "Edit Route" : "Add Route"}</Typography>
             <form className="form" onSubmit={handleSubmit}>
                 <TextField
                     required
