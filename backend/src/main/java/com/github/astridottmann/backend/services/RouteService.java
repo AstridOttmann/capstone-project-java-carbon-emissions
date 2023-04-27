@@ -31,9 +31,17 @@ public class RouteService {
     }
 
     public void deleteRouteById(String id) {
-        String errorMessage = "Couldn't delete delivery. Id " + id + " doesn't exist";
+        String errorMessage = "Couldn't delete route. Id " + id + " doesn't exist";
         if (routeRepository.existsById(id)) {
             routeRepository.deleteById(id);
         } else throw new NoSuchElementException(errorMessage);
+    }
+
+    public Route updateRoute(Route route) {
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
+        if (routeRepository.existsById(route.id())) {
+            return routeRepository.save(route);
+        }
+        throw new NoSuchElementException(errorMessage);
     }
 }

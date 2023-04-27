@@ -35,4 +35,13 @@ public class RouteController {
         }
         routeService.deleteRouteById(id);
     }
+
+    @PutMapping("/{id}")
+    public Route updateRoute(@PathVariable String id, @RequestBody Route route) {
+        if (!id.equals(route.id())){
+            String errorMessage = "Id " + id + " doesn't match";
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return routeService.updateRoute(route);
+    }
 }
