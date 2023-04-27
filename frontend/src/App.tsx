@@ -13,7 +13,7 @@ import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
 
 function App() {
-    const {routes, route, setRoute, getRouteById, addRoute, initialStateRoute} = useRoutes();
+    const {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute} = useRoutes();
     return (
         <Container maxWidth="lg">
             <main className="App">
@@ -27,12 +27,15 @@ function App() {
                                       setRoute={setRoute}
                                       addRoute={addRoute}/>}/>
                         <Route path="/routes" element={
-                            <RouteCollection routes={routes}/>}/>
+                            <RouteCollection deleteRoute={deleteRoute} routes={routes}/>}/>
                         <Route path="/routes/details/:id" element={
-                            <RouteDetails getRouteById={getRouteById}
+                            <RouteDetails setRoute={setRoute}
+                                          initialStateRoute={initialStateRoute}
+                                          getRouteById={getRouteById}
                                           route={route}/>}/>
                     </Routes>
-                    <NavigationBottom/>
+                    <NavigationBottom initialStateRoute={initialStateRoute}
+                                      setRoute={setRoute}/>
                 </BrowserRouter>
             </main>
         </Container>

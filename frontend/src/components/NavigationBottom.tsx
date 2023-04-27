@@ -4,14 +4,21 @@ import HomeIcon from '@mui/icons-material/Home';
 
 import {BottomNavigationAction, BottomNavigation} from "@mui/material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import {Route} from "../models/RouteModel";
 
-export default function NavigationBottom() {
+type NavigationBottomProps = {
+    setRoute: (route: Route) => void,
+    initialStateRoute: Route
+}
+
+export default function NavigationBottom(props: NavigationBottomProps) {
     const [value, setValue] = useState('/');
     const navigate = useNavigate();
 
     const handleChange = (event: SyntheticEvent, newValue: string) => {
         setValue(newValue);
         navigate(newValue)
+        props.setRoute(props.initialStateRoute)
     };
 
     return (

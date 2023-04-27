@@ -34,7 +34,9 @@ const Item = styled('div')(({theme}) => ({
 }));
 
 type RouteDetailsProps = {
-    route: Route
+    initialStateRoute: Route,
+    route: Route,
+    setRoute: (route: Route) => void,
     getRouteById: (id: string) => void
 }
 export default function RouteDetails(props: RouteDetailsProps) {
@@ -47,6 +49,12 @@ export default function RouteDetails(props: RouteDetailsProps) {
         }
         //eslint-disable-next-line
     }, [id])
+
+    function handleClick() {
+        navigate(-1)
+        props.setRoute(props.initialStateRoute);
+    }
+
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
@@ -82,7 +90,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         <Item>Means of Transport: <br/>{props.route.vehicle.meansOfTransport}</Item>
                     </Stack>}
                 <Button variant="outlined"
-                        onClick={() => navigate(-1)}>Back</Button>
+                        onClick={handleClick}>Back</Button>
             </Card>
         </Paper>
     )
