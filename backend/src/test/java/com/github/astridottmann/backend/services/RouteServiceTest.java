@@ -127,11 +127,10 @@ class RouteServiceTest {
         Mockito.when(routeRepository.existsById(id))
                 .thenReturn(false);
 
-        Exception exception = assertThrows(IllegalArgumentException.class,
+        Exception exception = assertThrows(NoSuchElementException.class,
                 ()-> routeService.deleteRouteById(id));
 
         verify(routeRepository).existsById(id);
         assertEquals(errorMessage, exception.getMessage());
-
     }
 }
