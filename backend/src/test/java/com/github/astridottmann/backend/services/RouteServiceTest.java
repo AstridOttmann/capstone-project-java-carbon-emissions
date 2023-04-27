@@ -83,7 +83,7 @@ class RouteServiceTest {
     }
 
     @Test
-    void getRouteById_should_returnRequestedRoute(){
+    void getRouteById_should_returnRequestedRoute() {
         Route requested = createTestRouteInstance();
 
         Mockito.when(routeRepository.findById(testId))
@@ -96,21 +96,21 @@ class RouteServiceTest {
     }
 
     @Test
-    void getRouteById_shouldThrowException_whenInvalidId(){
+    void getRouteById_shouldThrowException_whenInvalidId() {
         String errorMessage = "Route with Id " + testId + " not found!";
 
         Mockito.when(routeRepository.findById(testId))
                 .thenThrow(new NoSuchElementException(errorMessage));
 
         Exception exception = assertThrows(NoSuchElementException.class,
-                ()-> routeService.getRouteById(testId));
+                () -> routeService.getRouteById(testId));
 
         verify(routeRepository).findById(testId);
         assertEquals(errorMessage, exception.getMessage());
     }
 
     @Test
-    void deleteRouteById_shouldDeleteRoute(){
+    void deleteRouteById_shouldDeleteRoute() {
         Mockito.when(routeRepository.existsById(testId))
                 .thenReturn(true);
 
@@ -120,17 +120,49 @@ class RouteServiceTest {
     }
 
     @Test
-    void deleteRouteById_shouldThrowException_whenInvalidId(){
+    void deleteRouteById_shouldThrowException_whenInvalidId() {
         String id = "123";
-        String errorMessage = "Couldn't delete delivery. Id " + id + " doesn't exist";
+        String errorMessage = "Couldn't delete route. Id " + id + " doesn't exist";
 
         Mockito.when(routeRepository.existsById(id))
                 .thenReturn(false);
 
         Exception exception = assertThrows(NoSuchElementException.class,
-                ()-> routeService.deleteRouteById(id));
+                () -> routeService.deleteRouteById(id));
 
         verify(routeRepository).existsById(id);
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    void updateRoute_shouldReturnUpdatedRoute() {
+        Route routeToUpdate = createTestRouteInstance();
+
+        Mockito.when(routeRepository.existsById(routeToUpdate.id()))
+                .thenReturn(true);
+        Mockito.when(routeRepository.save(routeToUpdate))
+                .thenReturn(routeToUpdate);
+
+        Route actual = routeService.updateRoute(routeToUpdate);
+        Route expected = createTestRouteInstance();
+
+        verify(routeRepository).existsById(routeToUpdate.id());
+        verify(routeRepository).save(routeToUpdate);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void updateRoute_shouldThrowNoSuchElementException_whenIdNotExists() {
+        Route routeToUpdate = createTestRouteInstance();
+        String errorMessage = "Couldn't update route. Id " + routeToUpdate.id() + " doesn't exist";
+
+        Mockito.when(routeRepository.existsById(routeToUpdate.id()))
+                .thenReturn(false);
+
+        Exception exception = assertThrows(NoSuchElementException.class,
+                () -> routeService.updateRoute(routeToUpdate));
+
+        verify(routeRepository).existsById(routeToUpdate.id());
         assertEquals(errorMessage, exception.getMessage());
     }
 }
