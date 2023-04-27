@@ -15,5 +15,4 @@ public class Car extends Vehicle {
         this.fuel = fuel;
         this.carSize = carSize;
     }
-
 }
