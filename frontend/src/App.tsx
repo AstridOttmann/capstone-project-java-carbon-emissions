@@ -27,12 +27,15 @@ function App() {
                                       setRoute={setRoute}
                                       addRoute={addRoute}/>}/>
                         <Route path="/routes" element={
-                            <RouteCollection  deleteRoute={deleteRoute} routes={routes}/>}/>
+                            <RouteCollection deleteRoute={deleteRoute} routes={routes}/>}/>
                         <Route path="/routes/details/:id" element={
-                            <RouteDetails getRouteById={getRouteById}
+                            <RouteDetails setRoute={setRoute}
+                                          initialStateRoute={initialStateRoute}
+                                          getRouteById={getRouteById}
                                           route={route}/>}/>
                     </Routes>
-                    <NavigationBottom/>
+                    <NavigationBottom initialStateRoute={initialStateRoute}
+                                      setRoute={setRoute}/>
                 </BrowserRouter>
             </main>
         </Container>
