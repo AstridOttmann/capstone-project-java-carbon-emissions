@@ -29,7 +29,7 @@ export default function useRoutes() {
                 setRoutes(response.data)
             })
             .catch((error) => {
-                toast.error("Error! Try again later" + error)
+                toast.error("Error! Try again later " + error)
             })
     }
 
@@ -39,7 +39,7 @@ export default function useRoutes() {
                 setRoute(response.data)
             })
             .catch((error) => {
-                toast.error("404" + error)
+                toast.error("404 " + error)
             })
     }
 
@@ -50,7 +50,7 @@ export default function useRoutes() {
                 toast("Route successfully added")
             })
             .catch((error) => {
-                toast.error("Error! Try again later" + error)
+                toast.error("Error! Try again later " + error)
             })
     }
 
@@ -60,7 +60,7 @@ export default function useRoutes() {
                 setRoutes(routes.filter((route)=> route.id !== id))
             toast.success("Route successfully deleted")})
             .catch((error)=> {
-                toast.error("Error!" + error)
+                toast.error("Error! " + error)
             })
     }
 

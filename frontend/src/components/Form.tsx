@@ -26,7 +26,7 @@ const sxStyle = {
 type FormProps = {
     initialStateRoute: Route,
     route: Route,
-    setRoute: (route: Route)=> void,
+    setRoute: (route: Route) => void,
     addRoute: (route: NewRoute) => void
 }
 export default function Form(props: FormProps) {
