@@ -107,4 +107,39 @@ class RouteIntegrationTest {
 
         assertThat(routeRepository.findAll()).contains(expected);
     }
+
+    @Test
+    void deleteRouteById_shouldRemoveRouteFromRepository() throws Exception {
+        routeRepository.save(testRoute);
+
+        mockMvc.perform(delete("/api/routes/" + testRoute.id()))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/routes"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
+
+    @Test
+    void deleteRouteById_shouldReturnApiErrorAndStatusIsNotFound_whenIdNotExists() throws Exception {
+        String expectedBody = "{\"message\": \"Couldn't delete delivery. Id " + testRoute.id() + " doesn't exist\"}";
+
+        mockMvc.perform(delete("/api/routes/" + testRoute.id()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(expectedBody))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
+
+    @Test
+    void DeleteRouteById_shouldReturnApiErrorAndStatusIsUnprocessable_whenIdIsWhitespace() throws Exception {
+        String id = " ";
+        String expectedBody = "{\"message\":  \"Id is empty\"}";
+
+        mockMvc.perform(delete("/api/routes/" + id))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json(expectedBody))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
 }
