@@ -18,6 +18,11 @@ public class RouteController {
        return routeService.getAllRoutes();
     }
 
+    @GetMapping("/{id}")
+    public Route getRouteById(@PathVariable String id){
+        return routeService.getRouteById(id);
+    }
+
     @PostMapping
     public Route addRoute(@RequestBody Route route) {
         return routeService.addRoute(route);
