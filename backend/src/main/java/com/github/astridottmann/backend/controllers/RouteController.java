@@ -39,7 +39,7 @@ public class RouteController {
     @PutMapping("/{id}")
     public Route updateRoute(@PathVariable String id, @RequestBody Route route) {
         if (!id.equals(route.id())){
-            String errorMessage = "Id " + id + " doesn't match";
+            String errorMessage = "Id " + id + " doesn't match with route-id " + route.id();
             throw new IllegalArgumentException(errorMessage);
         }
         return routeService.updateRoute(route);

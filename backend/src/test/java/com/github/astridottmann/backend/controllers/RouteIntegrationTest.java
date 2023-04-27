@@ -46,6 +46,7 @@ class RouteIntegrationTest {
                         "longDistance",
                         "train"),
                 0.0);
+
         testRouteJson = objectMapper.writeValueAsString(testRoute);
 
         testRouteWithoutIdJson = """ 
@@ -124,7 +125,7 @@ class RouteIntegrationTest {
 
     @Test
     void deleteRouteById_shouldReturnApiErrorAndStatusIsNotFound_whenIdNotExists() throws Exception {
-        String expectedBody = "{\"message\": \"Couldn't delete delivery. Id " + testRoute.id() + " doesn't exist\"}";
+        String expectedBody = "{\"message\": \"Couldn't delete route. Id " + testRoute.id() + " doesn't exist\"}";
 
         mockMvc.perform(delete("/api/routes/" + testRoute.id()))
                 .andExpect(status().isNotFound())
@@ -138,6 +139,31 @@ class RouteIntegrationTest {
         String expectedBody = "{\"message\":  \"Id is empty\"}";
 
         mockMvc.perform(delete("/api/routes/" + id))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json(expectedBody))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
+
+    @Test
+    void updateRoute_shouldUpdateRouteInRepository() throws Exception {
+        routeRepository.save(testRoute);
+
+        mockMvc.perform(put("/api/routes/" + testRoute.id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testRouteJson))
+                .andExpect(status().isOk())
+                .andExpect(content().json(testRouteJson));
+    }
+
+    @Test
+    void updateRoute_shouldThrowApiErrorAndStatusIsUnprocessable_whenBodyIdAndRouteIdAreNotEqual() throws Exception {
+        String urlId = "1";
+        routeRepository.save(testRoute);
+        String expectedBody = "{\"message\": \"Id " + urlId + " doesn't match with route-id " + testRoute.id() + "\"}";
+
+        mockMvc.perform(put("/api/routes/" + urlId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(testRouteJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(expectedBody))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
