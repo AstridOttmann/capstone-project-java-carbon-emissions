@@ -19,13 +19,23 @@ import {Vehicle} from "../models/VehicleModel";
 import {useNavigate} from "react-router-dom";
 import EditOffIcon from '@mui/icons-material/EditOff';
 
-const sxStyle = {
+const sxStylePaper = {
     m: "1rem",
     p: "1rem",
     pb: "3rem",
     textAlign: "center",
     elevation: "3"
 }
+
+const sxStyleBox = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "3rem",
+    pb: "0.5rem",
+    m: "0.5rem"
+}
+
 type FormProps = {
     initialStateRoute: Route,
     route: Route,
@@ -75,7 +85,7 @@ export default function Form(props: FormProps) {
         props.setIsEditMode(false)
     }
 
-    function handleClick(){
+    function handleClick() {
         navigate(-1)
         props.setRoute(props.initialStateRoute);
         setVehicle(initialStateVehicle);
@@ -83,12 +93,16 @@ export default function Form(props: FormProps) {
     }
 
     return (
-        <Paper sx={sxStyle}>
+        <Paper sx={sxStylePaper}>
 
             {props.isEditMode
-                ? <Box sx={{display:"flex", justifyContent: "space-between", alignItems: "center", gap: "3rem", pb: "0.5rem", m: "0.5rem"}}>
+                ? <Box sx={sxStyleBox}>
                     <Typography variant="h2" sx={{fontSize: "2rem"}}>Edit Route</Typography>
-                    <Button variant="contained" sx={{maxHeight: "2.5rem"}} endIcon={<EditOffIcon/>} onClick={handleClick}>Cancel</Button>
+                    <Button variant="contained"
+                            sx={{maxHeight: "2.5rem"}}
+                            endIcon={<EditOffIcon/>}
+                            onClick={handleClick}>
+                        Cancel</Button>
                 </Box>
                 : <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>}
             <form className="form" onSubmit={handleSubmit}>
