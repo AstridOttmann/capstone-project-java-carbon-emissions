@@ -3,14 +3,14 @@ import {useNavigate} from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import {BottomNavigationAction, BottomNavigation} from "@mui/material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import {RoutesContext} from "../contexts/RoutesContextProvider";
+import {RouteContext} from "../contexts/RouteContextProvider";
 
 type NavigationBottomProps = {
     setIsEditMode: (arg0: boolean) => void
 }
 
 export default function NavigationBottom(props: NavigationBottomProps) {
-    const {resetRoute} = useContext(RoutesContext);
+    const {resetRoute} = useContext(RouteContext);
     const [value, setValue] = useState('/');
     const navigate = useNavigate();
 

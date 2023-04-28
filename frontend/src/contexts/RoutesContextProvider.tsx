@@ -4,25 +4,22 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 export type RoutesContextType = {
-    route?: Route,
+    //route?: Route,
     routes: Route[],
-    setRoute: (route: Route) => void,
-    resetRoute: () => void,
+    //setRoute: (route: Route) => void,
+    //resetRoute: () => void,
     setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
     getAllRoutes: () => void,
-    getRouteById: (id: string) => void,
+    //getRouteById: (id: string) => void,
     addRoute: (route: NewRoute) => void,
     deleteRoute: (id: string) => void,
     updateRoute: (id: string, route: Route) => void
 }
 
 export const RoutesContext = createContext<RoutesContextType>({
-    route: undefined,
+
     routes: [],
-    setRoute: () => {
-    },
-    resetRoute: () => {
-    },
+
     setRoutes: () => {
     },
     addRoute: () => {
@@ -33,8 +30,7 @@ export const RoutesContext = createContext<RoutesContextType>({
     },
     getAllRoutes: () => {
     },
-    getRouteById: () => {
-    }
+
 
 })
 
@@ -44,7 +40,7 @@ type RoutesContextProps = {
 export default function RoutesContextProvider(props: RoutesContextProps) {
     const [routes, setRoutes] = useState<Route[]>([])
 
-    const initialStateRoute: Route = {
+   /* const initialStateRoute: Route = {
         start: "",
         destination: "",
         distance: 0,
@@ -56,11 +52,11 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
         co2EmissionRoute: 0,
     };
 
-    const [route, setRoute] = useState<Route>(initialStateRoute);
+    const [route, setRoute] = useState<Route>(initialStateRoute);*/
 
-    function resetRoute() {
+   /* function resetRoute() {
         setRoute(initialStateRoute);
-    }
+    }*/
 
     useEffect(() => {
         getAllRoutes()
@@ -76,7 +72,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
             })
     }
 
-    function getRouteById(id: string) {
+   /* function getRouteById(id: string) {
         axios.get(`/api/routes/${id}`)
             .then((response) => {
                 setRoute(response.data)
@@ -84,7 +80,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
             .catch((error) => {
                 toast.error("404 " + error)
             })
-    }
+    }*/
 
     function addRoute(route: NewRoute) {
         axios.post("/api/routes", route)
@@ -126,16 +122,13 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
     return (
         <RoutesContext.Provider
             value={{
-                route,
                 routes,
-                resetRoute,
-                setRoute,
                 setRoutes,
                 addRoute,
                 deleteRoute,
                 updateRoute,
                 getAllRoutes,
-                getRouteById
+
             }}>
             {props.children}
         </RoutesContext.Provider>

@@ -6,7 +6,7 @@ import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import EditIcon from "@mui/icons-material/Edit";
 import {useContext, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {RoutesContext} from "../contexts/RoutesContextProvider";
+import {RouteContext} from "../contexts/RouteContextProvider";
 
 const sxStylePaper = {
     p: "1rem",
@@ -38,7 +38,7 @@ type RouteDetailsProps = {
     setIsEditMode: (arg0: boolean) => void
 }
 export default function RouteDetails(props: RouteDetailsProps) {
-    const {route, resetRoute, getRouteById} = useContext(RoutesContext);
+    const {route, resetRoute, getRouteById} = useContext(RouteContext);
     const navigate = useNavigate();
     const {id} = useParams();
 

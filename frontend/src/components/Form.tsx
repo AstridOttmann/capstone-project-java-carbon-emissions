@@ -19,6 +19,7 @@ import {Vehicle} from "../models/VehicleModel";
 import {useNavigate} from "react-router-dom";
 import EditOffIcon from '@mui/icons-material/EditOff';
 import {RoutesContext} from "../contexts/RoutesContextProvider";
+import {RouteContext} from "../contexts/RouteContextProvider";
 
 const sxStylePaper = {
     m: "1rem",
@@ -42,7 +43,8 @@ type FormProps = {
     setIsEditMode: (arg0: boolean) => void,
 }
 export default function Form(props: FormProps) {
-    const {route, setRoute, resetRoute, addRoute, updateRoute} = useContext(RoutesContext)
+    const {route, setRoute, resetRoute, } = useContext(RouteContext)
+    const { addRoute, updateRoute } = useContext(RoutesContext)
 
     const initialStateVehicle = route && props.isEditMode ? route?.vehicle : {
         type: "",
