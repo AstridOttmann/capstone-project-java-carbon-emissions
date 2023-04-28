@@ -1,5 +1,5 @@
 import {Route} from "../models/RouteModel";
-import {createContext, ReactElement, useState} from "react";
+import {createContext, ReactElement, useMemo, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
 
@@ -38,6 +38,14 @@ export default function RouteContextProvider(props: RouteContextProps) {
 
     const [route, setRoute] = useState<Route>(initialStateRoute);
 
+    const contextValue = useMemo(() => ({
+        route,
+        setRoute,
+        resetRoute,
+        getRouteById,
+        //eslint-disable-next-line
+    }), [route]);
+
     function resetRoute() {
         setRoute(initialStateRoute);
     }
@@ -52,7 +60,7 @@ export default function RouteContextProvider(props: RouteContextProps) {
             })
     }
 
-    return <RouteContext.Provider value={{route, setRoute, resetRoute, getRouteById}}>
+    return <RouteContext.Provider value={contextValue}>
         {props.children}
     </RouteContext.Provider>
 }
