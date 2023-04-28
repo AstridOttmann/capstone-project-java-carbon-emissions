@@ -13,8 +13,19 @@ import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
 
 function App() {
-    const {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute, updateRoute} = useRoutes();
-    const [isEditMode, setIsEditMode] = useState<boolean>(true)
+    const {
+        routes,
+        route,
+        initialStateRoute,
+        setRoute,
+        getRouteById,
+        addRoute,
+        deleteRoute,
+        updateRoute
+    } = useRoutes();
+
+    const [isEditMode, setIsEditMode] = useState<boolean>(false)
+
     return (
         <Container maxWidth="lg">
             <main className="App">
@@ -39,9 +50,10 @@ function App() {
                                           getRouteById={getRouteById}
                                           route={route}/>}/>
                     </Routes>
-                    <NavigationBottom setIsEditMode={setIsEditMode}
-                                      initialStateRoute={initialStateRoute}
-                                      setRoute={setRoute}/>
+                    <NavigationBottom
+                        setIsEditMode={setIsEditMode}
+                        initialStateRoute={initialStateRoute}
+                        setRoute={setRoute}/>
                 </BrowserRouter>
             </main>
         </Container>

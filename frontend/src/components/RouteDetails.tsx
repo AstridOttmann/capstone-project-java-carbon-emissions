@@ -101,7 +101,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
                              aria-label="text button group">
                     <Button variant="outlined"
                             onClick={handleClickBack}>Back</Button>
-                    <Button className="button" variant="contained" endIcon={<EditIcon/>}
+                    <Button variant="contained" endIcon={<EditIcon/>}
                             onClick={handleClickEdit}>Edit</Button>
                 </ButtonGroup>
             </Card>

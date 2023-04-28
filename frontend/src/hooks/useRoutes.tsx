@@ -17,7 +17,7 @@ export default function useRoutes() {
 
     }
     const [routes, setRoutes] = useState<Route[]>([]);
-    const [route, setRoute] = useState<Route>(initialStateRoute)
+    const [route, setRoute] = useState<Route>(initialStateRoute);
 
     useEffect(() => {
         getAllRoutes()
@@ -80,5 +80,5 @@ export default function useRoutes() {
                 toast.error(error))
     }
 
-    return {routes, route, initialStateRoute, getRouteById, setRoute, addRoute, deleteRoute, updateRoute}
+    return {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute, updateRoute}
 }

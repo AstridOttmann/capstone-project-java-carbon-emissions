@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     FormControl,
     FormControlLabel,
@@ -16,6 +17,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {NewRoute, Route} from "../models/RouteModel";
 import {Vehicle} from "../models/VehicleModel";
 import {useNavigate} from "react-router-dom";
+import EditOffIcon from '@mui/icons-material/EditOff';
 
 const sxStyle = {
     m: "1rem",
@@ -73,10 +75,22 @@ export default function Form(props: FormProps) {
         props.setIsEditMode(false)
     }
 
+    function handleClick(){
+        navigate(-1)
+        props.setRoute(props.initialStateRoute);
+        setVehicle(initialStateVehicle);
+        props.setIsEditMode(false)
+    }
+
     return (
         <Paper sx={sxStyle}>
-            <Typography variant="h2" sx={{fontSize: "2rem"}}>
-                {props.isEditMode ? "Edit Route" : "Add Route"}</Typography>
+
+            {props.isEditMode
+                ? <Box sx={{display:"flex", justifyContent: "space-between", p: "0.5rem", m: "0.5rem"}}>
+                    <Typography variant="h2" sx={{fontSize: "2rem"}}>Edit Route</Typography>
+                    <Button variant="contained" endIcon={<EditOffIcon/>} onClick={handleClick}>Cancel</Button>
+                </Box>
+                : <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>}
             <form className="form" onSubmit={handleSubmit}>
                 <TextField
                     required
