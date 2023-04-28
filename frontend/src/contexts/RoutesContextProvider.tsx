@@ -4,10 +4,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 export type RoutesContextType = {
-    //route?: Route,
     routes: Route[],
-    //setRoute: (route: Route) => void,
-    //resetRoute: () => void,
     setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
     getAllRoutes: () => void,
     //getRouteById: (id: string) => void,
@@ -40,24 +37,6 @@ type RoutesContextProps = {
 export default function RoutesContextProvider(props: RoutesContextProps) {
     const [routes, setRoutes] = useState<Route[]>([])
 
-   /* const initialStateRoute: Route = {
-        start: "",
-        destination: "",
-        distance: 0,
-        id: "",
-        numberOfPersons: 1,
-        oneWay: false,
-        vehicle:
-            {type: "", co2Emission: 0, fuel: "", carSize: "", distanceLevel: "", meansOfTransport: ""},
-        co2EmissionRoute: 0,
-    };
-
-    const [route, setRoute] = useState<Route>(initialStateRoute);*/
-
-   /* function resetRoute() {
-        setRoute(initialStateRoute);
-    }*/
-
     useEffect(() => {
         getAllRoutes()
     }, [])
@@ -71,16 +50,6 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 toast.error("Error! Try again later " + error)
             })
     }
-
-   /* function getRouteById(id: string) {
-        axios.get(`/api/routes/${id}`)
-            .then((response) => {
-                setRoute(response.data)
-            })
-            .catch((error) => {
-                toast.error("404 " + error)
-            })
-    }*/
 
     function addRoute(route: NewRoute) {
         axios.post("/api/routes", route)
