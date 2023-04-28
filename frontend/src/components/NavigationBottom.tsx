@@ -1,26 +1,24 @@
-import React, {SyntheticEvent, useState} from "react";
+import React, {SyntheticEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-
 import {BottomNavigationAction, BottomNavigation} from "@mui/material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import {Route} from "../models/RouteModel";
+import {RoutesContext} from "../contexts/RoutesContextProvider";
 
 type NavigationBottomProps = {
-    setRoute: (route: Route) => void,
-    initialStateRoute: Route,
     setIsEditMode: (arg0: boolean) => void
 }
 
 export default function NavigationBottom(props: NavigationBottomProps) {
+    const {resetRoute} = useContext(RoutesContext);
     const [value, setValue] = useState('/');
     const navigate = useNavigate();
 
     const handleChange = (event: SyntheticEvent, newValue: string) => {
-        setValue(newValue);
+        setValue(newValue)
         navigate(newValue)
-        props.setRoute(props.initialStateRoute)
         props.setIsEditMode(false)
+        resetRoute();
     };
 
     return (

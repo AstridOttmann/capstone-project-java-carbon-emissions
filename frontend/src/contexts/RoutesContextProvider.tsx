@@ -1,11 +1,50 @@
-
-import {useEffect, useState} from "react";
 import {NewRoute, Route} from "../models/RouteModel";
+import React, {createContext, ReactElement, useEffect, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export default function useRoutes() {
-    const initialStateRoute = {
+export type RoutesContextType = {
+    route?: Route,
+    routes: Route[],
+    setRoute: (route: Route) => void,
+    resetRoute: () => void,
+    setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
+    getAllRoutes: () => void,
+    getRouteById: (id: string) => void,
+    addRoute: (route: NewRoute) => void,
+    deleteRoute: (id: string) => void,
+    updateRoute: (id: string, route: Route) => void
+}
+
+export const RoutesContext = createContext<RoutesContextType>({
+    route: undefined,
+    routes: [],
+    setRoute: () => {
+    },
+    resetRoute: () => {
+    },
+    setRoutes: () => {
+    },
+    addRoute: () => {
+    },
+    deleteRoute: () => {
+    },
+    updateRoute: () => {
+    },
+    getAllRoutes: () => {
+    },
+    getRouteById: () => {
+    }
+
+})
+
+type RoutesContextProps = {
+    children: ReactElement
+}
+export default function RoutesContextProvider(props: RoutesContextProps) {
+    const [routes, setRoutes] = useState<Route[]>([])
+
+    const initialStateRoute: Route = {
         start: "",
         destination: "",
         distance: 0,
@@ -15,10 +54,13 @@ export default function useRoutes() {
         vehicle:
             {type: "", co2Emission: 0, fuel: "", carSize: "", distanceLevel: "", meansOfTransport: ""},
         co2EmissionRoute: 0,
+    };
 
-    }
-    const [routes, setRoutes] = useState<Route[]>([]);
     const [route, setRoute] = useState<Route>(initialStateRoute);
+
+    function resetRoute() {
+        setRoute(initialStateRoute);
+    }
 
     useEffect(() => {
         getAllRoutes()
@@ -81,5 +123,21 @@ export default function useRoutes() {
                 toast.error(error))
     }
 
-    return {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute, updateRoute}
+    return (
+        <RoutesContext.Provider
+            value={{
+                route,
+                routes,
+                resetRoute,
+                setRoute,
+                setRoutes,
+                addRoute,
+                deleteRoute,
+                updateRoute,
+                getAllRoutes,
+                getRouteById
+            }}>
+            {props.children}
+        </RoutesContext.Provider>
+    )
 }

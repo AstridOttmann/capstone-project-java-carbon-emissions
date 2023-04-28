@@ -2,10 +2,11 @@ import {
     Paper,
     Typography
 } from "@mui/material";
-import {Route} from "../models/RouteModel";
 import './RouteCollection.css'
 
 import RouteCard from "./RouteCard";
+import {useContext} from "react";
+import {RoutesContext} from "../contexts/RoutesContextProvider";
 
 const sxStylePaper = {
     p: "1rem",
@@ -19,12 +20,8 @@ const sxStyleTitle = {
     color: "#3fd44d"
 }
 
-type RouteCollectionProps = {
-    routes: Route[],
-   // route: Route,
-    deleteRoute: (id: string) => void
-}
-export default function RouteCollection(props: RouteCollectionProps) {
+export default function RouteCollection() {
+    const {routes} = useContext(RoutesContext)
 
     return (
         <Paper sx={sxStylePaper}>
@@ -32,10 +29,11 @@ export default function RouteCollection(props: RouteCollectionProps) {
                 My Routes
             </Typography>
             <ul className="route-list">
-                {props.routes.map((route) => {
+                {routes.map((route) => {
                     return (
-                       <RouteCard deleteRoute={props.deleteRoute} key={route.id} route={route}/>
-                )})}
+                        <RouteCard key={route.id} route={route}/>
+                    )
+                })}
             </ul>
         </Paper>
     )

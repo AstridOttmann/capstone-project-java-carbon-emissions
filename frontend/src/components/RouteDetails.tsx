@@ -4,9 +4,9 @@ import TrainIcon from "@mui/icons-material/Train";
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import EditIcon from "@mui/icons-material/Edit";
-import {Route} from "../models/RouteModel";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import {RoutesContext} from "../contexts/RoutesContextProvider";
 
 const sxStylePaper = {
     p: "1rem",
@@ -35,26 +35,23 @@ const Item = styled('div')(({theme}) => ({
 }));
 
 type RouteDetailsProps = {
-    initialStateRoute: Route,
-    route: Route,
-    setRoute: (route: Route) => void,
-    getRouteById: (id: string) => void,
-    setIsEditMode: (arg0: boolean)=> void
+    setIsEditMode: (arg0: boolean) => void
 }
 export default function RouteDetails(props: RouteDetailsProps) {
+    const {route, resetRoute, getRouteById} = useContext(RoutesContext);
     const navigate = useNavigate();
     const {id} = useParams();
 
     useEffect(() => {
         if (id) {
-            props.getRouteById(id)
+            getRouteById(id)
         }
         //eslint-disable-next-line
     }, [id])
 
     function handleClickBack() {
         navigate(-1)
-        props.setRoute(props.initialStateRoute);
+        resetRoute()
     }
 
     function handleClickEdit() {
@@ -67,44 +64,45 @@ export default function RouteDetails(props: RouteDetailsProps) {
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
                 Route Details
             </Typography>
-            <Card sx={sxStyleCard} variant="outlined">
-                <Typography variant="overline">Route</Typography>
-                <p>Id: {props.route.id}</p>
-                <Stack>
-                    <Item>From: {props.route.start}</Item>
-                    <Item>To: {props.route.destination}</Item>
-                    <Item>Distance: {props.route.distance} km</Item>
-                    <Item>Number of persons: {props.route.numberOfPersons}</Item>
-                    <Item>{props.route.oneWay ? "oneWay" : "Round Trip"}</Item>
-                </Stack>
-                <Divider sx={{borderColor: "#808080"}}/>
+            {route &&
+                <Card sx={sxStyleCard} variant="outlined">
+                    <Typography variant="overline">Route</Typography>
+                    <p>Id: {route.id}</p>
+                    <Stack>
+                        <Item>From: {route.start}</Item>
+                        <Item>To: {route.destination}</Item>
+                        <Item>Distance: {route.distance} km</Item>
+                        <Item>Number of persons: {route.numberOfPersons}</Item>
+                        <Item>{route.oneWay ? "oneWay" : "Round Trip"}</Item>
+                    </Stack>
+                    <Divider sx={{borderColor: "#808080"}}/>
 
-                <Typography variant="overline">Vehicle</Typography>
-                <div>
-                    {props.route.vehicle.type === "car" && <DirectionsCarIcon/>}
-                    {props.route.vehicle.type === "publicTransport" && <TrainIcon/>}
-                    {props.route.vehicle.type === "flight" && <FlightIcon/>}
-                    {props.route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
-                </div>
-                {props.route.vehicle.type === "car" &&
-                    <Stack direction="row" gap="0.5rem">
-                        <Item>Fuel: {props.route.vehicle.fuel}</Item>
-                        <Item>Car size: {props.route.vehicle.carSize}</Item>
-                    </Stack>}
-                {props.route.vehicle.type === "publicTransport" &&
-                    <Stack direction="row" gap="0.5rem">
-                        <Item>Distance Level: <br/>{props.route.vehicle.distanceLevel}</Item>
-                        <Item>Means of Transport: <br/>{props.route.vehicle.meansOfTransport}</Item>
-                    </Stack>}
-                <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
-                             variant="text"
-                             aria-label="text button group">
-                    <Button variant="outlined"
-                            onClick={handleClickBack}>Back</Button>
-                    <Button variant="contained" endIcon={<EditIcon/>}
-                            onClick={handleClickEdit}>Edit</Button>
-                </ButtonGroup>
-            </Card>
+                    <Typography variant="overline">Vehicle</Typography>
+                    <div>
+                        {route.vehicle.type === "car" && <DirectionsCarIcon/>}
+                        {route.vehicle.type === "publicTransport" && <TrainIcon/>}
+                        {route.vehicle.type === "flight" && <FlightIcon/>}
+                        {route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
+                    </div>
+                    {route.vehicle.type === "car" &&
+                        <Stack direction="row" gap="0.5rem">
+                            <Item>Fuel: {route.vehicle.fuel}</Item>
+                            <Item>Car size: {route.vehicle.carSize}</Item>
+                        </Stack>}
+                    {route.vehicle.type === "publicTransport" &&
+                        <Stack direction="row" gap="0.5rem">
+                            <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
+                            <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
+                        </Stack>}
+                    <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
+                                 variant="text"
+                                 aria-label="text button group">
+                        <Button variant="outlined"
+                                onClick={handleClickBack}>Back</Button>
+                        <Button variant="contained" endIcon={<EditIcon/>}
+                                onClick={handleClickEdit}>Edit</Button>
+                    </ButtonGroup>
+                </Card>}
         </Paper>
     )
 }
