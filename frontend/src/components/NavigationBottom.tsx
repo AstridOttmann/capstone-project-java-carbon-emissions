@@ -27,6 +27,7 @@ export default function NavigationBottom(props: NavigationBottomProps) {
         <>
             <BottomNavigation sx={{
                 position: "fixed",
+                zIndex: 1,
                 bottom: 0, width: '100vw',
                 backgroundColor: "#3fd44d",
                 borderRadius: 1

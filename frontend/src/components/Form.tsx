@@ -86,9 +86,9 @@ export default function Form(props: FormProps) {
         <Paper sx={sxStyle}>
 
             {props.isEditMode
-                ? <Box sx={{display:"flex", justifyContent: "space-between", p: "0.5rem", m: "0.5rem"}}>
+                ? <Box sx={{display:"flex", justifyContent: "space-between", alignItems: "center", gap: "3rem", pb: "0.5rem", m: "0.5rem"}}>
                     <Typography variant="h2" sx={{fontSize: "2rem"}}>Edit Route</Typography>
-                    <Button variant="contained" endIcon={<EditOffIcon/>} onClick={handleClick}>Cancel</Button>
+                    <Button variant="contained" sx={{maxHeight: "2.5rem"}} endIcon={<EditOffIcon/>} onClick={handleClick}>Cancel</Button>
                 </Box>
                 : <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>}
             <form className="form" onSubmit={handleSubmit}>
