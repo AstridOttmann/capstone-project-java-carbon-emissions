@@ -1,8 +1,9 @@
-import {Button, Card, Divider, Paper, Stack, styled, Typography} from "@mui/material";
+import {Button, ButtonGroup, Card, Divider, Paper, Stack, styled, Typography} from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import TrainIcon from "@mui/icons-material/Train";
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import EditIcon from "@mui/icons-material/Edit";
 import {Route} from "../models/RouteModel";
 import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -37,7 +38,8 @@ type RouteDetailsProps = {
     initialStateRoute: Route,
     route: Route,
     setRoute: (route: Route) => void,
-    getRouteById: (id: string) => void
+    getRouteById: (id: string) => void,
+    setIsEditMode: (arg0: boolean)=> void
 }
 export default function RouteDetails(props: RouteDetailsProps) {
     const navigate = useNavigate();
@@ -50,9 +52,14 @@ export default function RouteDetails(props: RouteDetailsProps) {
         //eslint-disable-next-line
     }, [id])
 
-    function handleClick() {
+    function handleClickBack() {
         navigate(-1)
         props.setRoute(props.initialStateRoute);
+    }
+
+    function handleClickEdit() {
+        navigate("/")
+        props.setIsEditMode(true);
     }
 
     return (
@@ -89,8 +96,14 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         <Item>Distance Level: <br/>{props.route.vehicle.distanceLevel}</Item>
                         <Item>Means of Transport: <br/>{props.route.vehicle.meansOfTransport}</Item>
                     </Stack>}
-                <Button variant="outlined"
-                        onClick={handleClick}>Back</Button>
+                <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
+                             variant="text"
+                             aria-label="text button group">
+                    <Button variant="outlined"
+                            onClick={handleClickBack}>Back</Button>
+                    <Button variant="contained" endIcon={<EditIcon/>}
+                            onClick={handleClickEdit}>Edit</Button>
+                </ButtonGroup>
             </Card>
         </Paper>
     )

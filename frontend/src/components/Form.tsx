@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     FormControl,
     FormControlLabel,
@@ -15,22 +16,37 @@ import './Form.css'
 import {ChangeEvent, FormEvent, useState} from "react";
 import {NewRoute, Route} from "../models/RouteModel";
 import {Vehicle} from "../models/VehicleModel";
+import {useNavigate} from "react-router-dom";
+import EditOffIcon from '@mui/icons-material/EditOff';
 
-const sxStyle = {
+const sxStylePaper = {
     m: "1rem",
     p: "1rem",
     pb: "3rem",
     textAlign: "center",
     elevation: "3"
 }
+
+const sxStyleBox = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "3rem",
+    pb: "0.5rem",
+    m: "0.5rem"
+}
+
 type FormProps = {
     initialStateRoute: Route,
     route: Route,
     setRoute: (route: Route) => void,
-    addRoute: (route: NewRoute) => void
+    addRoute: (route: NewRoute) => void,
+    isEditMode: boolean,
+    setIsEditMode: (arg0: boolean) => void,
+    updateRoute: (id: string, route: Route) => void
 }
 export default function Form(props: FormProps) {
-    const initialStateVehicle = {
+    const initialStateVehicle = props.isEditMode ? props.route.vehicle : {
         type: "",
         co2Emission: 0,
         fuel: "",
@@ -39,6 +55,7 @@ export default function Form(props: FormProps) {
         meansOfTransport: "",
     }
     const [vehicle, setVehicle] = useState<Vehicle>(initialStateVehicle)
+    const navigate = useNavigate();
 
     const handleChangeSelectVehicle = (event: SelectChangeEvent<string>) => {
         const {name, value} = event.target
@@ -54,17 +71,40 @@ export default function Form(props: FormProps) {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const routeToAdd = {...props.route, vehicle}
 
-        props.addRoute(routeToAdd)
-
+        if (props.isEditMode) {
+            const updatedRoute: Route = {...props.route, vehicle}
+            props.updateRoute(updatedRoute.id, updatedRoute);
+            navigate(-1);
+        } else {
+            const routeToAdd = {...props.route, vehicle}
+            props.addRoute(routeToAdd)
+        }
         props.setRoute(props.initialStateRoute)
         setVehicle(initialStateVehicle)
+        props.setIsEditMode(false)
+    }
+
+    function handleClick() {
+        navigate(-1)
+        props.setRoute(props.initialStateRoute);
+        setVehicle(initialStateVehicle);
+        props.setIsEditMode(false)
     }
 
     return (
-        <Paper sx={sxStyle}>
-            <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>
+        <Paper sx={sxStylePaper}>
+
+            {props.isEditMode
+                ? <Box sx={sxStyleBox}>
+                    <Typography variant="h2" sx={{fontSize: "2rem"}}>Edit Route</Typography>
+                    <Button variant="contained"
+                            sx={{maxHeight: "2.5rem"}}
+                            endIcon={<EditOffIcon/>}
+                            onClick={handleClick}>
+                        Cancel</Button>
+                </Box>
+                : <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>}
             <form className="form" onSubmit={handleSubmit}>
                 <TextField
                     required

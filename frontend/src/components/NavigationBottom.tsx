@@ -8,7 +8,8 @@ import {Route} from "../models/RouteModel";
 
 type NavigationBottomProps = {
     setRoute: (route: Route) => void,
-    initialStateRoute: Route
+    initialStateRoute: Route,
+    setIsEditMode: (arg0: boolean) => void
 }
 
 export default function NavigationBottom(props: NavigationBottomProps) {
@@ -19,12 +20,14 @@ export default function NavigationBottom(props: NavigationBottomProps) {
         setValue(newValue);
         navigate(newValue)
         props.setRoute(props.initialStateRoute)
+        props.setIsEditMode(false)
     };
 
     return (
         <>
             <BottomNavigation sx={{
                 position: "fixed",
+                zIndex: 1,
                 bottom: 0, width: '100vw',
                 backgroundColor: "#3fd44d",
                 borderRadius: 1
