@@ -10,13 +10,13 @@ class PublicTransportTest {
 
     @BeforeEach
     public void setUp() {
-        publicTransport = new PublicTransport("publicTransport", 0.6, "local", "train");
+        publicTransport = new PublicTransport("publicTransport", 86.5, "local", "train");
     }
 
     @Test
     void testConstructor() {
         assertEquals("publicTransport", publicTransport.getType());
-        assertEquals(0.6, publicTransport.getCo2Emission());
+        assertEquals(86.5, publicTransport.getCo2Emission());
         assertEquals("local", publicTransport.getDistanceLevel());
         assertEquals("train", publicTransport.getMeansOfTransport());
     }

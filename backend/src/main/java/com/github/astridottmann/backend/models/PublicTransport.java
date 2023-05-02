@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class PublicTransport extends Vehicle {
+public class PublicTransport extends Vehicle implements GetCo2EmissionFactor {
     String distanceLevel;
     String meansOfTransport;
 
@@ -17,5 +17,28 @@ public class PublicTransport extends Vehicle {
         super(type, co2Emission);
         this.distanceLevel = distanceLevel;
         this.meansOfTransport = meansOfTransport;
+    }
+
+    @Override
+    public double getCo2Emission() {
+        switch (distanceLevel) {
+            case "local" -> {
+                if (meansOfTransport.equals("bus")) {
+                    setCo2Emission(108.0);
+                } else {
+                    setCo2Emission(86.5);
+                }
+            }
+            case "longDistance" -> {
+                if (meansOfTransport.equals("bus")) {
+                    setCo2Emission(37.0);
+                } else {
+                    setCo2Emission(46.0);
+                }
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + distanceLevel);
+        }
+        return co2Emission;
+
     }
 }

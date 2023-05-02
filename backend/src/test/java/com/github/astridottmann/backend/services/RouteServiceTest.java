@@ -18,9 +18,11 @@ import static org.mockito.Mockito.verify;
 class RouteServiceTest {
     RouteService routeService;
     final IdService idService = mock(IdService.class);
+    final CalculateCo2EmissionService calculateCo2EmissionService = mock(CalculateCo2EmissionService.class);
 
     final RouteRepository routeRepository = mock(RouteRepository.class);
     private final String testId = "1";
+    private final double dummyEmission = 162;
 
     private Route createTestRouteInstance() {
         return new Route(testId,
@@ -30,27 +32,40 @@ class RouteServiceTest {
                 1,
                 false,
                 new Car("car", 2.8, "petrol", "large"),
-                0.0);
+                dummyEmission);
     }
 
+    private RouteDTO createTestRouteDTOInstance() {
+        return new RouteDTO(
+                "Hamburg",
+                "Frankfurt",
+                492,
+                1,
+                false,
+                new Car("car", 2.8, "petrol", "large"));
+    }
     @BeforeEach
     void init() {
-        this.routeService = new RouteService(routeRepository, idService);
+        this.routeService = new RouteService(routeRepository, idService, calculateCo2EmissionService );
     }
 
     @Test
     void addRoute_shouldReturnAddedRoute() {
+        RouteDTO routeToAddDTO = createTestRouteDTOInstance();
         Route routeToAdd = createTestRouteInstance();
         Mockito.when(routeRepository.save(routeToAdd))
                 .thenReturn(routeToAdd);
         Mockito.when(idService.createRandomId())
                 .thenReturn(testId);
+        Mockito.when(calculateCo2EmissionService.calculateCo2EmissionRoute(routeToAddDTO))
+                .thenReturn(dummyEmission);
 
-        Route actual = routeService.addRoute(routeToAdd);
+        Route actual = routeService.addRoute(routeToAddDTO);
         Route expected = createTestRouteInstance();
 
         verify(routeRepository).save(routeToAdd);
         verify(idService).createRandomId();
+        verify(calculateCo2EmissionService).calculateCo2EmissionRoute(routeToAddDTO);
 
         assertEquals(expected, actual);
     }

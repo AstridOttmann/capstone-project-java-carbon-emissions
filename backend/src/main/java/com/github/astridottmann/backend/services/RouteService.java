@@ -13,10 +13,21 @@ import java.util.NoSuchElementException;
 public class RouteService {
     private final RouteRepository routeRepository;
     private final IdService idService;
+    private final CalculateCo2EmissionService calculateCo2EmissionService;
 
 
-    public Route addRoute(Route route) {
-        Route routeToAdd = route.withId(idService.createRandomId());
+    public Route addRoute(RouteDTO routeDTO) {
+
+        Route routeToAdd = new Route(
+                idService.createRandomId(),
+                routeDTO.start(),
+                routeDTO.destination(),
+                routeDTO.distance(),
+                routeDTO.numberOfPersons(),
+                routeDTO.oneWay(),
+                routeDTO.vehicle(),
+                calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO));
+
         return routeRepository.save(routeToAdd);
     }
 

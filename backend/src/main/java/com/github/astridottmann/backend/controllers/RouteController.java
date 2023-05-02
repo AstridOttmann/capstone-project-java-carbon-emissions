@@ -1,6 +1,7 @@
 package com.github.astridottmann.backend.controllers;
 
 import com.github.astridottmann.backend.models.Route;
+import com.github.astridottmann.backend.models.RouteDTO;
 import com.github.astridottmann.backend.services.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class RouteController {
     }
 
     @PostMapping
-    public Route addRoute(@RequestBody Route route) {
-        return routeService.addRoute(route);
+    public Route addRoute(@RequestBody RouteDTO routeDTO) {
+        return routeService.addRoute(routeDTO);
     }
 
     @DeleteMapping("/{id}")
