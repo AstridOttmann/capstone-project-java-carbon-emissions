@@ -64,45 +64,46 @@ export default function RouteDetails(props: RouteDetailsProps) {
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
                 Route Details
             </Typography>
-            {route &&
-                <Card sx={sxStyleCard} variant="outlined">
-                    <Typography variant="overline">Route</Typography>
-                    <p>Id: {route.id}</p>
-                    <Stack>
-                        <Item>From: {route.start}</Item>
-                        <Item>To: {route.destination}</Item>
-                        <Item>Distance: {route.distance} km</Item>
-                        <Item>Number of persons: {route.numberOfPersons}</Item>
-                        <Item>{route.oneWay ? "oneWay" : "Round Trip"}</Item>
-                    </Stack>
-                    <Divider sx={{borderColor: "#808080"}}/>
+            {route ? (
+                    <Card sx={sxStyleCard} variant="outlined">
+                        <Typography variant="overline">Route</Typography>
+                        <p>Id: {route.id}</p>
+                        <Stack>
+                            <Item>From: {route.start}</Item>
+                            <Item>To: {route.destination}</Item>
+                            <Item>Distance: {route.distance} km</Item>
+                            <Item>Number of persons: {route.numberOfPersons}</Item>
+                            <Item>{route.oneWay ? "oneWay" : "Round Trip"}</Item>
+                        </Stack>
+                        <Divider sx={{borderColor: "#808080"}}/>
 
-                    <Typography variant="overline">Vehicle</Typography>
-                    <div>
-                        {route.vehicle.type === "car" && <DirectionsCarIcon/>}
-                        {route.vehicle.type === "publicTransport" && <TrainIcon/>}
-                        {route.vehicle.type === "flight" && <FlightIcon/>}
-                        {route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
-                    </div>
-                    {route.vehicle.type === "car" &&
-                        <Stack direction="row" gap="0.5rem">
-                            <Item>Fuel: {route.vehicle.fuel}</Item>
-                            <Item>Car size: {route.vehicle.carSize}</Item>
-                        </Stack>}
-                    {route.vehicle.type === "publicTransport" &&
-                        <Stack direction="row" gap="0.5rem">
-                            <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
-                            <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
-                        </Stack>}
-                    <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
-                                 variant="text"
-                                 aria-label="text button group">
-                        <Button variant="outlined"
-                                onClick={handleClickBack}>Back</Button>
-                        <Button variant="contained" endIcon={<EditIcon/>}
-                                onClick={handleClickEdit}>Edit</Button>
-                    </ButtonGroup>
-                </Card>}
+                        <Typography variant="overline">Vehicle</Typography>
+                        <div>
+                            {route.vehicle.type === "car" && <DirectionsCarIcon/>}
+                            {route.vehicle.type === "publicTransport" && <TrainIcon/>}
+                            {route.vehicle.type === "flight" && <FlightIcon/>}
+                            {route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
+                        </div>
+                        {route.vehicle.type === "car" &&
+                            <Stack direction="row" gap="0.5rem">
+                                <Item>Fuel: {route.vehicle.fuel}</Item>
+                                <Item>Car size: {route.vehicle.carSize}</Item>
+                            </Stack>}
+                        {route.vehicle.type === "publicTransport" &&
+                            <Stack direction="row" gap="0.5rem">
+                                <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
+                                <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
+                            </Stack>}
+                        <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
+                                     variant="text"
+                                     aria-label="text button group">
+                            <Button variant="outlined"
+                                    onClick={handleClickBack}>Back</Button>
+                            <Button variant="contained" endIcon={<EditIcon/>}
+                                    onClick={handleClickEdit}>Edit</Button>
+                        </ButtonGroup>
+                    </Card>)
+                : <div>Loading ...</div>}
         </Paper>
     )
 }
