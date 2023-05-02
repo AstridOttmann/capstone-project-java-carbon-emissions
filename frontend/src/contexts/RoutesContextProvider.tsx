@@ -1,23 +1,52 @@
-import {useEffect, useState} from "react";
 import {NewRoute, Route} from "../models/RouteModel";
+import React, {createContext, ReactElement, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export default function useRoutes() {
-    const initialStateRoute = {
-        start: "",
-        destination: "",
-        distance: 0,
-        id: "",
-        numberOfPersons: 1,
-        oneWay: false,
-        vehicle:
-            {type: "", co2Emission: 0, fuel: "", carSize: "", distanceLevel: "", meansOfTransport: ""},
-        co2EmissionRoute: 0,
+export type RoutesContextType = {
+    routes: Route[],
+    setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
+    getAllRoutes: () => void,
+    //getRouteById: (id: string) => void,
+    addRoute: (route: NewRoute) => void,
+    deleteRoute: (id: string) => void,
+    updateRoute: (id: string, route: Route) => void
+}
 
-    }
-    const [routes, setRoutes] = useState<Route[]>([]);
-    const [route, setRoute] = useState<Route>(initialStateRoute);
+export const RoutesContext = createContext<RoutesContextType>({
+
+    routes: [],
+
+    setRoutes: () => {
+    },
+    addRoute: () => {
+    },
+    deleteRoute: () => {
+    },
+    updateRoute: () => {
+    },
+    getAllRoutes: () => {
+    },
+
+
+})
+
+type RoutesContextProps = {
+    children: ReactElement
+}
+export default function RoutesContextProvider(props: RoutesContextProps) {
+    const [routes, setRoutes] = useState<Route[]>([])
+
+
+    const contextValue = useMemo(() => ({
+        routes,
+        setRoutes,
+        addRoute,
+        deleteRoute,
+        updateRoute,
+        getAllRoutes,
+        //eslint-disable-next-line
+    }), [routes]);
 
     useEffect(() => {
         getAllRoutes()
@@ -30,16 +59,6 @@ export default function useRoutes() {
             })
             .catch((error) => {
                 toast.error("Error! Try again later " + error)
-            })
-    }
-
-    function getRouteById(id: string) {
-        axios.get(`/api/routes/${id}`)
-            .then((response) => {
-                setRoute(response.data)
-            })
-            .catch((error) => {
-                toast.error("404 " + error)
             })
     }
 
@@ -80,5 +99,10 @@ export default function useRoutes() {
                 toast.error(error))
     }
 
-    return {routes, route, initialStateRoute, setRoute, getRouteById, addRoute, deleteRoute, updateRoute}
+    return (
+        <RoutesContext.Provider
+            value={contextValue}>
+            {props.children}
+        </RoutesContext.Provider>
+    )
 }
