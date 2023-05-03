@@ -13,7 +13,7 @@ import {
     Typography
 } from "@mui/material";
 import './Form.css'
-import {ChangeEvent, FormEvent, useContext, useState} from "react";
+import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {Route} from "../models/RouteModel";
 import {Vehicle} from "../models/VehicleModel";
 import {useNavigate} from "react-router-dom";
@@ -43,6 +43,9 @@ type FormProps = {
     isEditMode: boolean,
     setAddMode: (arg0: boolean)=> void,
     setIsEditMode: (arg0: boolean) => void,
+    setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
+    routesToCompare: Route[]
+
 }
 export default function Form(props: FormProps) {
     const {route, setRoute, resetRoute} = useContext(RouteContext)
@@ -80,15 +83,17 @@ export default function Form(props: FormProps) {
                 navigate(-1);
             } else {
                 const routeToAdd = {...route, vehicle}
-                addRoute(routeToAdd)
+                addRoute(routeToAdd).then(savedRoute => props.setRoutesToCompare([savedRoute]))
             }
             resetRoute();
             setVehicle(initialStateVehicle)
             props.setAddMode(false)
             props.setIsEditMode(false)
-
-            console.log("route", route)
         }
+    }
+
+    function showAndCompare(){
+
     }
 
     function handleClick() {
