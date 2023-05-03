@@ -13,10 +13,14 @@ import java.util.NoSuchElementException;
 public class RouteService {
     private final RouteRepository routeRepository;
     private final IdService idService;
+    private final CalculateCo2EmissionService calculateCo2EmissionService;
 
 
-    public Route addRoute(Route route) {
-        Route routeToAdd = route.withId(idService.createRandomId());
+    public Route addRoute(RouteDTO routeDTO) {
+        String id = idService.createRandomId();
+        double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO);
+        Route routeToAdd = new Route(id, routeDTO, co2EmissionRoute);
+
         return routeRepository.save(routeToAdd);
     }
 
@@ -38,10 +42,14 @@ public class RouteService {
     }
 
     public Route updateRoute(Route route) {
-        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
         if (routeRepository.existsById(route.id())) {
-            return routeRepository.save(route);
+            RouteDTO toUpdate = new RouteDTO(route);
+            double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
+
+            Route updatedRoute = route.withCo2Emission(co2EmissionRoute);
+            return routeRepository.save(updatedRoute);
         }
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
         throw new NoSuchElementException(errorMessage);
     }
 }

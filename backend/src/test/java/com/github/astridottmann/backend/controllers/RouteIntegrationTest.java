@@ -42,16 +42,16 @@ class RouteIntegrationTest {
                 1,
                 false,
                 new PublicTransport("publicTransport",
-                        1.2,
+                        46.0,
                         "longDistance",
                         "train"),
-                0.0);
+                26.59);
 
         testRouteJson = objectMapper.writeValueAsString(testRoute);
 
         testRouteWithoutIdJson = """ 
                 {
-                "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 1.2, "distanceLevel": "longDistance", "meansOfTransport": "train"}, "co2EmissionRoute": 0.0
+                "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "longDistance", "meansOfTransport": "train"}
                 }
                                 """;
     }
@@ -91,6 +91,7 @@ class RouteIntegrationTest {
                         .andExpect(status().isOk())
                         .andExpect(content().json(testRouteWithoutIdJson))
                         .andExpect(jsonPath("$.id").isNotEmpty())
+                        .andExpect(jsonPath("$.co2EmissionRoute").isNotEmpty())
                         .andReturn()
                         .getResponse()
                         .getContentAsString();
@@ -104,7 +105,7 @@ class RouteIntegrationTest {
                 testRoute.numberOfPersons(),
                 testRoute.oneWay(),
                 testRoute.vehicle(),
-                testRoute.co2EmissionRoute());
+                actual.co2EmissionRoute());
 
         assertThat(routeRepository.findAll()).contains(expected);
     }

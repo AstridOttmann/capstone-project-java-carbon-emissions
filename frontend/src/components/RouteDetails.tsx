@@ -84,16 +84,30 @@ export default function RouteDetails(props: RouteDetailsProps) {
                             {route.vehicle.type === "flight" && <FlightIcon/>}
                             {route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
                         </div>
+                        {route.vehicle.type === "flight" &&
+                            <Stack>
+                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
+                            </Stack>}
+                        {route.vehicle.type === "bike" &&
+                            <Stack>
+                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
+                            </Stack>}
                         {route.vehicle.type === "car" &&
                             <Stack direction="row" gap="0.5rem">
                                 <Item>Fuel: {route.vehicle.fuel}</Item>
                                 <Item>Car size: {route.vehicle.carSize}</Item>
+                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
                             </Stack>}
                         {route.vehicle.type === "publicTransport" &&
                             <Stack direction="row" gap="0.5rem">
                                 <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
                                 <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
+                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
                             </Stack>}
+                        <Typography variant="overline">CO2-Emission </Typography>
+                        <Stack>
+                            <Item>pro Person in kg: {route.co2EmissionRoute}</Item>
+                        </Stack>
                         <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
                                      variant="text"
                                      aria-label="text button group">

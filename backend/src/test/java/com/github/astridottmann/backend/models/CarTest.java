@@ -10,15 +10,24 @@ class CarTest {
 
     @BeforeEach
     public void setUp() {
-        car = new Car("car", 1.8, "petrol", "medium");
+        car = new Car("car", 193.3, "petrol", "medium");
     }
 
     @Test
     void testConstructor() {
         assertEquals("car", car.getType());
-        assertEquals(1.8, car.getCo2Emission());
+        assertEquals(193.3, car.getCo2Emission());
         assertEquals("petrol", car.getFuel());
         assertEquals("medium", car.getCarSize());
     }
 
-}
+    @Test
+    void getCo2Emission() {
+            Vehicle vehicle = new Car("Car", 123.3, "diesel","small");
+
+            double expectedCo2Emission = 123.3;
+
+            double actualCo2Emission = vehicle.getCo2Emission();
+            assertEquals(expectedCo2Emission, actualCo2Emission, 0.01);
+        }
+    }

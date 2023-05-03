@@ -10,14 +10,24 @@ class PublicTransportTest {
 
     @BeforeEach
     public void setUp() {
-        publicTransport = new PublicTransport("publicTransport", 0.6, "local", "train");
+        publicTransport = new PublicTransport("publicTransport", 86.5, "local", "train");
     }
 
     @Test
     void testConstructor() {
         assertEquals("publicTransport", publicTransport.getType());
-        assertEquals(0.6, publicTransport.getCo2Emission());
+        assertEquals(86.5, publicTransport.getCo2Emission());
         assertEquals("local", publicTransport.getDistanceLevel());
         assertEquals("train", publicTransport.getMeansOfTransport());
+    }
+
+    @Test
+    void getCo2Emission() {
+        Vehicle vehicle = new PublicTransport("PublicTransport", 37.0, "longDistance","bus");
+
+        double expectedCo2Emission = 37.0;
+
+        double actualCo2Emission = vehicle.getCo2Emission();
+        assertEquals(expectedCo2Emission, actualCo2Emission, 0.01);
     }
 }

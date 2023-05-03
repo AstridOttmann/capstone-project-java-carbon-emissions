@@ -10,13 +10,13 @@ class FlightTest {
 
     @BeforeEach
     public void setUp() {
-        flight = new Flight("flight", 188.4);
+        flight = new Flight("flight", 271.0);
     }
 
     @Test
     void testConstructor() {
         assertEquals("flight", flight.getType());
-        assertEquals(188.4, flight.getCo2Emission());
+        assertEquals(271.0, flight.getCo2Emission());
 
     }
 }
