@@ -1,4 +1,4 @@
-import {Box, Button, ButtonGroup, Card, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup, Card, Divider, Typography} from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import TrainIcon from "@mui/icons-material/Train";
 import FlightIcon from "@mui/icons-material/Flight";
@@ -48,6 +48,8 @@ export default function RouteCard(props: RouteCardProps) {
                         <Typography> {props.route.oneWay ? "oneWay" : "Round Trip"}</Typography>
                         <Typography>{props.route.numberOfPersons + " person(s)"}</Typography>
                     </Box>
+                    <Divider sx={{borderColor: "#808080"}}/>
+                    <Typography variant="h6" sx={{textAlign: "center"}}>CO2-Emission: {props.route.co2EmissionRoute} kg/Person</Typography>
                     <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
                                  variant="text"
                                  aria-label="text button group">

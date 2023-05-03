@@ -17,7 +17,6 @@ public class RouteService {
 
 
     public Route addRoute(RouteDTO routeDTO) {
-
         Route routeToAdd = new Route(
                 idService.createRandomId(),
                 routeDTO.start(),
@@ -51,7 +50,24 @@ public class RouteService {
     public Route updateRoute(Route route) {
         String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
         if (routeRepository.existsById(route.id())) {
-            return routeRepository.save(route);
+            RouteDTO toUpdate = new RouteDTO(
+                    route.start(),
+                    route.destination(),
+                    route.distance(),
+                    route.numberOfPersons(),
+                    route.oneWay(),
+                    route.vehicle());
+
+            Route routeToUpdate = new Route(
+                    route.id(),
+                    route.start(),
+                    route.destination(),
+                    route.distance(),
+                    route.numberOfPersons(),
+                    route.oneWay(),
+                    route.vehicle(),
+                    calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate));
+            return routeRepository.save(routeToUpdate);
         }
         throw new NoSuchElementException(errorMessage);
     }

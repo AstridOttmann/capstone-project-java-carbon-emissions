@@ -8,4 +8,5 @@ public record RouteDTO(
         boolean oneWay,
         Vehicle vehicle
 ) {
+
 }

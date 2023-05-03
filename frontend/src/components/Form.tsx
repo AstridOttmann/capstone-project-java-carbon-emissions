@@ -20,6 +20,7 @@ import {useNavigate} from "react-router-dom";
 import EditOffIcon from '@mui/icons-material/EditOff';
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
+import CloseIcon from '@mui/icons-material/Close';
 
 const sxStylePaper = {
     m: "1rem",
@@ -40,11 +41,12 @@ const sxStyleBox = {
 
 type FormProps = {
     isEditMode: boolean,
+    setAddMode: (arg0: boolean)=> void,
     setIsEditMode: (arg0: boolean) => void,
 }
 export default function Form(props: FormProps) {
-    const {route, setRoute, resetRoute, } = useContext(RouteContext)
-    const { addRoute, updateRoute } = useContext(RoutesContext)
+    const {route, setRoute, resetRoute} = useContext(RouteContext)
+    const {addRoute, updateRoute} = useContext(RoutesContext)
 
     const initialStateVehicle = route && props.isEditMode ? route?.vehicle : {
         type: "",
@@ -82,7 +84,10 @@ export default function Form(props: FormProps) {
             }
             resetRoute();
             setVehicle(initialStateVehicle)
+            props.setAddMode(false)
             props.setIsEditMode(false)
+
+            console.log("route", route)
         }
     }
 
@@ -92,6 +97,12 @@ export default function Form(props: FormProps) {
         setVehicle(initialStateVehicle);
         props.setIsEditMode(false)
     }
+    function handleClose() {
+        props.setIsEditMode(false)
+        props.setAddMode(false)
+    }
+
+
 
     return (
         <Paper sx={sxStylePaper}>
@@ -105,7 +116,12 @@ export default function Form(props: FormProps) {
                             onClick={handleClick}>
                         Cancel</Button>
                 </Box>
-                : <Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>}
+                : <Box sx={sxStyleBox}><Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>
+                    <Button variant="outlined"
+                            sx={{maxHeight: "2.5rem"}}
+                            onClick={handleClose}>
+                        <CloseIcon/></Button></Box>
+            }
             {route &&
                 <form className="form" onSubmit={handleSubmit}>
                     <TextField

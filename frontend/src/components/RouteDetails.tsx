@@ -106,7 +106,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
                             </Stack>}
                         <Typography variant="overline">CO2-Emission </Typography>
                         <Stack>
-                            <Item>CO2-Emission pro Person in kg: {route.co2EmissionRoute}</Item>
+                            <Item>pro Person in kg: {route.co2EmissionRoute}</Item>
                         </Stack>
                         <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
                                      variant="text"

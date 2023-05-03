@@ -22,8 +22,9 @@ function App() {
                     <ToastContainer autoClose={3000}/>
                     <Routes>
                         <Route path="/" element={
-                            <HomePage setIsEditMode={setIsEditMode}
-                                      isEditMode={isEditMode}
+                            <HomePage
+                                setIsEditMode={setIsEditMode}
+                                isEditMode={isEditMode}
                             />}/>
                         <Route path="/routes" element={
                             <RouteCollection/>}/>
