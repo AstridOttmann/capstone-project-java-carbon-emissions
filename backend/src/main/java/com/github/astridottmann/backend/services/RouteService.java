@@ -17,15 +17,9 @@ public class RouteService {
 
 
     public Route addRoute(RouteDTO routeDTO) {
-        Route routeToAdd = new Route(
-                idService.createRandomId(),
-                routeDTO.start(),
-                routeDTO.destination(),
-                routeDTO.distance(),
-                routeDTO.numberOfPersons(),
-                routeDTO.oneWay(),
-                routeDTO.vehicle(),
-                calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO));
+        String id = idService.createRandomId();
+        double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO);
+        Route routeToAdd = new Route(id, routeDTO, co2EmissionRoute);
 
         return routeRepository.save(routeToAdd);
     }
@@ -48,27 +42,14 @@ public class RouteService {
     }
 
     public Route updateRoute(Route route) {
-        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
         if (routeRepository.existsById(route.id())) {
-            RouteDTO toUpdate = new RouteDTO(
-                    route.start(),
-                    route.destination(),
-                    route.distance(),
-                    route.numberOfPersons(),
-                    route.oneWay(),
-                    route.vehicle());
+            RouteDTO toUpdate = new RouteDTO(route);
+            double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
 
-            Route updatedRoute = new Route(
-                    route.id(),
-                    route.start(),
-                    route.destination(),
-                    route.distance(),
-                    route.numberOfPersons(),
-                    route.oneWay(),
-                    route.vehicle(),
-                    calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate));
+            Route updatedRoute = route.withCo2Emission(co2EmissionRoute);
             return routeRepository.save(updatedRoute);
         }
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
         throw new NoSuchElementException(errorMessage);
     }
 }

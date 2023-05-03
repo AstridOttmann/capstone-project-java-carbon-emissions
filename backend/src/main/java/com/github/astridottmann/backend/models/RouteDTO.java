@@ -8,5 +8,13 @@ public record RouteDTO(
         boolean oneWay,
         Vehicle vehicle
 ) {
+    public RouteDTO(Route route) {
+        this(route.start(),
+                route.destination(),
+                route.distance(),
+                route.numberOfPersons(),
+                route.oneWay(),
+                route.vehicle());
 
+    }
 }
