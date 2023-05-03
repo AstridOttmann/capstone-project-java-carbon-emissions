@@ -66,7 +66,6 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
        return axios.post("/api/routes", route)
             .then((response) => {
                 setRoutes([response.data,...routes])
-                toast("Route successfully added")
                 return response.data
             })
             .catch((error) => {

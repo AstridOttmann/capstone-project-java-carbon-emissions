@@ -223,7 +223,7 @@ export default function Form(props: FormProps) {
                                     name="distanceLevel"
                                     onChange={handleChangeSelectVehicle}>
                                     <MenuItem value="local">local</MenuItem>
-                                    <MenuItem value="long distance">long distance</MenuItem>
+                                    <MenuItem value="longDistance">long distance</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl>
