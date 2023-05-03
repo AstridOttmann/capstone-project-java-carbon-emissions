@@ -58,7 +58,7 @@ public class RouteService {
                     route.oneWay(),
                     route.vehicle());
 
-            Route routeToUpdate = new Route(
+            Route updatedRoute = new Route(
                     route.id(),
                     route.start(),
                     route.destination(),
@@ -67,7 +67,7 @@ public class RouteService {
                     route.oneWay(),
                     route.vehicle(),
                     calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate));
-            return routeRepository.save(routeToUpdate);
+            return routeRepository.save(updatedRoute);
         }
         throw new NoSuchElementException(errorMessage);
     }

@@ -13,6 +13,7 @@ public record Route(
         Vehicle vehicle,
         double co2EmissionRoute
 ) {
+
     public Route(
             String start,
             String destination,

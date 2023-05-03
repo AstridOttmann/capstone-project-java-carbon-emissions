@@ -152,9 +152,12 @@ class RouteServiceTest {
     @Test
     void updateRoute_shouldReturnUpdatedRoute() {
         Route routeToUpdate = createTestRouteInstance();
+        RouteDTO routeToUpdateDTO = createTestRouteDTOInstance();
 
         Mockito.when(routeRepository.existsById(routeToUpdate.id()))
                 .thenReturn(true);
+        Mockito.when(calculateCo2EmissionService.calculateCo2EmissionRoute(routeToUpdateDTO))
+                .thenReturn(dummyEmission);
         Mockito.when(routeRepository.save(routeToUpdate))
                 .thenReturn(routeToUpdate);
 
@@ -163,6 +166,7 @@ class RouteServiceTest {
 
         verify(routeRepository).existsById(routeToUpdate.id());
         verify(routeRepository).save(routeToUpdate);
+        verify(calculateCo2EmissionService).calculateCo2EmissionRoute(routeToUpdateDTO);
         assertEquals(expected, actual);
     }
 
