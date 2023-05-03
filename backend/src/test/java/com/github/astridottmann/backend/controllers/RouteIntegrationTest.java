@@ -45,7 +45,7 @@ class RouteIntegrationTest {
                         46.0,
                         "longDistance",
                         "train"),
-                26.588);
+                26.59);
 
         testRouteJson = objectMapper.writeValueAsString(testRoute);
 
