@@ -1,9 +1,10 @@
 import Form from "./Form";
-import {Button, ButtonGroup, Paper} from "@mui/material";
+import {Box, Button, ButtonGroup, Paper, Typography} from "@mui/material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 import {useState} from "react";
 import {Route} from "../models/RouteModel";
+import RouteCard from "./RouteCard";
 
 type HomePageProps = {
     isEditMode: boolean,
@@ -20,6 +21,17 @@ export default function HomePage(props: HomePageProps) {
             pb: "4rem",
             backgroundColor: "#282c34"
         }}>
+            {routesToCompare.length && routesToCompare.map((route) => {
+                return <RouteCard key={route.id} route={route}/>
+            })}
+            <Box sx={{display: "flex", justifyContent: "space-evenly", gap: "2rem", backgroundColor: "#3fd44d"}}>
+            {routesToCompare.length > 1 && routesToCompare.map((route) => {
+                return <Box key={route.id} >
+                    <Typography>{route.vehicle.type}</Typography>
+                    <Typography>{route.co2EmissionRoute}</Typography>
+                </Box>
+            })}
+            </Box>
             {addMode || props.isEditMode ?
                 <Form isEditMode={props.isEditMode}
                       setIsEditMode={props.setIsEditMode}
@@ -33,7 +45,8 @@ export default function HomePage(props: HomePageProps) {
                     <Button variant="outlined" sx={{m: "1rem"}} onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
                         Add Route
                     </Button>
-                    <Button variant="outlined" sx={{m: "1rem"}} onClick={() => setCompareMode(!compareMode)}><AltRouteIcon/>
+                    <Button variant="outlined" sx={{m: "1rem"}}
+                            onClick={() => setCompareMode(!compareMode)}><AltRouteIcon/>
                         Compare
                     </Button></ButtonGroup>}
         </Paper>

@@ -41,7 +41,7 @@ const sxStyleBox = {
 
 type FormProps = {
     isEditMode: boolean,
-    setAddMode: (arg0: boolean)=> void,
+    setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,
     setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
     routesToCompare: Route[]
@@ -83,7 +83,7 @@ export default function Form(props: FormProps) {
                 navigate(-1);
             } else {
                 const routeToAdd = {...route, vehicle}
-                addRoute(routeToAdd).then(savedRoute => props.setRoutesToCompare([savedRoute]))
+                addRoute(routeToAdd).then(savedRoute => props.setRoutesToCompare([...props.routesToCompare, savedRoute]))
             }
             resetRoute();
             setVehicle(initialStateVehicle)
@@ -92,21 +92,17 @@ export default function Form(props: FormProps) {
         }
     }
 
-    function showAndCompare(){
-
-    }
-
     function handleClick() {
         navigate(-1)
         resetRoute();
         setVehicle(initialStateVehicle);
         props.setIsEditMode(false)
     }
+
     function handleClose() {
         props.setIsEditMode(false)
         props.setAddMode(false)
     }
-
 
 
     return (
