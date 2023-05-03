@@ -23,7 +23,7 @@ export default function HomePage(props: HomePageProps) {
             pt: "1rem",
             backgroundColor: "#282c34"
         }}>
-            {!addMode && routesToCompare.length === 0 &&
+            {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
                 <ButtonGroup
                     sx={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", gap: "0.5rem", m: "1rem"}}
                     variant="text"

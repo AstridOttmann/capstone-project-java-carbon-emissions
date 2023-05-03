@@ -1,4 +1,3 @@
-
 import {Box, Paper, Typography} from "@mui/material";
 import {Route} from "../models/RouteModel";
 import CompareRoutesCard from "./CompareRoutesCard";

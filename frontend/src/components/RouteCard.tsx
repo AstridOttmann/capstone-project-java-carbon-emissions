@@ -26,23 +26,20 @@ export default function RouteCard(props: RouteCardProps) {
         deleteRoute(props.route.id)
     }
 
-    return (
-        <>
-            {props.route &&
-                <Card variant="outlined" sx={sxStyleCard}>
-                    <small> ID: {props.route.id}</small>
-                   <RouteVehicleIcon route={props.route}/>
-                   <RouteInfo route={props.route}/>
-                    <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
-                                 variant="text"
-                                 aria-label="text button group">
-                        <Button variant="outlined"
-                                onClick={() => navigate(`/routes/details/${props.route.id}`)}>Details</Button>
-                        <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                                onClick={onDeleteClick}>Delete</Button>
-                    </ButtonGroup>
-                </Card>
-            }
-        </>
-    )
+    return (<>
+        {props.route &&
+            <Card variant="outlined" sx={sxStyleCard}>
+                <small> ID: {props.route.id}</small>
+                <RouteVehicleIcon route={props.route}/>
+                <RouteInfo route={props.route}/>
+                <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
+                             variant="text"
+                             aria-label="text button group">
+                    <Button variant="outlined"
+                            onClick={() => navigate(`/routes/details/${props.route.id}`)}>Details</Button>
+                    <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
+                            onClick={onDeleteClick}>Delete</Button>
+                </ButtonGroup>
+            </Card>}
+    </>)
 }
