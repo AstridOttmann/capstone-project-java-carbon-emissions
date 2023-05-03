@@ -21,4 +21,13 @@ class CarTest {
         assertEquals("medium", car.getCarSize());
     }
 
-}
+    @Test
+    void getCo2Emission() {
+            Vehicle vehicle = new Car("Car", 123.3, "diesel","small");
+
+            double expectedCo2Emission = 123.3;
+
+            double actualCo2Emission = vehicle.getCo2Emission();
+            assertEquals(expectedCo2Emission, actualCo2Emission, 0.01);
+        }
+    }
