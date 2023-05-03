@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
         @JsonSubTypes.Type(value = Bike.class, name = "bike"),
         @JsonSubTypes.Type(value = Flight.class, name = "flight")
 })
-public abstract class Vehicle implements GetCo2EmissionFactor{
+public class Vehicle implements GetCo2EmissionFactor{
     @JsonTypeId
     protected String type;
     protected double co2Emission;
