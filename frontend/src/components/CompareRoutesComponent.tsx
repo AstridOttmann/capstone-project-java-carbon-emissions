@@ -15,26 +15,26 @@ type CompareRoutesComponentProps = {
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     return (
         <Paper sx={sxStylePaper}>
-            {props.comparedRoutes.compared.map((route) => {
-                    return <CompareRoutesCard key={route.id} route={route}/>
-                })}
-            <Box sx={{display: "flex", gap: "1rem",}}>
-                {props.comparedRoutes.compared.length === 2 && props.comparedRoutes.compared.map((route) => {
-                    return (
-                        <Box key={route.id} sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            borderRadius: 1,
-                            width: "50%",
-                            backgroundColor: "#3fd44d"
-                        }}>
-                            <Typography sx={{textAlign: "center"}}>{route.vehicle.type}</Typography>
-                            <Typography sx={{textAlign: "center"}}>{route.co2EmissionRoute}</Typography>
-                        </Box>
-                    )
-                })}
+            <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
+            <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
+            {/*    <Box sx={{display: "flex", gap: "1rem",}}>*/}
+            <Box sx={{
+                display: "flex",
+                gap: "1rem",
+                borderRadius: 1
+            }}>
+                <Box sx={{backgroundColor: "#3fd44d", width: "50%", borderRadius: 1,}}>
+                    <Typography sx={{textAlign: "center"}}>{props.comparedRoutes.compared[0].vehicle.type}</Typography>
+                    <Typography
+                        sx={{textAlign: "center"}}>{props.comparedRoutes.compared[0].co2EmissionRoute}</Typography>
+                </Box>
+                <Box sx={{backgroundColor: "#3fd44d", width: "50%", borderRadius: 1,}}>
+                    <Typography sx={{textAlign: "center"}}>{props.comparedRoutes.compared[1].vehicle.type}</Typography>
+                    <Typography
+                        sx={{textAlign: "center"}}>{props.comparedRoutes.compared[1].co2EmissionRoute}</Typography>
+                </Box>
             </Box>
+
             <Box>
                 <Typography variant="body1"
                             sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>

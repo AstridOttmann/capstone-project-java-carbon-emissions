@@ -17,6 +17,7 @@ const sxStyleTitle = {
 
 type CompareRoutesCollectionProps = {
     comparedRoutes: CompareRoutes,
+    comparedRoutesList: CompareRoutes[]
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
     return (
@@ -24,7 +25,9 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
                 My Compared Routes
             </Typography>
-            <CompareRoutesComponent comparedRoutes={props.comparedRoutes}/>
+            {props.comparedRoutesList.map((element) => {
+                return <CompareRoutesComponent key={element.id} comparedRoutes={element}/>
+            })}
         </Paper>
     )
 }

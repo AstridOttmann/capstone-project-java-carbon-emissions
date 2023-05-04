@@ -4,10 +4,7 @@ import com.github.astridottmann.backend.models.CompareRoutes;
 import com.github.astridottmann.backend.models.Route;
 import com.github.astridottmann.backend.services.CompareRoutesService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompareRoutesController {
     private final CompareRoutesService compareRoutesService;
+
+    @GetMapping
+    public List<CompareRoutes> getAllCompareRoutes(){
+        return compareRoutesService.getAllCompareRoutes();
+    }
 
     @PostMapping
     public CompareRoutes addComparison(@RequestBody List<Route> compared){

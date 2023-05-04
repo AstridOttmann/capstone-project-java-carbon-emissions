@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Route} from "../models/RouteModel";
 import axios from "axios";
 import {CompareRoutes} from "../models/CompareRoutesModel";
@@ -55,6 +55,17 @@ export default function useCompareRoutes() {
     const [comparedRoutesList, setComparedRoutesList] = useState<CompareRoutes[]>([]);
     const [comparedRoutes, setComparedRoutes] = useState<CompareRoutes>(initialStateComparedRoutes);
 
+    useEffect(() => {
+        getAllComparison()
+    }, [])
+
+    function getAllComparison() {
+        axios.get("/api/compare")
+            .then((response) => {
+                setComparedRoutesList(response.data)
+            })
+    }
+
     function addComparison(comparedRoutes: CompareRoutes) {
         axios.post("/api/compare", comparedRoutes.compared)
             .then((response) => {
@@ -65,5 +76,5 @@ export default function useCompareRoutes() {
             })
     }
 
-    return {routesToCompare, setRoutesToCompare, comparedRoutes, setComparedRoutes, addComparison}
+    return {routesToCompare, setRoutesToCompare, comparedRoutes, setComparedRoutes, comparedRoutesList, getAllComparison, addComparison}
 }

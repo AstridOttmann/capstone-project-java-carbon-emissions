@@ -29,4 +29,8 @@ public class CompareRoutesService {
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }
+
+    public List<CompareRoutes> getAllCompareRoutes() {
+        return compareRoutesRepository.findAll();
+    }
 }

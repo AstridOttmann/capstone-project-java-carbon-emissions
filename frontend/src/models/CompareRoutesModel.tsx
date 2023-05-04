@@ -2,7 +2,7 @@ import {Route} from "./RouteModel";
 import {ComparisonResults} from "./ComparisonResultsModel";
 
 export type CompareRoutes = {
-    id: String,
+    id: string,
     compared: Route[],
     comparisonResults: ComparisonResults
 
