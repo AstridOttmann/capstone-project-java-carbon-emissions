@@ -1,13 +1,16 @@
 import Form from "./Form";
-import {Button, ButtonGroup, Paper} from "@mui/material";
+import {Box, Button, ButtonGroup, Paper, Typography} from "@mui/material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
-import {useState} from "react";
+import React, {useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
 import CompareRoutesComponent from "./CompareRoutesComponent";
 import {CompareRoutes} from "../models/CompareRoutesModel";
+import CompareRoutesCard from "./CompareRoutesCard";
+import CompareRoutesResults from "./CompareRoutesResults";
+import {Routes} from "react-router-dom";
 
 
 type HomePageProps = {
@@ -15,8 +18,8 @@ type HomePageProps = {
     setIsEditMode: (arg0: boolean) => void,
     // addComparison: (compareRoutes: { routesToCompare: Route[] })=> void
     addComparison: (compareRoutes: CompareRoutes) => void,
-    comparedRoute: CompareRoutes,
-    setComparedRoute: (compareRoutes: CompareRoutes) => void
+    comparedRoutes: CompareRoutes,
+    setComparedRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
 }
 
 export default function HomePage(props: HomePageProps) {
@@ -24,9 +27,8 @@ export default function HomePage(props: HomePageProps) {
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
 
     function handleAdd() {
-
-        const comparedRoutesToAdd = {...props.comparedRoute, compared: routesToCompare}
-        props.setComparedRoute(comparedRoutesToAdd)
+        const comparedRoutesToAdd = {...props.comparedRoutes, compared: routesToCompare}
+        props.setComparedRoutes(comparedRoutesToAdd)
         props.addComparison(comparedRoutesToAdd)
         //setRoutesToCompare([])
     }
@@ -37,7 +39,7 @@ export default function HomePage(props: HomePageProps) {
             pt: "1rem",
             backgroundColor: "#282c34"
         }}>
-            {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
+            {!addMode && !props.isEditMode && !routesToCompare &&
                 <ButtonGroup
                     sx={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", gap: "0.5rem", m: "1rem"}}
                     variant="text"
@@ -48,24 +50,39 @@ export default function HomePage(props: HomePageProps) {
                     </Button>
                 </ButtonGroup>}
 
-            {!addMode && routesToCompare.length === 1 &&
-                <>
-                    <CompareRoutesComponent routesToCompare={routesToCompare}/>
-                    <ButtonGroup sx={{display: "flex", gap: "1rem", justifyContent: "space-between", p: "1rem"}}>
-                        <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}>
-                            Delete Route
-                        </Button>
+            {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {
+                return (
+                    <>
+                        <CompareRoutesCard key={route.id} route={route}/>
+                        <ButtonGroup sx={{display: "flex", gap: "1rem", justifyContent: "space-between", p: "1rem"}}>
+                            <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}>
+                                Delete Route
+                            </Button>
 
-                        {/*  <ButtonGroup sx={{display: "flex", justifyContent: "center"}}>*/}
-                        <Button variant="outlined"
-                                onClick={() => setAddMode(!addMode)}><AltRouteIcon/>
-                            Add Route & Compare
-                        </Button>
-                    </ButtonGroup>
-                </>}
+                            {/*  <ButtonGroup sx={{display: "flex", justifyContent: "center"}}>*/}
+                            <Button variant="outlined"
+                                    onClick={() => setAddMode(!addMode)}><AltRouteIcon/>
+                                Add Route & Compare
+                            </Button>
+                        </ButtonGroup>
+                    </>
+                )
+            })}
+
+            {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
+                return <CompareRoutesCard key={route.id} route={route}/>
+            })}
+            {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
+                return <CompareRoutesResults key={route.id} route={route}/>
+            })}
             {!addMode && routesToCompare.length === 2 &&
                 <>
-                    <CompareRoutesComponent routesToCompare={routesToCompare}/>
+                    <Box>
+                        <Typography>
+                            You can reduce your CO2-Emission
+                            by {props.comparedRoutes.comparisonResults.difference}
+                        </Typography>
+                    </Box>
                     <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}>
                         <Button variant="outlined" endIcon={<SaveIcon/>} onClick={handleAdd}>
                             Save
@@ -75,13 +92,16 @@ export default function HomePage(props: HomePageProps) {
                         </Button>
                     </ButtonGroup>
                 </>}
+
             {addMode || props.isEditMode ?
-                <Form isEditMode={props.isEditMode}
-                      setIsEditMode={props.setIsEditMode}
-                      setAddMode={setAddMode}
-                      setRoutesToCompare={setRoutesToCompare}
-                      routesToCompare={routesToCompare}
-                /> : null
+                    <Form isEditMode={props.isEditMode}
+                          setIsEditMode={props.setIsEditMode}
+                          setAddMode={setAddMode}
+                          setRoutesToCompare={setRoutesToCompare}
+                          routesToCompare={routesToCompare}
+                        /* comparedRoutes={props.comparedRoutes}
+                         setComparedRoutes={props.setComparedRoutes}*/
+                    /> : null
             }
         </Paper>
     )

@@ -1,6 +1,7 @@
 import {Box, Paper, Typography} from "@mui/material";
 import {Route} from "../models/RouteModel";
 import CompareRoutesCard from "./CompareRoutesCard";
+import {CompareRoutes} from "../models/CompareRoutesModel";
 
 const sxStylePaper = {
     p: "1rem",
@@ -10,17 +11,16 @@ const sxStylePaper = {
 }
 
 type CompareRoutesComponentProps = {
-    routesToCompare: Route[]
+    comparedRoutes: CompareRoutes,
 }
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     return (
         <Paper sx={sxStylePaper}>
-            {props.routesToCompare &&
-                props.routesToCompare.map((route) => {
+            {props.comparedRoutes.compared.map((route) => {
                     return <CompareRoutesCard key={route.id} route={route}/>
                 })}
             <Box sx={{display: "flex", gap: "1rem",}}>
-                {props.routesToCompare.length === 2 && props.routesToCompare.map((route) => {
+                {props.comparedRoutes.compared.length === 2 && props.comparedRoutes.compared.map((route) => {
                     return (
                         <Box key={route.id} sx={{
                             display: "flex",
@@ -35,6 +35,12 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                         </Box>
                     )
                 })}
+            </Box>
+            <Box>
+                <Typography>
+                    You can reduce your CO2-Emission
+                    by {props.comparedRoutes.comparisonResults.difference}
+                </Typography>
             </Box>
         </Paper>
     )
