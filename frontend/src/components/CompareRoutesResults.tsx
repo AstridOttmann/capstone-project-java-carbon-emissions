@@ -6,18 +6,16 @@ type CompareRoutesResultsProps = {
 }
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     return (
-      /*  <Box sx={{display: "flex", gap: "1rem",}}>*/
-            <Box  sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                borderRadius: 1,
-                width: "50%",
-                backgroundColor: "#3fd44d"
-            }}>
-                <Typography sx={{textAlign: "center"}}>{props.route.vehicle.type}</Typography>
-                <Typography sx={{textAlign: "center"}}>{props.route.co2EmissionRoute}</Typography>
-            </Box>
-     /*   </Box>*/
+        <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            borderRadius: 1,
+            width: "50%",
+            backgroundColor: "#3fd44d"
+        }}>
+            <Typography sx={{textAlign: "center"}}>{props.route.vehicle.type}</Typography>
+            <Typography sx={{textAlign: "center"}}>{props.route.co2EmissionRoute}</Typography>
+        </Box>
     )
 }

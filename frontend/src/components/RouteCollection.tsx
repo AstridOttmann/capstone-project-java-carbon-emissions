@@ -26,7 +26,7 @@ export default function RouteCollection() {
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
-                My Routes
+                Single Routes
             </Typography>
             <ul className="route-list">
                 {routes.map((route) => {

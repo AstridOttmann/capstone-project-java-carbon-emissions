@@ -6,11 +6,10 @@ import React, {useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
-import CompareRoutesComponent from "./CompareRoutesComponent";
 import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
 import CompareRoutesResults from "./CompareRoutesResults";
-import {Routes} from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 type HomePageProps = {
@@ -30,7 +29,12 @@ export default function HomePage(props: HomePageProps) {
         const comparedRoutesToAdd = {...props.comparedRoutes, compared: routesToCompare}
         props.setComparedRoutes(comparedRoutesToAdd)
         props.addComparison(comparedRoutesToAdd)
-        //setRoutesToCompare([])
+        setRoutesToCompare([])
+    }
+
+    function onCancelClick() {
+        setAddMode(false)
+        setRoutesToCompare([])
     }
 
     return (
@@ -39,7 +43,7 @@ export default function HomePage(props: HomePageProps) {
             pt: "1rem",
             backgroundColor: "#282c34"
         }}>
-            {!addMode && !props.isEditMode && !routesToCompare &&
+            {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
                 <ButtonGroup
                     sx={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", gap: "0.5rem", m: "1rem"}}
                     variant="text"
@@ -55,11 +59,11 @@ export default function HomePage(props: HomePageProps) {
                     <>
                         <CompareRoutesCard key={route.id} route={route}/>
                         <ButtonGroup sx={{display: "flex", gap: "1rem", justifyContent: "space-between", p: "1rem"}}>
-                            <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}>
-                                Delete Route
+                            <Button variant="outlined" color="error" endIcon={<CloseIcon/>}
+                                    onClick={onCancelClick}>
+                                Cancel
                             </Button>
 
-                            {/*  <ButtonGroup sx={{display: "flex", justifyContent: "center"}}>*/}
                             <Button variant="outlined"
                                     onClick={() => setAddMode(!addMode)}><AltRouteIcon/>
                                 Add Route & Compare
@@ -72,37 +76,39 @@ export default function HomePage(props: HomePageProps) {
             {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
                 return <CompareRoutesCard key={route.id} route={route}/>
             })}
-            {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
-                return <CompareRoutesResults key={route.id} route={route}/>
-            })}
+            {!addMode && routesToCompare.length === 2 &&
+                <Box sx={{display: "flex", gap: "1rem",}}>
+                    {routesToCompare.map((route) => {
+                        return <CompareRoutesResults key={route.id} route={route}/>
+                    })}
+                </Box>}
             {!addMode && routesToCompare.length === 2 &&
                 <>
                     <Box>
-                        <Typography>
+                        <Typography variant="body1"
+                                    sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
                             You can reduce your CO2-Emission
-                            by {props.comparedRoutes.comparisonResults.difference}
+                            by {routesToCompare[0].co2EmissionRoute - routesToCompare[1].co2EmissionRoute} kg
                         </Typography>
                     </Box>
                     <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}>
                         <Button variant="outlined" endIcon={<SaveIcon/>} onClick={handleAdd}>
                             Save
                         </Button>
-                        <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}>
-                            Delete
+                        <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
+                                onClick={onCancelClick}>
+                            Discard
                         </Button>
                     </ButtonGroup>
                 </>}
 
             {addMode || props.isEditMode ?
-                    <Form isEditMode={props.isEditMode}
-                          setIsEditMode={props.setIsEditMode}
-                          setAddMode={setAddMode}
-                          setRoutesToCompare={setRoutesToCompare}
-                          routesToCompare={routesToCompare}
-                        /* comparedRoutes={props.comparedRoutes}
-                         setComparedRoutes={props.setComparedRoutes}*/
-                    /> : null
+                <Form isEditMode={props.isEditMode}
+                      setIsEditMode={props.setIsEditMode}
+                      setAddMode={setAddMode}
+                      setRoutesToCompare={setRoutesToCompare}
+                      routesToCompare={routesToCompare}
+                /> : null
             }
-        </Paper>
-    )
+        </Paper>)
 }

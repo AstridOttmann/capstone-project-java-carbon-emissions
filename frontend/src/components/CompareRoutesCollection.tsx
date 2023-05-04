@@ -1,9 +1,6 @@
 import {Paper, Typography} from "@mui/material";
-import RouteCard from "./RouteCard";
 import {CompareRoutes} from "../models/CompareRoutesModel";
-import CompareRoutesCard from "./CompareRoutesCard";
 import CompareRoutesComponent from "./CompareRoutesComponent";
-import {Route} from "../models/RouteModel";
 
 const sxStylePaper = {
     p: "1rem",
@@ -28,7 +25,6 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                 My Compared Routes
             </Typography>
             <CompareRoutesComponent comparedRoutes={props.comparedRoutes}/>
-
         </Paper>
     )
 }

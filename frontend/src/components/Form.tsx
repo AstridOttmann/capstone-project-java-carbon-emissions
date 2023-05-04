@@ -21,7 +21,7 @@ import EditOffIcon from '@mui/icons-material/EditOff';
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
-import {CompareRoutes} from "../models/CompareRoutesModel";
+
 
 const sxStylePaper = {
     m: "1rem",
@@ -43,12 +43,9 @@ const sxStyleBox = {
 type FormProps = {
     isEditMode: boolean,
     setAddMode: (arg0: boolean) => void,
-
     setIsEditMode: (arg0: boolean) => void,
     routesToCompare: Route[]
-    setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
-    //comparedRoutes: CompareRoutes,
-  //  setComparedRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
+    setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>
 
 }
 export default function Form(props: FormProps) {
@@ -252,11 +249,3 @@ export default function Form(props: FormProps) {
         </Paper>
     )
 }
-
-
-/*
-.then(savedRoute =>
-    props.setComparedRoutes({
-        ...props.comparedRoutes,
-        compared: [savedRoute, ...props.comparedRoutes.compared]
-    }))*/

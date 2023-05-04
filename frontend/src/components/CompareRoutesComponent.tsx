@@ -1,5 +1,4 @@
 import {Box, Paper, Typography} from "@mui/material";
-import {Route} from "../models/RouteModel";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {CompareRoutes} from "../models/CompareRoutesModel";
 
@@ -37,7 +36,8 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 })}
             </Box>
             <Box>
-                <Typography>
+                <Typography variant="body1"
+                            sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
                     You can reduce your CO2-Emission
                     by {props.comparedRoutes.comparisonResults.difference}
                 </Typography>
