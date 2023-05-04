@@ -11,10 +11,12 @@ import RouteCollection from "./components/RouteCollection";
 import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
 import useCompareRoutes from "./hooks/useCompareRoutes";
+import CompareRoutesCollection from "./components/CompareRoutesCollection";
+
 
 function App() {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
-    const {addComparison} = useCompareRoutes();
+    const {routesToCompare, comparedRoute, setComparedRoute, addComparison} = useCompareRoutes();
 
     return (
         <Container maxWidth="lg">
@@ -28,9 +30,13 @@ function App() {
                                 addComparison={addComparison}
                                 setIsEditMode={setIsEditMode}
                                 isEditMode={isEditMode}
+                                comparedRoute={comparedRoute}
+                                setComparedRoute={setComparedRoute}
                             />}/>
                         <Route path="/routes" element={
                             <RouteCollection/>}/>
+                        <Route path="/compared" element={
+                            <CompareRoutesCollection routesToCompare={routesToCompare}/>}/>
                         <Route path="/routes/details/:id" element={
                             <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                     </Routes>

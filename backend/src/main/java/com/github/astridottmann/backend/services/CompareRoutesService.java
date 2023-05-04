@@ -20,11 +20,12 @@ public class CompareRoutesService {
         double emissionRouteOne = compared.get(0).co2EmissionRoute();
         double emissionRouteTwo = compared.get(1).co2EmissionRoute();
         double difference = emissionRouteOne - emissionRouteTwo;
+        double differenceRounded = Math.round(difference * 100.0) / 100.0;
 
         CompareRoutes compareRoutesToAdd = new CompareRoutes(
                 idCompareRoutes,
                 List.of(compared.get(0), compared.get(1)),
-                new ComparisonResults(emissionRouteOne, emissionRouteTwo, difference));
+                new ComparisonResults(emissionRouteOne, emissionRouteTwo, differenceRounded));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }

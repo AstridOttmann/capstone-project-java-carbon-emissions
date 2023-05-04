@@ -44,7 +44,8 @@ type FormProps = {
     setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,
     setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
-    routesToCompare: Route[]
+    routesToCompare: Route[],
+   // comparedRoute: Route
 
 }
 export default function Form(props: FormProps) {

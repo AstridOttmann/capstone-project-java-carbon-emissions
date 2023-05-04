@@ -7,24 +7,30 @@ import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
 import CompareRoutesComponent from "./CompareRoutesComponent";
-import {NewCompareRoutes} from "../models/CompareRoutesModel";
+import {CompareRoutes} from "../models/CompareRoutesModel";
+
 
 type HomePageProps = {
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
-   // addComparison: (compareRoutes: { routesToCompare: Route[] })=> void
-    addComparison: (compareRoutes: NewCompareRoutes) => void
+    // addComparison: (compareRoutes: { routesToCompare: Route[] })=> void
+    addComparison: (compareRoutes: CompareRoutes) => void,
+    comparedRoute: CompareRoutes,
+    setComparedRoute: (compareRoutes: CompareRoutes) => void
 }
 
 export default function HomePage(props: HomePageProps) {
     const [addMode, setAddMode] = useState<boolean>(false)
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
 
-    function handleAdd(){
-       const compareRoutesToAdd = {  compared: routesToCompare }
-        props.addComparison(compareRoutesToAdd)
-        setRoutesToCompare([])
+    function handleAdd() {
+
+        const comparedRoutesToAdd = {...props.comparedRoute, compared: routesToCompare}
+        props.setComparedRoute(comparedRoutesToAdd)
+        props.addComparison(comparedRoutesToAdd)
+        //setRoutesToCompare([])
     }
+
     return (
         <Paper sx={{
             pb: "4rem",
@@ -50,7 +56,7 @@ export default function HomePage(props: HomePageProps) {
                             Delete Route
                         </Button>
 
-                  {/*  <ButtonGroup sx={{display: "flex", justifyContent: "center"}}>*/}
+                        {/*  <ButtonGroup sx={{display: "flex", justifyContent: "center"}}>*/}
                         <Button variant="outlined"
                                 onClick={() => setAddMode(!addMode)}><AltRouteIcon/>
                             Add Route & Compare
