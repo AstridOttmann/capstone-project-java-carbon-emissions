@@ -18,10 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -51,7 +49,7 @@ class CompareRoutesIntegrationTest {
                                 492,
                                 1,
                                 false,
-                                new Car("car", 243.3, "petrol", "large"),
+                                new Car("car", 253.3, "petrol", "large"),
                                 268.93),
                         new Route("456",
                                 "Hamburg",
@@ -64,6 +62,7 @@ class CompareRoutesIntegrationTest {
                 new ComparisonResults(268.93, 45.26, 223.67)
         );
         testCompareRoutesJson = objectMapper.writeValueAsString(testCompareRoutes);
+
         testCompareRoutesWithoutId = new CompareRoutes(
                 null,
                 List.of(new Route("123",
@@ -72,7 +71,7 @@ class CompareRoutesIntegrationTest {
                                 492,
                                 1,
                                 false,
-                                new Car("car", 243.3, "petrol", "large"),
+                                new Car("car", 253.3, "petrol", "large"),
                                 268.93),
                         new Route("456",
                                 "Hamburg",
@@ -84,7 +83,7 @@ class CompareRoutesIntegrationTest {
                                 45.26)),
                 new ComparisonResults(268.93, 45.26, 223.67));
 
-     //   testCompareRoutesWithoutIdJson = objectMapper.writeValueAsString(testCompareRoutesWithoutId);
+        //   testCompareRoutesWithoutIdJson = objectMapper.writeValueAsString(testCompareRoutesWithoutId);
 
         testComparedJson = """
                   [
@@ -97,7 +96,7 @@ class CompareRoutesIntegrationTest {
                                 "oneWay": false,
                                 "vehicle": {
                                     "type": "car",
-                                    "co2Emission": 273.3,
+                                    "co2Emission": 253.3,
                                     "fuel": "petrol",
                                     "carSize": "large"
                                 },
@@ -118,12 +117,11 @@ class CompareRoutesIntegrationTest {
                                 },
                                 "co2EmissionRoute": 45.26
                             }
-                        ],
+                        ]
                 """;
 
         testCompareRoutesWithoutIdJson = """
-                 { 
-                 "compared": [
+                 { "compared": [
                             {
                                 "id": "123",
                                 "start": "Hamburg",
@@ -133,7 +131,7 @@ class CompareRoutesIntegrationTest {
                                 "oneWay": false,
                                 "vehicle": {
                                     "type": "car",
-                                    "co2Emission": 273.3,
+                                    "co2Emission": 253.3,
                                     "fuel": "petrol",
                                     "carSize": "large"
                                 },
@@ -186,10 +184,10 @@ class CompareRoutesIntegrationTest {
 
     @Test
     void addComparison() throws Exception {
-        String addedCompareRoutes =
-                mockMvc.perform(post("/api/routes")
+
+                mockMvc.perform(post("/api/compare")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(testCompareRoutesWithoutIdJson))
+                                .content(testComparedJson))
                         .andExpect(status().isOk())
                         .andExpect(content().json(testCompareRoutesWithoutIdJson))
                         .andExpect(jsonPath("$.id").isNotEmpty())
