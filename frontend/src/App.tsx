@@ -16,7 +16,7 @@ import CompareRoutesCollection from "./components/CompareRoutesCollection";
 
 function App() {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
-    const {comparedRoutes, comparedRoutesList, setComparedRoutes, getAllComparison, addComparison} = useCompareRoutes();
+    const {comparedRoutes, comparedRoutesList, setComparedRoutes, addComparison} = useCompareRoutes();
 
     return (
         <Container maxWidth="lg">

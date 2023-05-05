@@ -39,7 +39,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 <Typography variant="body1"
                             sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
                     You can reduce your CO2-Emission
-                    by {props.comparedRoutes.comparisonResults.difference}
+                    by {props.comparedRoutes.comparisonResults.difference} kg
                 </Typography>
             </Box>
         </Paper>
