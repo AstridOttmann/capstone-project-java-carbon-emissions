@@ -199,6 +199,7 @@ class CompareRoutesIntegrationTest {
                 .andExpect(content().json(errorMessage))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
+
     @Test
     void addComparison() throws Exception {
         mockMvc.perform(post("/api/compare")
@@ -210,5 +211,38 @@ class CompareRoutesIntegrationTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
+    }
+
+    @Test
+    void deleteCompareRoutesById_shouldDeleteCompareRoutes() throws Exception {
+        compareRoutesRepository.save(testCompareRoutes);
+
+        mockMvc.perform(delete("/api/compare/" + testCompareRoutes.id()))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/compare"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
+
+    @Test
+    void deleteCompareRoutesById_shouldThrowApiErrorAndStatusNotFound_whenIdNotExists() throws Exception {
+        String errorMessage = "{\"message\": \"Could not delete. Id " + testCompareRoutes.id() + " doesn't exist\"}";
+        mockMvc.perform(delete("/api/compare/" + testCompareRoutes.id()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(errorMessage))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
+
+    @Test
+    void deleteCompareRoutesById_shouldThrowApiErrorAndStatusUnprocessable_whenIdIsBlank() throws Exception {
+        String id = " ";
+        String errorMessage = "{\"message\": \"Id is empty\"}";
+        mockMvc.perform(delete("/api/compare/" + id))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json(errorMessage))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 }

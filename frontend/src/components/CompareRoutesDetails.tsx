@@ -50,12 +50,14 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
 
     return (
         <Paper sx={sxStylePaper}>
+            <Typography>Option 1</Typography>
             <Card sx={sxStyleCard}>
                 <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
                 <RouteVehicleDetails route={props.comparedRoutes.compared[0]}/>
                 <Button variant="contained" endIcon={<EditIcon/>}
                         onClick={handleClickEdit}>Edit</Button>
             </Card>
+            <Typography>Option 2</Typography>
             <Card sx={sxStyleCard}>
                 <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
                 <RouteVehicleDetails route={props.comparedRoutes.compared[1]}/>
