@@ -1,6 +1,4 @@
 import {Box, Button, ButtonGroup, Card, Paper, Typography} from "@mui/material";
-import {Route} from "../models/RouteModel";
-import RouteVehicleIcon from "./RouteVehicleIcon";
 import CompareRoutesResults from "./CompareRoutesResults";
 import EditIcon from "@mui/icons-material/Edit";
 import {useNavigate, useParams} from "react-router-dom";

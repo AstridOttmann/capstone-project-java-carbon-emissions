@@ -22,7 +22,8 @@ function App() {
         comparedRoutesList,
         setComparedRoutes,
         addComparison,
-        getComparisonById
+        getComparisonById,
+        deleteComparisonById
     } = useCompareRoutes();
 
     return (
@@ -43,7 +44,7 @@ function App() {
                         <Route path="/routes" element={
                             <RouteCollection/>}/>
                         <Route path="/compared" element={
-                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList}/>}/>
+                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList} deleteComparisonById={deleteComparisonById}/>}/>
                         <Route path="/routes/details/:id" element={
                             <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                         <Route path="/compared/details/:id" element={

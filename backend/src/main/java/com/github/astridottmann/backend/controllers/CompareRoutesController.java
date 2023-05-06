@@ -29,4 +29,12 @@ public class CompareRoutesController {
         return compareRoutesService.addComparison(compared);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteCompareRoutesById(@PathVariable String id){
+        if (id.isBlank()) {
+            throw new IllegalArgumentException("Id is empty");
+        }
+        compareRoutesService.deleteCompareRoutesById(id);
+    }
+
 }

@@ -40,4 +40,12 @@ public class CompareRoutesService {
                 return compareRoutesRepository.findById(id)
                         .orElseThrow(() -> new NoSuchElementException(errorMessage));
     }
+
+    public void deleteCompareRoutesById(String id) {
+        String errorMessage = "Could not delete. Id " + id + " doesn't exist";
+        if(compareRoutesRepository.existsById(id)){
+            compareRoutesRepository.deleteById(id);
+        }
+        else throw new NoSuchElementException(errorMessage);
+    }
 }

@@ -14,18 +14,20 @@ const sxStylePaper = {
 
 type CompareRoutesComponentProps = {
     comparedRoutes: CompareRoutes,
+    deleteComparisonById: (id: string) => void
 }
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     const navigate = useNavigate();
 
-    function onDeleteClick(){
-
+    function onDeleteClick() {
+        props.deleteComparisonById(props.comparedRoutes.id);
     }
+
     return (
         <Paper sx={sxStylePaper}>
             <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
             <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
-            {/*    <Box sx={{display: "flex", gap: "1rem",}}>*/}
+
             <Box sx={{
                 display: "flex",
                 gap: "1rem",
@@ -33,16 +35,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
             }}>
                 <CompareRoutesResults route={props.comparedRoutes.compared[0]}/>
                 <CompareRoutesResults route={props.comparedRoutes.compared[1]}/>
-              {/*  <Box sx={{backgroundColor: "#3fd44d", width: "50%", borderRadius: 1,}}>
-                    <Typography sx={{textAlign: "center"}}>{props.comparedRoutes.compared[0].vehicle.type}</Typography>
-                    <Typography
-                        sx={{textAlign: "center"}}>{props.comparedRoutes.compared[0].co2EmissionRoute}</Typography>
-                </Box>
-                <Box sx={{backgroundColor: "#3fd44d", width: "50%", borderRadius: 1,}}>
-                    <Typography sx={{textAlign: "center"}}>{props.comparedRoutes.compared[1].vehicle.type}</Typography>
-                    <Typography
-                        sx={{textAlign: "center"}}>{props.comparedRoutes.compared[1].co2EmissionRoute}</Typography>
-                </Box>*/}
+
             </Box>
 
             <Box>
@@ -52,7 +45,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                     by {props.comparedRoutes.comparisonResults.difference} kg
                 </Typography>
             </Box>
-            <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p:"1rem"}}
+            <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
                          variant="text"
                          aria-label="text button group">
                 <Button variant="outlined"
