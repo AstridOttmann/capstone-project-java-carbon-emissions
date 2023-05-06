@@ -184,16 +184,14 @@ class CompareRoutesIntegrationTest {
 
     @Test
     void addComparison() throws Exception {
-
-                mockMvc.perform(post("/api/compare")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(testComparedJson))
-                        .andExpect(status().isOk())
-                        .andExpect(content().json(testCompareRoutesWithoutIdJson))
-                        .andExpect(jsonPath("$.id").isNotEmpty())
-                        .andReturn()
-                        .getResponse()
-                        .getContentAsString();
-
+        mockMvc.perform(post("/api/compare")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testComparedJson))
+                .andExpect(status().isOk())
+                .andExpect(content().json(testCompareRoutesWithoutIdJson))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
     }
 }

@@ -66,6 +66,15 @@ export default function useCompareRoutes() {
             })
     }
 
+    function getComparisonById(id: string){
+        axios.get(`/api/compare/${id}`)
+            .then((response)=> {
+                setComparedRoutes(response.data)
+            })
+            .catch((error) => {
+                toast.error("404 " + error)
+            })
+    }
     function addComparison(comparedRoutes: CompareRoutes) {
         axios.post("/api/compare", comparedRoutes.compared)
             .then((response) => {
@@ -76,5 +85,5 @@ export default function useCompareRoutes() {
             })
     }
 
-    return {routesToCompare, setRoutesToCompare, comparedRoutes, setComparedRoutes, comparedRoutesList, getAllComparison, addComparison}
+    return {routesToCompare, setRoutesToCompare, comparedRoutes, setComparedRoutes, comparedRoutesList, getComparisonById, addComparison}
 }

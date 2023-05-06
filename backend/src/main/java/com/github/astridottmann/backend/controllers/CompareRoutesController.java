@@ -19,6 +19,11 @@ public class CompareRoutesController {
         return compareRoutesService.getAllCompareRoutes();
     }
 
+    @GetMapping("/{id}")
+    public CompareRoutes getCompareRoutesById(@PathVariable String id){
+        return compareRoutesService.getCompareRoutesById(id);
+    }
+
     @PostMapping
     public CompareRoutes addComparison(@RequestBody List<Route> compared){
         return compareRoutesService.addComparison(compared);

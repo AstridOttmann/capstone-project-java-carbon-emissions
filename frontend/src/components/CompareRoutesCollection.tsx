@@ -16,7 +16,7 @@ const sxStyleTitle = {
 }
 
 type CompareRoutesCollectionProps = {
-    comparedRoutes: CompareRoutes,
+   // comparedRoutes: CompareRoutes,
     comparedRoutesList: CompareRoutes[]
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {

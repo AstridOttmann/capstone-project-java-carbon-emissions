@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,11 @@ public class CompareRoutesService {
 
     public List<CompareRoutes> getAllCompareRoutes() {
         return compareRoutesRepository.findAll();
+    }
+
+    public CompareRoutes getCompareRoutesById(String id) {
+        String errorMessage = "Not found!";
+                return compareRoutesRepository.findById(id)
+                        .orElseThrow(() -> new NoSuchElementException(errorMessage));
     }
 }
