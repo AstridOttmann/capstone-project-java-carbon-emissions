@@ -91,6 +91,7 @@ export default function useCompareRoutes() {
             .then(() => {
                 setComparedRoutesList(
                     comparedRoutesList.filter((comparedRoutes) => comparedRoutes.id !== id))
+                toast.success("Deleted!")
             })
             .catch((error) => {
                 toast.error("Error!", error)

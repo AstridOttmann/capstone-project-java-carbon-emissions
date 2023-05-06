@@ -5,6 +5,7 @@ import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,5 +116,32 @@ class CompareRoutesServiceTest {
 
         verify(compareRoutesRepository).findById(testId);
         assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    void deleteCompareRoutesById_shouldDeleteRequested(){
+        CompareRoutes toDelete = createTestCompareRoutesInstance();
+        compareRoutesRepository.save(createTestCompareRoutesInstance());
+
+        Mockito.when(compareRoutesRepository.existsById(toDelete.id()))
+                .thenReturn(true);
+
+        compareRoutesService.deleteCompareRoutesById(toDelete.id());
+        verify(compareRoutesRepository).existsById(toDelete.id());
+    }
+
+    @Test
+    void deleteCompareRoutes_shouldThrowException_whenInvalidId(){
+        String errorMessage = "Could not delete. Id 123 doesn't exist";
+
+        Mockito.when(compareRoutesRepository.existsById("123"))
+                .thenReturn(false);
+
+        Exception exception = assertThrows(NoSuchElementException.class,
+                ()-> compareRoutesService.deleteCompareRoutesById("123"));
+
+        verify(compareRoutesRepository).existsById("123");
+        assertEquals(errorMessage, exception.getMessage());
+
     }
 }
