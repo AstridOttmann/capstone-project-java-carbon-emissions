@@ -183,6 +183,23 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    void getCompareRoutesById_shouldReturnRequested() throws Exception {
+        compareRoutesRepository.save(testCompareRoutes);
+
+        mockMvc.perform(get("/api/compare/" + testCompareRoutes.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(testCompareRoutesJson));
+    }
+
+    @Test
+    void getCompareRoutesById_shouldThrowException_whenIdInvalid() throws Exception {
+        String errorMessage = "{\"message\":  \"Not found!\"}";
+        mockMvc.perform((get("/api/compare/" + testCompareRoutes.id())))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(errorMessage))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
+    @Test
     void addComparison() throws Exception {
         mockMvc.perform(post("/api/compare")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -88,5 +90,30 @@ class CompareRoutesServiceTest {
 
         verify(compareRoutesRepository).findAll();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getCompareRoutesById_shouldReturnRequested(){
+        CompareRoutes requested = createTestCompareRoutesInstance();
+        Mockito.when(compareRoutesRepository.findById(testId))
+                .thenReturn(Optional.of(requested));
+
+        CompareRoutes actual = compareRoutesService.getCompareRoutesById(testId);
+
+        verify(compareRoutesRepository).findById(testId);
+        assertEquals(requested, actual);
+    }
+
+    @Test
+    void getCompareRoutesById_shouldThrowException_whenInvalidId(){
+        String errorMessage = "Not found!";
+        Mockito.when(compareRoutesRepository.findById(testId))
+                .thenThrow(new NoSuchElementException(errorMessage));
+
+        Exception exception = assertThrows(NoSuchElementException.class,
+                ()-> compareRoutesService.getCompareRoutesById(testId));
+
+        verify(compareRoutesRepository).findById(testId);
+        assertEquals(errorMessage, exception.getMessage());
     }
 }
