@@ -25,24 +25,26 @@ class RouteServiceTest {
     private final double dummyEmission = 162;
 
     private Route createTestRouteInstance() {
+        Car car =  new Car("car", 2.8, "petrol", "large");
         return new Route(testId,
                 "Hamburg",
                 "Frankfurt",
                 492,
                 1,
                 false,
-                new Car("car", 2.8, "petrol", "large"),
+                car,
                 dummyEmission);
     }
 
     private RouteDTO createTestRouteDTOInstance() {
+        Car car =  new Car("car", 2.8, "petrol", "large");
         return new RouteDTO(
                 "Hamburg",
                 "Frankfurt",
                 492,
                 1,
                 false,
-                new Car("car", 2.8, "petrol", "large"));
+                car);
     }
     @BeforeEach
     void init() {

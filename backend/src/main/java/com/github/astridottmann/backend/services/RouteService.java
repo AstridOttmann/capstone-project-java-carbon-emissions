@@ -19,6 +19,7 @@ public class RouteService {
     public Route addRoute(RouteDTO routeDTO) {
         String id = idService.createRandomId();
         double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO);
+
         Route routeToAdd = Route.createRouteFromDTO( routeDTO, id, co2EmissionRoute);
 
         return routeRepository.save(routeToAdd);

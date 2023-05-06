@@ -5,7 +5,6 @@ import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,24 +22,31 @@ class CompareRoutesServiceTest {
     private final String testId = "1";
 
     private CompareRoutes createTestCompareRoutesInstance() {
+        Car car = new Car("car", 253.3, "petrol", "large");
+        Route routeA = new Route(
+                "123",
+                "Hamburg",
+                "Frankfurt",
+                492,
+                1,
+                false,
+                car,
+                268.93);
+
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        Route routeB = new Route(
+                "456",
+                "Hamburg",
+                "Frankfurt",
+                492,
+                1,
+                false,
+                publicTransport,
+                45.26);
+
         return new CompareRoutes(
                 testId,
-                List.of(new Route("123",
-                                "Hamburg",
-                                "Frankfurt",
-                                492,
-                                1,
-                                false,
-                                new Car("car", 243.3, "petrol", "large"),
-                                268.93),
-                        new Route("456",
-                                "Hamburg",
-                                "Frankfurt",
-                                492,
-                                1,
-                                false,
-                                new PublicTransport("publicTransport", 46.0, "longDistance", "train"),
-                                45.26)),
+                List.of(routeA, routeB),
                 new ComparisonResults(268.93, 45.26, 223.67)
         );
     }
@@ -94,7 +100,7 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void getCompareRoutesById_shouldReturnRequested(){
+    void getCompareRoutesById_shouldReturnRequested() {
         CompareRoutes requested = createTestCompareRoutesInstance();
         Mockito.when(compareRoutesRepository.findById(testId))
                 .thenReturn(Optional.of(requested));
@@ -106,20 +112,20 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void getCompareRoutesById_shouldThrowException_whenInvalidId(){
+    void getCompareRoutesById_shouldThrowException_whenInvalidId() {
         String errorMessage = "Not found!";
         Mockito.when(compareRoutesRepository.findById(testId))
                 .thenThrow(new NoSuchElementException(errorMessage));
 
         Exception exception = assertThrows(NoSuchElementException.class,
-                ()-> compareRoutesService.getCompareRoutesById(testId));
+                () -> compareRoutesService.getCompareRoutesById(testId));
 
         verify(compareRoutesRepository).findById(testId);
         assertEquals(errorMessage, exception.getMessage());
     }
 
     @Test
-    void deleteCompareRoutesById_shouldDeleteRequested(){
+    void deleteCompareRoutesById_shouldDeleteRequested() {
         CompareRoutes toDelete = createTestCompareRoutesInstance();
         compareRoutesRepository.save(createTestCompareRoutesInstance());
 
@@ -131,14 +137,14 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void deleteCompareRoutes_shouldThrowException_whenInvalidId(){
+    void deleteCompareRoutes_shouldThrowException_whenInvalidId() {
         String errorMessage = "Could not delete. Id 123 doesn't exist";
 
         Mockito.when(compareRoutesRepository.existsById("123"))
                 .thenReturn(false);
 
         Exception exception = assertThrows(NoSuchElementException.class,
-                ()-> compareRoutesService.deleteCompareRoutesById("123"));
+                () -> compareRoutesService.deleteCompareRoutesById("123"));
 
         verify(compareRoutesRepository).existsById("123");
         assertEquals(errorMessage, exception.getMessage());
