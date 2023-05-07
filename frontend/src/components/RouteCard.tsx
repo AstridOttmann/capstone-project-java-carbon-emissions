@@ -1,13 +1,11 @@
-import {Box, Button, ButtonGroup, Card, Divider, Typography} from "@mui/material";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import TrainIcon from "@mui/icons-material/Train";
-import FlightIcon from "@mui/icons-material/Flight";
-import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import {Button, ButtonGroup, Card} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {Route} from "../models/RouteModel";
+import RouteVehicleIcon from "./RouteVehicleIcon";
+import RouteInfo from "./RouteInfo";
 
 const sxStyleCard = {
     p: "1rem",
@@ -28,38 +26,20 @@ export default function RouteCard(props: RouteCardProps) {
         deleteRoute(props.route.id)
     }
 
-    return (
-        <>
-            {props.route &&
-                <Card variant="outlined" sx={sxStyleCard}>
-                    <small> ID: {props.route.id}</small>
-                    <Box sx={{display: "flex", gap: "2rem", justifyContent: "flex-start"}}>
-                        <Typography>{props.route.vehicle.type === "car" && <DirectionsCarIcon/>}
-                            {props.route.vehicle.type === "publicTransport" && <TrainIcon/>}
-                            {props.route.vehicle.type === "flight" && <FlightIcon/>}
-                            {props.route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
-                        </Typography>
-                        <Typography>
-                            {props.route.start.toUpperCase() + " - " + props.route.destination.toUpperCase()}
-                        </Typography>
-                    </Box>
-                    <Box sx={{display: "flex", gap: "2rem", justifyContent: "flex-start"}}>
-                        <Typography>{props.route.distance + "km"}</Typography>
-                        <Typography> {props.route.oneWay ? "oneWay" : "Round Trip"}</Typography>
-                        <Typography>{props.route.numberOfPersons + " person(s)"}</Typography>
-                    </Box>
-                    <Divider sx={{borderColor: "#808080"}}/>
-                    <Typography variant="h6" sx={{textAlign: "center"}}>CO2-Emission: {props.route.co2EmissionRoute} kg/Person</Typography>
-                    <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
-                                 variant="text"
-                                 aria-label="text button group">
-                        <Button variant="outlined"
-                                onClick={() => navigate(`/routes/details/${props.route.id}`)}>Details</Button>
-                        <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                                onClick={onDeleteClick}>Delete</Button>
-                    </ButtonGroup>
-                </Card>
-            }
-        </>
-    )
+    return (<>
+        {props.route &&
+            <Card variant="outlined" sx={sxStyleCard}>
+                <small> ID: {props.route.id}</small>
+                <RouteVehicleIcon route={props.route}/>
+                <RouteInfo route={props.route}/>
+                <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
+                             variant="text"
+                             aria-label="text button group">
+                    <Button variant="outlined"
+                            onClick={() => navigate(`/routes/details/${props.route.id}`)}>Details</Button>
+                    <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
+                            onClick={onDeleteClick}>Delete</Button>
+                </ButtonGroup>
+            </Card>}
+    </>)
 }

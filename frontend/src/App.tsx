@@ -10,9 +10,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import RouteCollection from "./components/RouteCollection";
 import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
+import useCompareRoutes from "./hooks/useCompareRoutes";
+import CompareRoutesCollection from "./components/CompareRoutesCollection";
+
 
 function App() {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
+    const {comparedRoutes, comparedRoutesList, setComparedRoutes, addComparison} = useCompareRoutes();
 
     return (
         <Container maxWidth="lg">
@@ -23,11 +27,16 @@ function App() {
                     <Routes>
                         <Route path="/" element={
                             <HomePage
+                                addComparison={addComparison}
                                 setIsEditMode={setIsEditMode}
                                 isEditMode={isEditMode}
+                                comparedRoutes={comparedRoutes}
+                                setComparedRoutes={setComparedRoutes}
                             />}/>
                         <Route path="/routes" element={
                             <RouteCollection/>}/>
+                        <Route path="/compared" element={
+                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList} comparedRoutes={comparedRoutes}/>}/>
                         <Route path="/routes/details/:id" element={
                             <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                     </Routes>

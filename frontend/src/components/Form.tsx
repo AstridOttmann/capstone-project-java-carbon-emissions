@@ -13,7 +13,7 @@ import {
     Typography
 } from "@mui/material";
 import './Form.css'
-import {ChangeEvent, FormEvent, useContext, useState} from "react";
+import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {Route} from "../models/RouteModel";
 import {Vehicle} from "../models/VehicleModel";
 import {useNavigate} from "react-router-dom";
@@ -21,6 +21,7 @@ import EditOffIcon from '@mui/icons-material/EditOff';
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
+
 
 const sxStylePaper = {
     m: "1rem",
@@ -41,8 +42,11 @@ const sxStyleBox = {
 
 type FormProps = {
     isEditMode: boolean,
-    setAddMode: (arg0: boolean)=> void,
+    setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,
+    routesToCompare: Route[]
+    setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>
+
 }
 export default function Form(props: FormProps) {
     const {route, setRoute, resetRoute} = useContext(RouteContext)
@@ -81,13 +85,14 @@ export default function Form(props: FormProps) {
             } else {
                 const routeToAdd = {...route, vehicle}
                 addRoute(routeToAdd)
+                    .then(savedRoute =>
+                        props.setRoutesToCompare(
+                            [...props.routesToCompare, savedRoute]))
             }
             resetRoute();
             setVehicle(initialStateVehicle)
             props.setAddMode(false)
             props.setIsEditMode(false)
-
-            console.log("route", route)
         }
     }
 
@@ -97,11 +102,11 @@ export default function Form(props: FormProps) {
         setVehicle(initialStateVehicle);
         props.setIsEditMode(false)
     }
+
     function handleClose() {
         props.setIsEditMode(false)
         props.setAddMode(false)
     }
-
 
 
     return (
@@ -222,7 +227,7 @@ export default function Form(props: FormProps) {
                                     name="distanceLevel"
                                     onChange={handleChangeSelectVehicle}>
                                     <MenuItem value="local">local</MenuItem>
-                                    <MenuItem value="long distance">long distance</MenuItem>
+                                    <MenuItem value="longDistance">long distance</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl>

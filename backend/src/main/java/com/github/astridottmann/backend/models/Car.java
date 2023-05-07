@@ -25,7 +25,7 @@ public class Car extends Vehicle implements GetCo2EmissionFactor {
                 } else if (carSize.equals("medium")) {
                     setCo2Emission(193.3);
                 } else {
-                    setCo2Emission(273.3);
+                    setCo2Emission(253.3);
                 }
             }
             case "diesel" -> {
