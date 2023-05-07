@@ -29,23 +29,23 @@ export default function RouteVehicleDetails(props: RouteVehicleDetailsProps) {
             </div>
             {props.route.vehicle.type === "flight" &&
                 <Stack>
-                    <Item>CO2-Emission in g/km: {props.route.vehicle.co2Emission}</Item>
+                    <Item><small>CO2-EMISSION in g/km: </small> {props.route.vehicle.co2Emission}</Item>
                 </Stack>}
             {props.route.vehicle.type === "bike" &&
                 <Stack>
-                    <Item>CO2-Emission in g/km: {props.route.vehicle.co2Emission}</Item>
+                    <Item><small>CO2-EMISSION in g/km: </small> {props.route.vehicle.co2Emission}</Item>
                 </Stack>}
             {props.route.vehicle.type === "car" &&
                 <Stack direction="row" gap="0.5rem">
-                    <Item>Fuel: {props.route.vehicle.fuel}</Item>
-                    <Item>Car size: {props.route.vehicle.carSize}</Item>
-                    <Item>CO2-Emission in g/km: {props.route.vehicle.co2Emission}</Item>
+                    <Item><small>FUEL: </small> {props.route.vehicle.fuel}</Item>
+                    <Item><small>CAR SIZE: </small> {props.route.vehicle.carSize}</Item>
+                    <Item><small>CO2-EMISSION in g/km: </small> {props.route.vehicle.co2Emission}</Item>
                 </Stack>}
             {props.route.vehicle.type === "publicTransport" &&
                 <Stack direction="row" gap="0.5rem">
-                    <Item>Distance Level: <br/>{props.route.vehicle.distanceLevel}</Item>
-                    <Item>Means of Transport: <br/>{props.route.vehicle.meansOfTransport}</Item>
-                    <Item>CO2-Emission in g/km: {props.route.vehicle.co2Emission}</Item>
+                    <Item><small>DISTANCE LEVEL:</small> <br/>{props.route.vehicle.distanceLevel}</Item>
+                    <Item><small>MEANS OF TRANSPORT: </small> <br/>{props.route.vehicle.meansOfTransport}</Item>
+                    <Item><small>CO2-EMISSION in g/km: </small> {props.route.vehicle.co2Emission}</Item>
                 </Stack>}
         </>
 

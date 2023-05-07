@@ -8,6 +8,8 @@ import CompareRoutesCard from "./CompareRoutesCard";
 import {useContext, useEffect} from "react";
 import {RouteContext} from "../contexts/RouteContextProvider";
 
+
+
 const sxStylePaper = {
     m: "1rem",
     p: "1rem",
@@ -41,33 +43,71 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
         navigate(-1)
     }
 
-    function handleClickEdit() {
+    function handleClickEditA() {
         navigate("/")
         props.setIsEditMode(true);
-        setRoute(props.comparedRoutes.compared[0])
 
+        setRoute(props.comparedRoutes.compared[0])
+    }
+
+   /* function handleClickEdit() {
+        const option1 = props.comparedRoutes.compared[0];
+        const option2 = props.comparedRoutes.compared[1];
+
+        if (option1) {
+            setRoute(props.comparedRoutes.compared[0])
+            navigate("/");
+            props.setIsEditMode(true);
+            return route;
+        } else if (option2) {
+            setRoute(props.comparedRoutes.compared[1])
+            navigate("/");
+            props.setIsEditMode(true);
+            return route;
+        }
+        return "Not found!"
+    }*/
+
+    function handleClickEditB() {
+        navigate("/")
+        props.setIsEditMode(true);
+
+        setRoute(props.comparedRoutes.compared[1])
     }
 
     return (
         <Paper sx={sxStylePaper}>
             <Typography>Option 1</Typography>
             <Card sx={sxStyleCard}>
+                {/*    {props.comparedRoutes.compared.map((route) => {
+                    return (
+                        <>
+                            <CompareRoutesCard key={route.id} route={route}/>
+                            <RouteVehicleDetails route={route}/>
+                            <Button variant="contained" endIcon={<EditIcon/>}
+                                    onClick={handleClickEdit}>Edit</Button>
+                        </>
+                    )
+                })}
+*/}
                 <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
                 <RouteVehicleDetails route={props.comparedRoutes.compared[0]}/>
                 <Button variant="contained" endIcon={<EditIcon/>}
-                        onClick={handleClickEdit}>Edit</Button>
+                        onClick={handleClickEditA}>Edit</Button>
             </Card>
             <Typography>Option 2</Typography>
             <Card sx={sxStyleCard}>
                 <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
                 <RouteVehicleDetails route={props.comparedRoutes.compared[1]}/>
                 <Button variant="contained" endIcon={<EditIcon/>}
-                        onClick={handleClickEdit}>Edit</Button>
+                        onClick={handleClickEditB}>Edit</Button>
             </Card>
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
-                <CompareRoutesResults route={props.comparedRoutes.compared[0]}/>
-                <CompareRoutesResults route={props.comparedRoutes.compared[1]}/>
+                {props.comparedRoutes.compared.map((route) => {
+                    return <CompareRoutesResults key={route.id} route={route}/>
+                })}
             </Box>
+
             <Box>
                 <Typography variant="body1"
                             sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>

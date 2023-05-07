@@ -1,11 +1,9 @@
 import {useEffect, useState} from "react";
-import {Route} from "../models/RouteModel";
 import axios from "axios";
 import {CompareRoutes} from "../models/CompareRoutesModel";
 import {toast} from "react-toastify";
 
 export default function useCompareRoutes() {
-    const [routesToCompare, setRoutesToCompare] = useState<Route[]>([]);
 
     const initialStateComparedRoutes: CompareRoutes = {
         id: "",
@@ -99,8 +97,6 @@ export default function useCompareRoutes() {
     }
 
     return {
-        routesToCompare,
-        setRoutesToCompare,
         comparedRoutes,
         setComparedRoutes,
         comparedRoutesList,

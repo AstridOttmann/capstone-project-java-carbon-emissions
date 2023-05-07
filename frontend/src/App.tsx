@@ -17,13 +17,14 @@ import CompareRoutesDetails from "./components/CompareRoutesDetails";
 
 function App() {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
+
     const {
         comparedRoutes,
         comparedRoutesList,
         setComparedRoutes,
-        addComparison,
         getComparisonById,
-        deleteComparisonById
+        addComparison,
+        deleteComparisonById,
     } = useCompareRoutes();
 
     return (
@@ -44,7 +45,8 @@ function App() {
                         <Route path="/routes" element={
                             <RouteCollection/>}/>
                         <Route path="/compared" element={
-                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList} deleteComparisonById={deleteComparisonById}/>}/>
+                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList}
+                                                     deleteComparisonById={deleteComparisonById}/>}/>
                         <Route path="/routes/details/:id" element={
                             <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                         <Route path="/compared/details/:id" element={

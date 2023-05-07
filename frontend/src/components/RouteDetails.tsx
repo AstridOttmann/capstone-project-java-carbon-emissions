@@ -66,11 +66,11 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         <Typography variant="overline">Route</Typography>
                         <p>Id: {route.id}</p>
                         <Stack>
-                            <Item>From: {route.start}</Item>
-                            <Item>To: {route.destination}</Item>
-                            <Item>Distance: {route.distance} km</Item>
-                            <Item>Number of persons: {route.numberOfPersons}</Item>
-                            <Item>{route.oneWay ? "oneWay" : "Round Trip"}</Item>
+                            <Item><small>FROM:</small> {route.start}</Item>
+                            <Item><small>TO.</small> {route.destination}</Item>
+                            <Item><small>DISTANCE:</small> {route.distance} km</Item>
+                            <Item><small>NUMBER OF PERSONS:</small> {route.numberOfPersons}</Item>
+                            <Item>{route.oneWay ? "ONEWAY" : "ROUND TRIP"}</Item>
                         </Stack>
                         <Divider sx={{borderColor: "#808080"}}/>
                         <RouteVehicleDetails route={route}/>
@@ -102,8 +102,8 @@ export default function RouteDetails(props: RouteDetailsProps) {
                                 <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
                             </Stack>}*/}
                         <Typography variant="overline">CO2-Emission </Typography>
-                        <Stack>
-                            <Item>pro Person in kg: {route.co2EmissionRoute}</Item>
+                        <Stack sx={{textAlign: "center"}}>
+                            <Item><small>PRO PERSON IN KG: </small> {route.co2EmissionRoute}</Item>
                         </Stack>
                         <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
                                      variant="text"

@@ -25,16 +25,19 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
 
     return (
         <Paper sx={sxStylePaper}>
-            <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
-            <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
-
+            {props.comparedRoutes.compared.map((route) => {
+                return <CompareRoutesCard key={route.id} route={route}/>
+            })}
             <Box sx={{
                 display: "flex",
                 gap: "1rem",
                 borderRadius: 1
             }}>
-                <CompareRoutesResults route={props.comparedRoutes.compared[0]}/>
-                <CompareRoutesResults route={props.comparedRoutes.compared[1]}/>
+                {props.comparedRoutes.compared.map((route) => {
+                    return <CompareRoutesResults key={route.id} route={route}/>
+                })}
+             {/*   <CompareRoutesResults route={props.comparedRoutes.compared[0]}/>
+                <CompareRoutesResults route={props.comparedRoutes.compared[1]}/>*/}
 
             </Box>
 
