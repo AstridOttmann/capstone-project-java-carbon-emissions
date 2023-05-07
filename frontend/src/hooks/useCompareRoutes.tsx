@@ -9,7 +9,7 @@ export default function useCompareRoutes() {
         id: "",
         compared: [
             {
-                id: "",
+                id: " ",
                 start: "",
                 destination: "",
                 distance: 0,
@@ -100,6 +100,7 @@ export default function useCompareRoutes() {
         comparedRoutes,
         setComparedRoutes,
         comparedRoutesList,
+        setComparedRoutesList,
         getComparisonById,
         addComparison,
         deleteComparisonById
