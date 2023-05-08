@@ -16,6 +16,7 @@ type HomePageProps = {
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
     // addComparison: (compareRoutes: { routesToCompare: Route[] })=> void
+    getAllComparison:()=> Promise<void>,
     addComparison: (compareRoutes: CompareRoutes) => void,
     comparedRoutes: CompareRoutes,
     setComparedRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
@@ -108,6 +109,7 @@ export default function HomePage(props: HomePageProps) {
                       setAddMode={setAddMode}
                       setRoutesToCompare={setRoutesToCompare}
                       routesToCompare={routesToCompare}
+                      getAllComparison={props.getAllComparison}
                 /> : null
             }
         </Paper>)

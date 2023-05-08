@@ -58,7 +58,7 @@ export default function useCompareRoutes() {
     }, [])
 
     function getAllComparison() {
-        axios.get("/api/compare")
+     return axios.get("/api/compare")
             .then((response) => {
                 setComparedRoutesList(response.data)
             })
@@ -84,6 +84,19 @@ export default function useCompareRoutes() {
             })
     }
 
+    function updateComparison(id: string, comparedRoutes: CompareRoutes) {
+        axios.put(`api/compare/${id}`, comparedRoutes)
+            .then(response => response.data)
+            .then(data => setComparedRoutesList(prevState => {
+                return prevState.map(currentState => {
+                    if (currentState.id === id) {
+                        return data;
+                    }
+                    return currentState;
+                })
+            }))
+    }
+
     function deleteComparisonById(id: string) {
         axios.delete(`/api/compare/${id}`)
             .then(() => {
@@ -93,7 +106,7 @@ export default function useCompareRoutes() {
             })
             .catch((error) => {
                 toast.error("Error!", error)
-            });
+            })
     }
 
     return {
@@ -101,8 +114,10 @@ export default function useCompareRoutes() {
         setComparedRoutes,
         comparedRoutesList,
         setComparedRoutesList,
+        getAllComparison,
         getComparisonById,
         addComparison,
+        updateComparison,
         deleteComparisonById
     }
 }

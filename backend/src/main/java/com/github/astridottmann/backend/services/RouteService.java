@@ -14,6 +14,7 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final IdService idService;
     private final CalculateCo2EmissionService calculateCo2EmissionService;
+    private final CompareRoutesService compareRoutesService;
 
 
     public Route addRoute(RouteDTO routeDTO) {
@@ -48,9 +49,12 @@ public class RouteService {
             double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
 
             Route updatedRoute = route.withCo2Emission(co2EmissionRoute);
+            compareRoutesService.updateComparisonWithRoute(updatedRoute);
             return routeRepository.save(updatedRoute);
         }
         String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
         throw new NoSuchElementException(errorMessage);
     }
+
+
 }

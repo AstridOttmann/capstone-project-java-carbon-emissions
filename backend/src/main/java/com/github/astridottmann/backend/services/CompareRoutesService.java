@@ -63,6 +63,33 @@ public class CompareRoutesService {
         }
         String errorMessage = "Couldn't update Compared Routes. Id " + compareRoutes.id() + " doesn't exist";
         throw new NoSuchElementException(errorMessage);
+    }
 
+    public void updateComparisonWithRoute(Route route) {
+        List<CompareRoutes> compareRoutesWithRoute = compareRoutesRepository.findAll()
+                .stream()
+                .filter((compareRoutes -> compareRoutes.compared()
+                        .stream()
+                        .anyMatch((currentRoute) -> currentRoute.id().equals(route.id()))))
+                .toList();
+
+        List<CompareRoutes> updatedCompareRoutes = compareRoutesWithRoute.stream().map((compareRoutes -> {
+                    List<Route> currentCompared = compareRoutes.compared()
+                            .stream()
+                            .map((currentRoute) -> {
+                                if (currentRoute.id().equals(route.id())) {
+                                    return route;
+                                }
+                                return currentRoute;
+                            })
+                            .toList();
+                    return new CompareRoutes(compareRoutes.id(), currentCompared, compareEmissions(currentCompared));
+                }))
+                .toList();
+
+        compareRoutesRepository.saveAll(updatedCompareRoutes);
     }
 }
+
+
+// (new Route("31f45015-775e-444a-8422-817ec08eb947", "place A", "place B", 44, 1, true,  new Car("car", 173.3, "diesel", "medium"), 7.63));

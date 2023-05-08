@@ -22,9 +22,11 @@ function App() {
         comparedRoutes,
         comparedRoutesList,
         setComparedRoutes,
+        getAllComparison,
         getComparisonById,
         addComparison,
-        deleteComparisonById,
+        updateComparison,
+        deleteComparisonById
     } = useCompareRoutes();
 
     return (
@@ -36,6 +38,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={
                             <HomePage
+                                getAllComparison={getAllComparison}
                                 addComparison={addComparison}
                                 setIsEditMode={setIsEditMode}
                                 isEditMode={isEditMode}

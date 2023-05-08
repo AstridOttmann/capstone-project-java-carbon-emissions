@@ -45,7 +45,8 @@ type FormProps = {
     setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,
     routesToCompare: Route[]
-    setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>
+    setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
+    getAllComparison:()=> Promise<void>,
 
 }
 export default function Form(props: FormProps) {
@@ -80,8 +81,9 @@ export default function Form(props: FormProps) {
         if (route) {
             if (props.isEditMode) {
                 const updatedRoute: Route = {...route, vehicle}
-                updateRoute(updatedRoute.id, updatedRoute);
-                navigate(-1);
+                updateRoute(updatedRoute.id, updatedRoute)
+                    .then(updatedRoute => props.getAllComparison()
+                        .then(()=> navigate(-1)))
             } else {
                 const routeToAdd = {...route, vehicle}
                 addRoute(routeToAdd)
