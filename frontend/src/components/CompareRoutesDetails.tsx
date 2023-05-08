@@ -7,7 +7,7 @@ import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {useContext, useEffect} from "react";
 import {RouteContext} from "../contexts/RouteContextProvider";
-
+import {Route} from "../models/RouteModel";
 
 
 const sxStylePaper = {
@@ -50,23 +50,12 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
         setRoute(props.comparedRoutes.compared[0])
     }
 
-   /* function handleClickEdit() {
-        const option1 = props.comparedRoutes.compared[0];
-        const option2 = props.comparedRoutes.compared[1];
+    function handleOnClick(route: Route) {
+        navigate("/")
+        props.setIsEditMode(true);
 
-        if (option1) {
-            setRoute(props.comparedRoutes.compared[0])
-            navigate("/");
-            props.setIsEditMode(true);
-            return route;
-        } else if (option2) {
-            setRoute(props.comparedRoutes.compared[1])
-            navigate("/");
-            props.setIsEditMode(true);
-            return route;
-        }
-        return "Not found!"
-    }*/
+        setRoute(route)
+    }
 
     function handleClickEditB() {
         navigate("/")
@@ -79,18 +68,18 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
         <Paper sx={sxStylePaper}>
             <Typography>Option 1</Typography>
             <Card sx={sxStyleCard}>
-                {/*    {props.comparedRoutes.compared.map((route) => {
+                {props.comparedRoutes.compared.map((route) => {
                     return (
                         <>
                             <CompareRoutesCard key={route.id} route={route}/>
                             <RouteVehicleDetails route={route}/>
                             <Button variant="contained" endIcon={<EditIcon/>}
-                                    onClick={handleClickEdit}>Edit</Button>
+                                    onClick={() => handleOnClick(route)}>Edit</Button>
                         </>
                     )
                 })}
-*/}
-                <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
+
+                {/*   <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
                 <RouteVehicleDetails route={props.comparedRoutes.compared[0]}/>
                 <Button variant="contained" endIcon={<EditIcon/>}
                         onClick={handleClickEditA}>Edit</Button>
@@ -100,7 +89,7 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
                 <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
                 <RouteVehicleDetails route={props.comparedRoutes.compared[1]}/>
                 <Button variant="contained" endIcon={<EditIcon/>}
-                        onClick={handleClickEditB}>Edit</Button>
+                        onClick={handleClickEditB}>Edit</Button>*/}
             </Card>
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
                 {props.comparedRoutes.compared.map((route) => {
