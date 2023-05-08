@@ -25,7 +25,6 @@ function App() {
         getAllComparison,
         getComparisonById,
         addComparison,
-        updateComparison,
         deleteComparisonById
     } = useCompareRoutes();
 

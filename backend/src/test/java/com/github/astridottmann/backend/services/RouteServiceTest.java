@@ -19,13 +19,14 @@ class RouteServiceTest {
     RouteService routeService;
     final IdService idService = mock(IdService.class);
     final CalculateCo2EmissionService calculateCo2EmissionService = mock(CalculateCo2EmissionService.class);
+    final CompareRoutesService compareRoutesService = mock(CompareRoutesService .class);
 
     final RouteRepository routeRepository = mock(RouteRepository.class);
     private final String testId = "1";
     private final double dummyEmission = 162;
 
     private Route createTestRouteInstance() {
-        Car car =  new Car("car", 2.8, "petrol", "large");
+        Car car = new Car("car", 2.8, "petrol", "large");
         return new Route(testId,
                 "Hamburg",
                 "Frankfurt",
@@ -37,7 +38,7 @@ class RouteServiceTest {
     }
 
     private RouteDTO createTestRouteDTOInstance() {
-        Car car =  new Car("car", 2.8, "petrol", "large");
+        Car car = new Car("car", 2.8, "petrol", "large");
         return new RouteDTO(
                 "Hamburg",
                 "Frankfurt",
@@ -46,9 +47,10 @@ class RouteServiceTest {
                 false,
                 car);
     }
+
     @BeforeEach
     void init() {
-        this.routeService = new RouteService(routeRepository, idService, calculateCo2EmissionService );
+        this.routeService = new RouteService(routeRepository, idService, calculateCo2EmissionService, compareRoutesService);
     }
 
     @Test
