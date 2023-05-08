@@ -216,4 +216,15 @@ class CompareRoutesIntegrationTest {
                 .andExpect(content().json(errorMessage))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
+
+    @Test
+    void updateCompareRoutes_shouldReturnUpdatedCompareRoutes() throws Exception {
+        compareRoutesRepository.save(testCompareRoutes);
+
+        mockMvc.perform(put("/api/compare/" + testCompareRoutes.id(), testCompareRoutes)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testCompareRoutesJson))
+                .andExpect(status().isOk())
+                .andExpect(content().json(testCompareRoutesJson));
+    }
 }

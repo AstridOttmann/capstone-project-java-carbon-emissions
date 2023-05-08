@@ -4,7 +4,6 @@ import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.*;
@@ -180,7 +179,7 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void updateAllComparisonContainingRoute_shouldUpdateAllComarisonWithUpdatedRoute() {
+    void updateAllComparisonContainingRoute_shouldUpdateAllComparisonWithUpdatedRoute() {
         CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
         Route updatedRoute = testCompareRoutes.compared().get(0);
         List<CompareRoutes> testList = List.of(testCompareRoutes, testCompareRoutes);

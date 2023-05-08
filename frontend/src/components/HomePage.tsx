@@ -15,8 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 type HomePageProps = {
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
-    // addComparison: (compareRoutes: { routesToCompare: Route[] })=> void
-    getAllComparison:()=> Promise<void>,
+    getAllComparison: () => Promise<void>,
     addComparison: (compareRoutes: CompareRoutes) => void,
     comparedRoutes: CompareRoutes,
     setComparedRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>

@@ -85,6 +85,3 @@ public class CompareRoutesService {
         compareRoutesRepository.saveAll(updatedCompareRoutes);
     }
 }
-
-
-// (new Route("31f45015-775e-444a-8422-817ec08eb947", "place A", "place B", 44, 1, true,  new Car("car", 173.3, "diesel", "medium"), 7.63));

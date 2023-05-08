@@ -36,8 +36,6 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 {props.comparedRoutes.compared.map((route) => {
                     return <CompareRoutesResults key={route.id} route={route}/>
                 })}
-             {/*   <CompareRoutesResults route={props.comparedRoutes.compared[0]}/>
-                <CompareRoutesResults route={props.comparedRoutes.compared[1]}/>*/}
 
             </Box>
 

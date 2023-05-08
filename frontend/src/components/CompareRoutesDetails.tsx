@@ -43,25 +43,11 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
         navigate(-1)
     }
 
-    function handleClickEditA() {
-        navigate("/")
-        props.setIsEditMode(true);
-
-        setRoute(props.comparedRoutes.compared[0])
-    }
-
-    function handleOnClick(route: Route) {
+    function editOnClick(route: Route) {
         navigate("/")
         props.setIsEditMode(true);
 
         setRoute(route)
-    }
-
-    function handleClickEditB() {
-        navigate("/")
-        props.setIsEditMode(true);
-
-        setRoute(props.comparedRoutes.compared[1])
     }
 
     return (
@@ -74,23 +60,12 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
                             <CompareRoutesCard key={route.id} route={route}/>
                             <RouteVehicleDetails route={route}/>
                             <Button variant="contained" endIcon={<EditIcon/>}
-                                    onClick={() => handleOnClick(route)}>Edit</Button>
+                                    onClick={() => editOnClick(route)}>Edit</Button>
                         </>
                     )
                 })}
+            </Card>
 
-                {/*   <CompareRoutesCard route={props.comparedRoutes.compared[0]}/>
-                <RouteVehicleDetails route={props.comparedRoutes.compared[0]}/>
-                <Button variant="contained" endIcon={<EditIcon/>}
-                        onClick={handleClickEditA}>Edit</Button>
-            </Card>
-            <Typography>Option 2</Typography>
-            <Card sx={sxStyleCard}>
-                <CompareRoutesCard route={props.comparedRoutes.compared[1]}/>
-                <RouteVehicleDetails route={props.comparedRoutes.compared[1]}/>
-                <Button variant="contained" endIcon={<EditIcon/>}
-                        onClick={handleClickEditB}>Edit</Button>*/}
-            </Card>
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
                 {props.comparedRoutes.compared.map((route) => {
                     return <CompareRoutesResults key={route.id} route={route}/>
