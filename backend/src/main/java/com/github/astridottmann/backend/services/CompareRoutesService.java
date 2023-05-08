@@ -65,18 +65,18 @@ public class CompareRoutesService {
         throw new NoSuchElementException(errorMessage);
     }
 
-    public void updateComparisonWithRoute(Route route) {
+    public void updateAllComparisonContainingRoute(Route route) {
         List<CompareRoutes> compareRoutesWithRoute = compareRoutesRepository.findAll()
                 .stream()
                 .filter((compareRoutes -> compareRoutes.compared()
                         .stream()
-                        .anyMatch((currentRoute) -> currentRoute.id().equals(route.id()))))
+                        .anyMatch(currentRoute -> currentRoute.id().equals(route.id()))))
                 .toList();
 
         List<CompareRoutes> updatedCompareRoutes = compareRoutesWithRoute.stream().map((compareRoutes -> {
                     List<Route> currentCompared = compareRoutes.compared()
                             .stream()
-                            .map((currentRoute) -> {
+                            .map(currentRoute -> {
                                 if (currentRoute.id().equals(route.id())) {
                                     return route;
                                 }

@@ -49,7 +49,7 @@ public class RouteService {
             double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
 
             Route updatedRoute = route.withCo2Emission(co2EmissionRoute);
-            compareRoutesService.updateComparisonWithRoute(updatedRoute);
+            compareRoutesService.updateAllComparisonContainingRoute(updatedRoute);
             return routeRepository.save(updatedRoute);
         }
         String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";

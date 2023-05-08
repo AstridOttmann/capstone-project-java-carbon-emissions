@@ -4,12 +4,10 @@ import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -148,6 +146,53 @@ class CompareRoutesServiceTest {
 
         verify(compareRoutesRepository).existsById("123");
         assertEquals(errorMessage, exception.getMessage());
+    }
 
+    @Test
+    void updateComparison_shouldReturnUpdatedCompareRoutes(){
+        CompareRoutes toUpdate = createTestCompareRoutesInstance();
+
+        Mockito.when(compareRoutesRepository.existsById(toUpdate.id()))
+                .thenReturn(true);
+        Mockito.when(compareRoutesRepository.save(toUpdate))
+                .thenReturn(toUpdate);
+
+        CompareRoutes actual = compareRoutesService.updateComparison(toUpdate);
+
+        verify(compareRoutesRepository).existsById(toUpdate.id());
+        verify(compareRoutesRepository).save(toUpdate);
+        assertEquals(toUpdate, actual);
+    }
+
+    @Test
+    void updateComparison_shouldThrowNoSuchElementException_whenInvaliId(){
+        CompareRoutes toUpdate = createTestCompareRoutesInstance();
+        String errorMessage = "Couldn't update Compared Routes. Id " + toUpdate.id() + " doesn't exist";
+
+        Mockito.when(compareRoutesRepository.existsById(toUpdate.id()))
+                .thenReturn(false);
+
+        Exception exception = assertThrows(NoSuchElementException.class,
+                () -> compareRoutesService.updateComparison(toUpdate));
+
+        verify(compareRoutesRepository).existsById(toUpdate.id());
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    void updateAllComparisonContainingRoute_shouldUpdateAllComarisonWithUpdatedRoute(){
+        CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
+        Route updatedRoute = testCompareRoutes.compared().get(0);
+        List<CompareRoutes> testList = List.of(testCompareRoutes, testCompareRoutes);
+
+        Mockito.when(compareRoutesRepository.findAll())
+                .thenReturn(testList);
+        Mockito.when(compareRoutesRepository.saveAll(testList))
+                .thenReturn(testList);
+
+        compareRoutesService.updateAllComparisonContainingRoute(updatedRoute);
+
+        verify(compareRoutesRepository).findAll();
+        verify(compareRoutesRepository).saveAll(testList);
     }
 }
