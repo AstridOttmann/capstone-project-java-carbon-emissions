@@ -149,7 +149,7 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void updateComparison_shouldReturnUpdatedCompareRoutes(){
+    void updateComparison_shouldReturnUpdatedCompareRoutes() {
         CompareRoutes toUpdate = createTestCompareRoutesInstance();
 
         Mockito.when(compareRoutesRepository.existsById(toUpdate.id()))
@@ -165,7 +165,7 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void updateComparison_shouldThrowNoSuchElementException_whenInvaliId(){
+    void updateComparison_shouldThrowNoSuchElementException_whenInvaliId() {
         CompareRoutes toUpdate = createTestCompareRoutesInstance();
         String errorMessage = "Couldn't update Compared Routes. Id " + toUpdate.id() + " doesn't exist";
 
@@ -180,19 +180,19 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void updateAllComparisonContainingRoute_shouldUpdateAllComarisonWithUpdatedRoute(){
+    void updateAllComparisonContainingRoute_shouldUpdateAllComarisonWithUpdatedRoute() {
         CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
         Route updatedRoute = testCompareRoutes.compared().get(0);
         List<CompareRoutes> testList = List.of(testCompareRoutes, testCompareRoutes);
 
-        Mockito.when(compareRoutesRepository.findAll())
+        Mockito.when(compareRoutesRepository.findAllByComparedId(updatedRoute.id()))
                 .thenReturn(testList);
         Mockito.when(compareRoutesRepository.saveAll(testList))
                 .thenReturn(testList);
 
         compareRoutesService.updateAllComparisonContainingRoute(updatedRoute);
 
-        verify(compareRoutesRepository).findAll();
+        verify(compareRoutesRepository).findAllByComparedId(updatedRoute.id());
         verify(compareRoutesRepository).saveAll(testList);
     }
 }

@@ -66,12 +66,7 @@ public class CompareRoutesService {
     }
 
     public void updateAllComparisonContainingRoute(Route route) {
-        List<CompareRoutes> compareRoutesWithRoute = compareRoutesRepository.findAll()
-                .stream()
-                .filter((compareRoutes -> compareRoutes.compared()
-                        .stream()
-                        .anyMatch(currentRoute -> currentRoute.id().equals(route.id()))))
-                .toList();
+        List<CompareRoutes> compareRoutesWithRoute = compareRoutesRepository.findAllByComparedId(route.id());
 
         List<CompareRoutes> updatedCompareRoutes = compareRoutesWithRoute.stream().map((compareRoutes -> {
                     List<Route> currentCompared = compareRoutes.compared()

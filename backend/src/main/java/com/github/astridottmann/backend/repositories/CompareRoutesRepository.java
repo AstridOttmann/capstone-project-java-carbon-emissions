@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CompareRoutesRepository extends MongoRepository<CompareRoutes, String> {
-List<CompareRoutes> findAllByComparedContains(Route route);
+List<CompareRoutes> findAllByComparedId(String id);
 }
 
