@@ -11,14 +11,4 @@ public record CompareRoutes(
         List<Route> compared,
         ComparisonResults comparisonResults
 ) {
-     /*  public CompareRoutes(
-               List<Route> compared,
-               ComparisonResults comparisonResults
-       ){
-               this(null, compared, comparisonResults);
-       }
-
-        public CompareRoutes withId(String id){
-                return new CompareRoutes(id, compared, comparisonResults);
-        }*/
 }
