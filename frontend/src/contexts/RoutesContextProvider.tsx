@@ -78,7 +78,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 toast.success("Route successfully deleted")
             })
             .catch((error) => {
-                toast.error("Error! " + error)
+                toast.error("Cannot delete! Route doesn't exist or is referenced by comparisons" + error)
             })
     }
 

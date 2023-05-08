@@ -1,6 +1,8 @@
 package com.github.astridottmann.backend.services;
 
+import com.github.astridottmann.backend.exceptions.DependencyException;
 import com.github.astridottmann.backend.models.*;
+import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import com.github.astridottmann.backend.repositories.RouteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +21,8 @@ class RouteServiceTest {
     RouteService routeService;
     final IdService idService = mock(IdService.class);
     final CalculateCo2EmissionService calculateCo2EmissionService = mock(CalculateCo2EmissionService.class);
-    final CompareRoutesService compareRoutesService = mock(CompareRoutesService .class);
-
+    final CompareRoutesService compareRoutesService = mock(CompareRoutesService.class);
+    final CompareRoutesRepository compareRoutesRepository = mock(CompareRoutesRepository.class);
     final RouteRepository routeRepository = mock(RouteRepository.class);
     private final String testId = "1";
     private final double dummyEmission = 162;
@@ -50,7 +52,7 @@ class RouteServiceTest {
 
     @BeforeEach
     void init() {
-        this.routeService = new RouteService(routeRepository, idService, calculateCo2EmissionService, compareRoutesService);
+        this.routeService = new RouteService(routeRepository, idService, calculateCo2EmissionService, compareRoutesService, compareRoutesRepository);
     }
 
     @Test
@@ -129,7 +131,7 @@ class RouteServiceTest {
     }
 
     @Test
-    void deleteRouteById_shouldDeleteRoute() {
+    void deleteRouteById_shouldDeleteRoute() throws DependencyException {
         Mockito.when(routeRepository.existsById(testId))
                 .thenReturn(true);
 
