@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,6 +57,7 @@ class RouteIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getAllRoutes_shouldReturnEmptyList_whenRepositoryIsEmpty() throws Exception {
         mockMvc.perform(get("/api/routes"))
                 .andExpect(status().isOk())
@@ -62,8 +65,13 @@ class RouteIntegrationTest {
                         []
                         """));
     }
-
     @Test
+    void expect401_OnGet_whenAnonymousUser() throws Exception {
+        mockMvc.perform(get("/api/routes"))
+                .andExpect(status().isUnauthorized());
+    }
+    @Test
+    @WithMockUser
     void getRouteById_shouldReturnRequestedRoute() throws Exception {
         routeRepository.save(testRoute);
         mockMvc.perform(get("/api/routes/" + testRoute.id()))
@@ -72,6 +80,7 @@ class RouteIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getRouteById_shouldThrowException_whenInvalidId() throws Exception {
         String expectedBody = "{ \"message\": \"Route with Id " + testRoute.id() + " not found!\"}";
         mockMvc.perform(get("/api/routes/" + testRoute.id()))
@@ -81,11 +90,13 @@ class RouteIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void addRoute_shouldAddRouteToRepository() throws Exception {
         String addedRouteJson =
                 mockMvc.perform(post("/api/routes")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(testRouteWithoutIdJson))
+                                .content(testRouteWithoutIdJson)
+                                .with(csrf()))
                         .andExpect(status().isOk())
                         .andExpect(content().json(testRouteWithoutIdJson))
                         .andExpect(jsonPath("$.id").isNotEmpty())
@@ -109,10 +120,12 @@ class RouteIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void deleteRouteById_shouldRemoveRouteFromRepository() throws Exception {
         routeRepository.save(testRoute);
 
-        mockMvc.perform(delete("/api/routes/" + testRoute.id()))
+        mockMvc.perform(delete("/api/routes/" + testRoute.id())
+                        .with(csrf()))
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/api/routes"))
@@ -123,38 +136,45 @@ class RouteIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void deleteRouteById_shouldReturnApiErrorAndStatusIsNotFound_whenIdNotExists() throws Exception {
         String expectedBody = "{\"message\": \"Couldn't delete route. Id " + testRoute.id() + " doesn't exist\"}";
 
-        mockMvc.perform(delete("/api/routes/" + testRoute.id()))
+        mockMvc.perform(delete("/api/routes/" + testRoute.id())
+                        .with(csrf()))
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(expectedBody))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
     @Test
+    @WithMockUser
     void DeleteRouteById_shouldReturnApiErrorAndStatusIsUnprocessable_whenIdIsWhitespace() throws Exception {
         String id = " ";
         String expectedBody = "{\"message\":  \"Id is empty\"}";
 
-        mockMvc.perform(delete("/api/routes/" + id))
+        mockMvc.perform(delete("/api/routes/" + id)
+                        .with(csrf()))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(expectedBody))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
     @Test
+    @WithMockUser
     void updateRoute_shouldUpdateRouteInRepository() throws Exception {
         routeRepository.save(testRoute);
 
         mockMvc.perform(put("/api/routes/" + testRoute.id())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(testRouteJson))
+                        .content(testRouteJson)
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(testRouteJson));
     }
 
     @Test
+    @WithMockUser
     void updateRoute_shouldThrowApiErrorAndStatusIsUnprocessable_whenBodyIdAndRouteIdAreNotEqual() throws Exception {
         String urlId = "1";
         routeRepository.save(testRoute);
@@ -162,7 +182,8 @@ class RouteIntegrationTest {
 
         mockMvc.perform(put("/api/routes/" + urlId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(testRouteJson))
+                .content(testRouteJson)
+                        .with(csrf()))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(expectedBody))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());

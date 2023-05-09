@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -122,6 +124,7 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getAllCompareRoutes_shouldReturnAllCompareRoutesFromTheRepository() throws Exception {
         compareRoutesRepository.save(testCompareRoutes);
         List<CompareRoutes> expectedBody = new ArrayList<>(List.of(testCompareRoutes));
@@ -133,6 +136,7 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getAllCompareRoutes_shouldReturnEmptyList_whenRepositoryIsEmpty() throws Exception {
         mockMvc.perform(get("/api/compare"))
                 .andExpect(status().isOk())
@@ -142,6 +146,7 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getCompareRoutesById_shouldReturnRequested() throws Exception {
         compareRoutesRepository.save(testCompareRoutes);
 
@@ -151,6 +156,7 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getCompareRoutesById_shouldThrowException_whenIdInvalid() throws Exception {
         String errorMessage = "{\"message\":  \"Not found!\"}";
         mockMvc.perform((get("/api/compare/" + testCompareRoutes.id())))
@@ -160,12 +166,14 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void addComparison_shouldAddComparisonToRepository() throws Exception {
         compareRoutesRepository.save(testCompareRoutes);
         String addedCompareRoutesJson =
                 mockMvc.perform(post("/api/compare")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(testComparedJson))
+                                .content(testComparedJson)
+                                .with(csrf()))
                         .andExpect(status().isOk())
                         .andExpect(content().json(testCompareRoutesWithoutIdJson))
                         .andExpect(jsonPath("$.id").isNotEmpty())
@@ -185,10 +193,12 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void deleteCompareRoutesById_shouldDeleteCompareRoutes() throws Exception {
         compareRoutesRepository.save(testCompareRoutes);
 
-        mockMvc.perform(delete("/api/compare/" + testCompareRoutes.id()))
+        mockMvc.perform(delete("/api/compare/" + testCompareRoutes.id())
+                        .with(csrf()))
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/api/compare"))
@@ -199,31 +209,37 @@ class CompareRoutesIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void deleteCompareRoutesById_shouldThrowApiErrorAndStatusNotFound_whenIdNotExists() throws Exception {
         String errorMessage = "{\"message\": \"Could not delete. Id " + testCompareRoutes.id() + " doesn't exist\"}";
-        mockMvc.perform(delete("/api/compare/" + testCompareRoutes.id()))
+        mockMvc.perform(delete("/api/compare/" + testCompareRoutes.id())
+                        .with(csrf()))
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(errorMessage))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
     @Test
+    @WithMockUser
     void deleteCompareRoutesById_shouldThrowApiErrorAndStatusUnprocessable_whenIdIsBlank() throws Exception {
         String id = " ";
         String errorMessage = "{\"message\": \"Id is empty\"}";
-        mockMvc.perform(delete("/api/compare/" + id))
+        mockMvc.perform(delete("/api/compare/" + id)
+                        .with(csrf()))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(errorMessage))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
     @Test
+    @WithMockUser
     void updateCompareRoutes_shouldReturnUpdatedCompareRoutes() throws Exception {
         compareRoutesRepository.save(testCompareRoutes);
 
         mockMvc.perform(put("/api/compare/" + testCompareRoutes.id(), testCompareRoutes)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(testCompareRoutesJson))
+                        .content(testCompareRoutesJson)
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(testCompareRoutesJson));
     }
