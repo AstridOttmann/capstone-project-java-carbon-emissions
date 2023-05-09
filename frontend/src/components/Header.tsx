@@ -18,7 +18,7 @@ const sxStyleBox = {
 
 type HeaderProps = {
     user: string | undefined,
-    onLogout:()=> Promise<void>
+    onLogout:()=> Promise<string | number | void>
 }
 export default function Header(props: HeaderProps) {
     const navigate = useNavigate();
