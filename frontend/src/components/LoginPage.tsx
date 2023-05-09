@@ -30,6 +30,7 @@ export default function LoginPage(props: LoginPageProps) {
                 getAllRoutes();
                 props.getAllComparison();
             })
+            .catch(error => console.error(error));
 
     }
 

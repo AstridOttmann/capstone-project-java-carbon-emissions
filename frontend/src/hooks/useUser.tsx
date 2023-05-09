@@ -16,6 +16,7 @@ export default function useUser() {
             .then(() => {
                 setUser(undefined);
             })
+            .catch(error => toast.error("Already logged out!" + error))
     }
 
     return {user, login, logout}

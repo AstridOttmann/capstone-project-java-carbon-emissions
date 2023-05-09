@@ -27,8 +27,9 @@ export default function Header(props: HeaderProps) {
     function logoutOnClick() {
         props.onLogout()
             .then(() => {
-                navigate("/login")
+                navigate("/login");
             })
+            .catch(error => console.error(error));
     }
 
     return (
