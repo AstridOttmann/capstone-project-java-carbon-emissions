@@ -34,6 +34,7 @@ class RouteIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
+        PublicTransport publicTransport =   new PublicTransport("publicTransport", 46.0, "longDistance", "train");
         testRoute = new Route(
                 "123",
                 "Hamburg",
@@ -41,10 +42,7 @@ class RouteIntegrationTest {
                 289,
                 1,
                 false,
-                new PublicTransport("publicTransport",
-                        46.0,
-                        "longDistance",
-                        "train"),
+                publicTransport,
                 26.59);
 
         testRouteJson = objectMapper.writeValueAsString(testRoute);

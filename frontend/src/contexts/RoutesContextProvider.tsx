@@ -10,7 +10,7 @@ export type RoutesContextType = {
     //getRouteById: (id: string) => void,
     addRoute: (route: NewRoute) => Promise<Route>,
     deleteRoute: (id: string) => void,
-    updateRoute: (id: string, route: Route) => void
+    updateRoute: (id: string, route: Route) => Promise<Route>,
 }
 
 export const RoutesContext = createContext<RoutesContextType>({
@@ -23,12 +23,10 @@ export const RoutesContext = createContext<RoutesContextType>({
     ,
     deleteRoute: () => {
     },
-    updateRoute: () => {
-    },
+    updateRoute: () => Promise.reject()
+    ,
     getAllRoutes: () => {
     },
-
-
 })
 
 type RoutesContextProps = {
@@ -63,9 +61,9 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
     }
 
     function addRoute(route: NewRoute) {
-       return axios.post("/api/routes", route)
+        return axios.post("/api/routes", route)
             .then((response) => {
-                setRoutes([response.data,...routes])
+                setRoutes([response.data, ...routes])
                 return response.data
             })
             .catch((error) => {
@@ -80,21 +78,24 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 toast.success("Route successfully deleted")
             })
             .catch((error) => {
-                toast.error("Error! " + error)
+                toast.error("Cannot delete! Route doesn't exist or is referenced by comparisons" + error)
             })
     }
 
     function updateRoute(id: string, route: Route) {
-        axios.put(`/api/routes/${id}`, route)
-            .then(response => response.data)
-            .then(data => setRoutes(prevState => {
-                return prevState.map(currentRoute => {
-                    if (currentRoute.id === id) {
-                        return data;
-                    }
-                    return currentRoute;
-                })
-            }))
+        return axios.put(`/api/routes/${id}`, route)
+            .then((response) => {
+                const updatedRoute = response.data;
+                setRoutes(prevState => {
+                    return prevState.map((currentRoute) => {
+                        if (currentRoute.id === updatedRoute.id) {
+                            return updatedRoute;
+                        }
+                        return currentRoute;
+                    });
+                });
+                return updatedRoute;
+            })
             .catch((error) =>
                 toast.error(error))
     }

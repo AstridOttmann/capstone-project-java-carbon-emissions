@@ -1,5 +1,6 @@
 package com.github.astridottmann.backend.controllers;
 
+import com.github.astridottmann.backend.exceptions.DependencyException;
 import com.github.astridottmann.backend.models.Route;
 import com.github.astridottmann.backend.models.RouteDTO;
 import com.github.astridottmann.backend.services.RouteService;
@@ -30,7 +31,7 @@ public class RouteController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteRouteById(@PathVariable String id) {
+    void deleteRouteById(@PathVariable String id) throws DependencyException {
         if (id.isBlank()) {
             throw new IllegalArgumentException("Id is empty");
         }

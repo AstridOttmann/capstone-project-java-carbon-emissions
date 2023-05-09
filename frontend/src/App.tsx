@@ -12,11 +12,21 @@ import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
 import useCompareRoutes from "./hooks/useCompareRoutes";
 import CompareRoutesCollection from "./components/CompareRoutesCollection";
+import CompareRoutesDetails from "./components/CompareRoutesDetails";
 
 
 function App() {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
-    const {comparedRoutes, comparedRoutesList, setComparedRoutes, addComparison} = useCompareRoutes();
+
+    const {
+        comparedRoutes,
+        comparedRoutesList,
+        setComparedRoutes,
+        getAllComparison,
+        getComparisonById,
+        addComparison,
+        deleteComparisonById
+    } = useCompareRoutes();
 
     return (
         <Container maxWidth="lg">
@@ -27,6 +37,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={
                             <HomePage
+                                getAllComparison={getAllComparison}
                                 addComparison={addComparison}
                                 setIsEditMode={setIsEditMode}
                                 isEditMode={isEditMode}
@@ -36,9 +47,13 @@ function App() {
                         <Route path="/routes" element={
                             <RouteCollection/>}/>
                         <Route path="/compared" element={
-                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList} comparedRoutes={comparedRoutes}/>}/>
+                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList}
+                                                     deleteComparisonById={deleteComparisonById}/>}/>
                         <Route path="/routes/details/:id" element={
                             <RouteDetails setIsEditMode={setIsEditMode}/>}/>
+                        <Route path="/compared/details/:id" element={
+                            <CompareRoutesDetails getComparisonById={getComparisonById} comparedRoutes={comparedRoutes}
+                                                  setIsEditMode={setIsEditMode}/>}/>
                     </Routes>
                     <NavigationBottom setIsEditMode={setIsEditMode}/>
                 </BrowserRouter>

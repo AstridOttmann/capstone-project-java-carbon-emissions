@@ -1,12 +1,9 @@
 import {Button, ButtonGroup, Card, Divider, Paper, Stack, styled, Typography} from "@mui/material";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import TrainIcon from "@mui/icons-material/Train";
-import FlightIcon from "@mui/icons-material/Flight";
-import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import EditIcon from "@mui/icons-material/Edit";
 import {useContext, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {RouteContext} from "../contexts/RouteContextProvider";
+import RouteVehicleDetails from "./RouteVehicleDetails";
 
 const sxStylePaper = {
     p: "1rem",
@@ -69,15 +66,15 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         <Typography variant="overline">Route</Typography>
                         <p>Id: {route.id}</p>
                         <Stack>
-                            <Item>From: {route.start}</Item>
-                            <Item>To: {route.destination}</Item>
-                            <Item>Distance: {route.distance} km</Item>
-                            <Item>Number of persons: {route.numberOfPersons}</Item>
-                            <Item>{route.oneWay ? "oneWay" : "Round Trip"}</Item>
+                            <Item><small>FROM:</small> {route.start}</Item>
+                            <Item><small>TO.</small> {route.destination}</Item>
+                            <Item><small>DISTANCE:</small> {route.distance} km</Item>
+                            <Item><small>NUMBER OF PERSONS:</small> {route.numberOfPersons}</Item>
+                            <Item>{route.oneWay ? "ONEWAY" : "ROUND TRIP"}</Item>
                         </Stack>
                         <Divider sx={{borderColor: "#808080"}}/>
-
-                        <Typography variant="overline">Vehicle</Typography>
+                        <RouteVehicleDetails route={route}/>
+                        {/* <Typography variant="overline">Vehicle</Typography>
                         <div>
                             {route.vehicle.type === "car" && <DirectionsCarIcon/>}
                             {route.vehicle.type === "publicTransport" && <TrainIcon/>}
@@ -103,10 +100,10 @@ export default function RouteDetails(props: RouteDetailsProps) {
                                 <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
                                 <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
                                 <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
-                            </Stack>}
+                            </Stack>}*/}
                         <Typography variant="overline">CO2-Emission </Typography>
-                        <Stack>
-                            <Item>pro Person in kg: {route.co2EmissionRoute}</Item>
+                        <Stack sx={{textAlign: "center"}}>
+                            <Item><small>PRO PERSON IN KG: </small> {route.co2EmissionRoute}</Item>
                         </Stack>
                         <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
                                      variant="text"
