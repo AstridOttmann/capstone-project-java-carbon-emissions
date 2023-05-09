@@ -56,7 +56,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 setRoutes(response.data)
             })
             .catch((error) => {
-                toast.error("Error! Try again later " + error)
+                toast.error("Error! Try again later. " + error)
             })
     }
 
@@ -67,7 +67,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 return response.data
             })
             .catch((error) => {
-                toast.error("Error! Try again later " + error)
+                toast.error("Error! Try again later. " + error)
             })
     }
 
@@ -78,7 +78,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 toast.success("Route successfully deleted")
             })
             .catch((error) => {
-                toast.error("Cannot delete! Route doesn't exist or is referenced by comparisons" + error)
+                toast.error("Cannot delete! Route doesn't exist or is referenced by comparisons. " + error)
             })
     }
 

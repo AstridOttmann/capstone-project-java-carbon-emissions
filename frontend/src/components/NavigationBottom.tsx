@@ -5,15 +5,18 @@ import {BottomNavigationAction, BottomNavigation, Paper} from "@mui/material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import {RouteContext} from "../contexts/RouteContextProvider";
 import DifferenceIcon from '@mui/icons-material/Difference';
+import LoginIcon from "@mui/icons-material/Login";
 
 type NavigationBottomProps = {
-    setIsEditMode: (arg0: boolean) => void
+    setIsEditMode: (arg0: boolean) => void,
+    user: string | undefined
 }
 
 export default function NavigationBottom(props: NavigationBottomProps) {
     const {resetRoute} = useContext(RouteContext);
     const [value, setValue] = useState('/');
     const navigate = useNavigate();
+    const authenticated = props.user !== undefined && props.user !== "anonymousUser"
 
     const handleChange = (event: SyntheticEvent, newValue: string) => {
         setValue(newValue)
@@ -33,6 +36,12 @@ export default function NavigationBottom(props: NavigationBottomProps) {
                 borderRadius: 1,
                 width: "100vw"
             }} value={value} onChange={handleChange}>
+                {!authenticated &&
+                <BottomNavigationAction
+                    label="login"
+                    value="/login"
+                    icon={<LoginIcon/>}
+                />}
                 <BottomNavigationAction
                     label="home"
                     value="/"

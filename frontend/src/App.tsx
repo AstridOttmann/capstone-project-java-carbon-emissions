@@ -13,11 +13,13 @@ import RouteDetails from "./components/RouteDetails";
 import useCompareRoutes from "./hooks/useCompareRoutes";
 import CompareRoutesCollection from "./components/CompareRoutesCollection";
 import CompareRoutesDetails from "./components/CompareRoutesDetails";
+import LoginPage from "./components/LoginPage";
+import useUser from "./hooks/useUser";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 
 function App() {
-    const [isEditMode, setIsEditMode] = useState<boolean>(false)
-
+    const {user, login, logout} = useUser()
     const {
         comparedRoutes,
         comparedRoutesList,
@@ -27,35 +29,45 @@ function App() {
         addComparison,
         deleteComparisonById
     } = useCompareRoutes();
+    const [isEditMode, setIsEditMode] = useState<boolean>(false)
 
     return (
         <Container maxWidth="lg">
             <main className="App">
                 <BrowserRouter>
-                    <Header/>
+                    <Header user={user} onLogout={logout}/>
                     <ToastContainer autoClose={3000}/>
                     <Routes>
-                        <Route path="/" element={
-                            <HomePage
-                                getAllComparison={getAllComparison}
-                                addComparison={addComparison}
-                                setIsEditMode={setIsEditMode}
-                                isEditMode={isEditMode}
-                                comparedRoutes={comparedRoutes}
-                                setComparedRoutes={setComparedRoutes}
-                            />}/>
-                        <Route path="/routes" element={
-                            <RouteCollection/>}/>
-                        <Route path="/compared" element={
-                            <CompareRoutesCollection comparedRoutesList={comparedRoutesList}
-                                                     deleteComparisonById={deleteComparisonById}/>}/>
-                        <Route path="/routes/details/:id" element={
-                            <RouteDetails setIsEditMode={setIsEditMode}/>}/>
-                        <Route path="/compared/details/:id" element={
-                            <CompareRoutesDetails getComparisonById={getComparisonById} comparedRoutes={comparedRoutes}
-                                                  setIsEditMode={setIsEditMode}/>}/>
+                        <Route path="/login"
+                               element={<LoginPage
+                                   getAllComparison={getAllComparison}
+                                   onLogin={login}/>}/>
+
+                        <Route element={<ProtectedRoutes user={user}/>}>
+                            <Route path="/" element={
+                                <HomePage
+                                    getAllComparison={getAllComparison}
+                                    addComparison={addComparison}
+                                    setIsEditMode={setIsEditMode}
+                                    isEditMode={isEditMode}
+                                    comparedRoutes={comparedRoutes}
+                                    setComparedRoutes={setComparedRoutes}
+                                />}/>
+                            <Route path="/routes" element={
+                                <RouteCollection/>}/>
+                            <Route path="/compared" element={
+                                <CompareRoutesCollection comparedRoutesList={comparedRoutesList}
+                                                         deleteComparisonById={deleteComparisonById}/>}/>
+                            <Route path="/routes/details/:id" element={
+                                <RouteDetails setIsEditMode={setIsEditMode}/>}/>
+                            <Route path="/compared/details/:id" element={
+                                <CompareRoutesDetails getComparisonById={getComparisonById}
+                                                      comparedRoutes={comparedRoutes}
+                                                      setIsEditMode={setIsEditMode}/>}/>
+
+                        </Route>
                     </Routes>
-                    <NavigationBottom setIsEditMode={setIsEditMode}/>
+                    <NavigationBottom user={user} setIsEditMode={setIsEditMode}/>
                 </BrowserRouter>
             </main>
         </Container>

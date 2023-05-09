@@ -1,14 +1,43 @@
-import {Divider, Typography} from "@mui/material";
+import {Box, Button, Divider, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 
-const sxStyle = {
+const sxStyleTypo = {
     fontSize: "2rem",
+    flexGrow: "3",
     textAlign: "center",
     p: "1rem"
 }
-export default function Header(){
-    return(
+
+const sxStyleBox = {
+    display: "flex",
+    justifyContent: "flex-end",
+    textAlign: "center",
+    p: "1rem"
+}
+
+type HeaderProps = {
+    user: string | undefined,
+    onLogout:()=> Promise<void>
+}
+export default function Header(props: HeaderProps) {
+    const navigate = useNavigate();
+    const authenticated = props.user !== undefined && props.user !== "anonymousUser";
+
+    function logoutOnClick() {
+        props.onLogout()
+            .then(() => {
+                navigate("/login")
+            })
+    }
+
+    return (
         <header>
-            <Typography variant="h1" sx={sxStyle}>Move Green!</Typography>
+            <Box sx={sxStyleBox}>
+                <Typography variant="h1" sx={sxStyleTypo}>Move Green!</Typography>
+                {authenticated &&
+                    <Button type="button" onClick={logoutOnClick}><LogoutIcon/></Button>}
+            </Box>
             <Divider sx={{borderColor: "#808080"}}/>
         </header>
     )
