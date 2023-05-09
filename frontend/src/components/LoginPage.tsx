@@ -25,7 +25,7 @@ export default function LoginPage(props: LoginPageProps) {
         event.preventDefault();
 
         props.onLogin(username, password)
-            .then(()=> {
+            .then(() => {
                 navigate("/");
                 getAllRoutes();
                 props.getAllComparison();
@@ -41,14 +41,20 @@ export default function LoginPage(props: LoginPageProps) {
                            label="User name"
                            id="username"
                            value={username}
-                           onChange={e => setUsername(e.target.value)}/>
+                           onChange={e => setUsername(e.target.value)}
+                           InputLabelProps={{sx: {color: "#3fd44d"}}}
+                           InputProps={{sx: {color: "#3fd44d"}}}
+                />
                 <TextField required
                            variant="standard"
                            type="password"
                            label="Password"
                            id="password"
                            value={password}
-                           onChange={e => setPassword(e.target.value)}/>
+                           onChange={e => setPassword(e.target.value)}
+                           InputLabelProps={{sx: {color: "#3fd44d"}}}
+                           InputProps={{sx: {color: "#3fd44d"}}}
+                />
                 <Button type="submit" variant="outlined">Login</Button>
             </Box>
         </form>
