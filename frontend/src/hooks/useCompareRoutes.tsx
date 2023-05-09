@@ -58,7 +58,7 @@ export default function useCompareRoutes() {
     }, [])
 
     function getAllComparison() {
-     return axios.get("/api/compare")
+        return axios.get("/api/compare")
             .then((response) => {
                 setComparedRoutesList(response.data)
             })
@@ -90,10 +90,6 @@ export default function useCompareRoutes() {
             .then(data => setComparedRoutesList(prevState => {
                 return prevState.map(currentState => {
                     return currentState.id === id ? data : currentState
-                    /*if (currentState.id === id) {
-                        return data;
-                    }
-                    return currentState;*/
                 })
             }))
     }

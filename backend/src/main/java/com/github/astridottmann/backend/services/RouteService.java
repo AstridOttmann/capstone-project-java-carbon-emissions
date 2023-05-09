@@ -38,13 +38,13 @@ public class RouteService {
                 .orElseThrow(() -> new NoSuchElementException(errorMessage));
     }
 
-    public void deleteRouteById(String id) throws DependencyException {
+    public void deleteRouteById(String id) {
         String errorMessageNoElement = "Couldn't delete route. Id " + id + " doesn't exist";
         String errorMessageDependency = "Cannot delete element " + id + " because it is still referenced by other elements";
 
         boolean routeExists = routeRepository.existsById(id);
         int listContainedRoutesLength = compareRoutesRepository.findAllByComparedId(id).size();
-        boolean routeIsUsedInComparison = routeRepository.existsById(id) && listContainedRoutesLength > 0;
+        boolean routeIsUsedInComparison = routeExists && listContainedRoutesLength > 0;
 
         if (!routeExists) {
             throw new NoSuchElementException(errorMessageNoElement);
@@ -54,15 +54,6 @@ public class RouteService {
             routeRepository.deleteById(id);
         }
     }
-      /*  if (routeExists && listContainedRoutesLength == 0) {
-            routeRepository.deleteById(id);
-        } else if (routeExists) {
-            throw new DependencyException(errorMessageDependency);
-        } else {
-            throw new NoSuchElementException(errorMessageNoElement);
-        }
-       */
-
 
     public Route updateRoute(Route route) {
         if (routeRepository.existsById(route.id())) {

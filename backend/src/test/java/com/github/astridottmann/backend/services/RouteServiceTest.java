@@ -1,6 +1,5 @@
 package com.github.astridottmann.backend.services;
 
-import com.github.astridottmann.backend.exceptions.DependencyException;
 import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import com.github.astridottmann.backend.repositories.RouteRepository;
@@ -131,7 +130,7 @@ class RouteServiceTest {
     }
 
     @Test
-    void deleteRouteById_shouldDeleteRoute() throws DependencyException {
+    void deleteRouteById_shouldDeleteRoute() {
         Mockito.when(routeRepository.existsById(testId))
                 .thenReturn(true);
 
