@@ -88,6 +88,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 const updatedRoute = response.data;
                 setRoutes(prevState => {
                     return prevState.map((currentRoute) => {
+                        // return currentRoute.id === updatedRoute.id ? updateRoute : currentRoute;
                         if (currentRoute.id === updatedRoute.id) {
                             return updatedRoute;
                         }

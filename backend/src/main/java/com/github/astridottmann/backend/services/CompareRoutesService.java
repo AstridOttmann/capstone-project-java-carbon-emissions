@@ -31,9 +31,8 @@ public class CompareRoutesService {
     }
 
     public CompareRoutes getCompareRoutesById(String id) {
-        String errorMessage = "Not found!";
         return compareRoutesRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(errorMessage));
+                .orElseThrow(() -> new NoSuchElementException("Not found!"));
     }
 
     public CompareRoutes addComparison(List<Route> compared) {
@@ -46,23 +45,30 @@ public class CompareRoutesService {
     }
 
     public void deleteCompareRoutesById(String id) {
-        String errorMessage = "Could not delete. Id " + id + " doesn't exist";
-        if (compareRoutesRepository.existsById(id)) {
-            compareRoutesRepository.deleteById(id);
-        } else throw new NoSuchElementException(errorMessage);
+        if (!compareRoutesRepository.existsById(id)) {
+            String errorMessage = "Could not delete. Id " + id + " doesn't exist";
+            throw new NoSuchElementException(errorMessage);
+        }
+
+        compareRoutesRepository.deleteById(id);
     }
 
     public CompareRoutes updateComparison(CompareRoutes compareRoutes) {
-        if (compareRoutesRepository.existsById(compareRoutes.id())) {
-            CompareRoutes updatedCompareRoutes =
-                    new CompareRoutes(
-                            compareRoutes.id(),
-                            List.of(compareRoutes.compared().get(0), compareRoutes.compared().get(1)),
-                            compareEmissions(compareRoutes.compared()));
-            return compareRoutesRepository.save(updatedCompareRoutes);
+        if (!compareRoutesRepository.existsById(compareRoutes.id())) {
+            String errorMessage = "Couldn't update Compared Routes. Id " + compareRoutes.id() + " doesn't exist";
+            throw new NoSuchElementException(errorMessage);
         }
-        String errorMessage = "Couldn't update Compared Routes. Id " + compareRoutes.id() + " doesn't exist";
-        throw new NoSuchElementException(errorMessage);
+
+        List<Route> routes = List.of(
+                compareRoutes.compared().get(0),
+                compareRoutes.compared().get(1));
+
+        CompareRoutes updatedCompareRoutes = new CompareRoutes(
+                compareRoutes.id(),
+                routes,
+                compareEmissions(compareRoutes.compared()));
+
+        return compareRoutesRepository.save(updatedCompareRoutes);
     }
 
     public void updateAllComparisonContainingRoute(Route route) {
@@ -71,12 +77,7 @@ public class CompareRoutesService {
         List<CompareRoutes> updatedCompareRoutes = compareRoutesWithRoute.stream().map((compareRoutes -> {
                     List<Route> currentCompared = compareRoutes.compared()
                             .stream()
-                            .map(currentRoute -> {
-                                if (currentRoute.id().equals(route.id())) {
-                                    return route;
-                                }
-                                return currentRoute;
-                            })
+                            .map(currentRoute -> currentRoute.id().equals(route.id()) ? route : currentRoute)
                             .toList();
                     return new CompareRoutes(compareRoutes.id(), currentCompared, compareEmissions(currentCompared));
                 }))

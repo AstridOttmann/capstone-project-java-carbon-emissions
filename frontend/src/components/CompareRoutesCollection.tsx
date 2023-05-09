@@ -16,7 +16,6 @@ const sxStyleTitle = {
 }
 
 type CompareRoutesCollectionProps = {
-   // comparedRoutes: CompareRoutes,
     comparedRoutesList: CompareRoutes[],
     deleteComparisonById: (id: string) => void
 }

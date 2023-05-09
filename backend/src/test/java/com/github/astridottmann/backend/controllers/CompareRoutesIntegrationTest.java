@@ -72,12 +72,6 @@ class CompareRoutesIntegrationTest {
         );
         testCompareRoutesJson = objectMapper.writeValueAsString(testCompareRoutes);
 
-     /*   testCompareRoutesWithoutId = new CompareRoutes(
-                List.of(routeA, routeB),
-                new ComparisonResults(268.93, 45.26, 223.67));
-
-        testCompareRoutesWithoutIdJson = objectMapper.writeValueAsString(testCompareRoutesWithoutId);*/
-
         List<Route> testCompared = new ArrayList<>(List.of(routeA, routeB));
         testComparedJson = objectMapper.writeValueAsString(testCompared);
 
@@ -144,7 +138,11 @@ class CompareRoutesIntegrationTest {
                         []
                         """));
     }
-
+    @Test
+    void expect401_OnGet_whenAnonymousUser() throws Exception {
+        mockMvc.perform(get("/api/compare"))
+                .andExpect(status().isUnauthorized());
+    }
     @Test
     @WithMockUser
     void getCompareRoutesById_shouldReturnRequested() throws Exception {
@@ -182,7 +180,6 @@ class CompareRoutesIntegrationTest {
                         .getContentAsString();
 
         CompareRoutes actual = objectMapper.readValue(addedCompareRoutesJson, CompareRoutes.class);
-        //CompareRoutes expected = testCompareRoutes.withId(actual.id());
 
         CompareRoutes expected = new CompareRoutes(
                 actual.id(),
@@ -242,5 +239,21 @@ class CompareRoutesIntegrationTest {
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(testCompareRoutesJson));
+    }
+
+    @Test
+    @WithMockUser
+    void updateCompareRoutes_shouldThrowApiErrorAndStatusIsUnprocessable_whenBodyIdAndCompareRoutesIdAreNotEqual() throws Exception {
+        String urlId = "1";
+        compareRoutesRepository.save(testCompareRoutes);
+        String expectedBody = "{\"message\": \"Id " + urlId + " doesn't match\"}";
+
+        mockMvc.perform(put("/api/compare/" + urlId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testCompareRoutesJson)
+                        .with(csrf()))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json(expectedBody))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 }

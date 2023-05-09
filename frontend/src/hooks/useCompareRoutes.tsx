@@ -89,10 +89,11 @@ export default function useCompareRoutes() {
             .then(response => response.data)
             .then(data => setComparedRoutesList(prevState => {
                 return prevState.map(currentState => {
-                    if (currentState.id === id) {
+                    return currentState.id === id ? data : currentState
+                    /*if (currentState.id === id) {
                         return data;
                     }
-                    return currentState;
+                    return currentState;*/
                 })
             }))
     }

@@ -1,5 +1,6 @@
 package com.github.astridottmann.backend.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.astridottmann.backend.models.PublicTransport;
 import com.github.astridottmann.backend.models.Route;
@@ -35,8 +36,8 @@ class RouteIntegrationTest {
     private String testRouteWithoutIdJson;
 
     @BeforeEach
-    void setUp() throws Exception {
-        PublicTransport publicTransport =   new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+    void setUp() throws JsonProcessingException {
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
         testRoute = new Route(
                 "123",
                 "Hamburg",
@@ -65,11 +66,13 @@ class RouteIntegrationTest {
                         []
                         """));
     }
+
     @Test
     void expect401_OnGet_whenAnonymousUser() throws Exception {
         mockMvc.perform(get("/api/routes"))
                 .andExpect(status().isUnauthorized());
     }
+
     @Test
     @WithMockUser
     void getRouteById_shouldReturnRequestedRoute() throws Exception {
@@ -181,8 +184,8 @@ class RouteIntegrationTest {
         String expectedBody = "{\"message\": \"Id " + urlId + " doesn't match with route-id " + testRoute.id() + "\"}";
 
         mockMvc.perform(put("/api/routes/" + urlId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(testRouteJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testRouteJson)
                         .with(csrf()))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(expectedBody))

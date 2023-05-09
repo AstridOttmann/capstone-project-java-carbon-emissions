@@ -25,7 +25,6 @@ public class RouteService {
         double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO);
 
         Route routeToAdd = Route.createRouteFromDTO(routeDTO, id, co2EmissionRoute);
-
         return routeRepository.save(routeToAdd);
     }
 
@@ -45,15 +44,24 @@ public class RouteService {
 
         boolean routeExists = routeRepository.existsById(id);
         int listContainedRoutesLength = compareRoutesRepository.findAllByComparedId(id).size();
+        boolean routeIsUsedInComparison = routeRepository.existsById(id) && listContainedRoutesLength > 0;
 
-        if (routeExists && listContainedRoutesLength == 0) {
+        if (!routeExists) {
+            throw new NoSuchElementException(errorMessageNoElement);
+        } else if (routeIsUsedInComparison) {
+            throw new DependencyException(errorMessageDependency);
+        } else {
+            routeRepository.deleteById(id);
+        }
+    }
+      /*  if (routeExists && listContainedRoutesLength == 0) {
             routeRepository.deleteById(id);
         } else if (routeExists) {
             throw new DependencyException(errorMessageDependency);
         } else {
             throw new NoSuchElementException(errorMessageNoElement);
         }
-    }
+       */
 
 
     public Route updateRoute(Route route) {

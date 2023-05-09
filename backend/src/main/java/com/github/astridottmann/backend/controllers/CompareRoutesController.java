@@ -39,6 +39,10 @@ public class CompareRoutesController {
 
     @PutMapping("/{id}")
     public CompareRoutes updateCompareRoutes(@PathVariable String id, @RequestBody CompareRoutes compareRoutes) {
+        if(!id.equals(compareRoutes.id())){
+            String errorMessage = "Id " + id + " doesn't match";
+            throw new IllegalArgumentException(errorMessage);
+        }
         return compareRoutesService.updateComparison(compareRoutes);
     }
 }
