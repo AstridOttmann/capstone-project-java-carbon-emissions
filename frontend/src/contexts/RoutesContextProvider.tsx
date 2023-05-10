@@ -67,7 +67,8 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 return response.data
             })
             .catch((error) => {
-                toast.error("Error! Try again later. " + error)
+                toast.error("Something went wrong! " + error)
+                throw error;
             })
     }
 

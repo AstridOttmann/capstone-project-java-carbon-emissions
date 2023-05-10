@@ -3,6 +3,7 @@ package com.github.astridottmann.backend.controllers;
 import com.github.astridottmann.backend.models.Route;
 import com.github.astridottmann.backend.models.RouteDTO;
 import com.github.astridottmann.backend.services.RouteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class RouteController {
     }
 
     @PostMapping
-    public Route addRoute(@RequestBody RouteDTO routeDTO) {
+    public Route addRoute(@RequestBody @Valid RouteDTO routeDTO) {
         return routeService.addRoute(routeDTO);
     }
 
