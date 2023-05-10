@@ -4,7 +4,7 @@ import './App.css';
 import Header from "./components/Header";
 import HomePage from "./components/HomePage";
 import {Container} from "@mui/material";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import RouteCollection from "./components/RouteCollection";
@@ -19,7 +19,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 
 
 function App() {
-    const {user, login, logout} = useUser()
+    const {user, isLoading, login, logout} = useUser()
     const {
         comparedRoutes,
         comparedRoutesList,
@@ -43,7 +43,8 @@ function App() {
                                    getAllComparison={getAllComparison}
                                    onLogin={login}/>}/>
 
-                        <Route element={<ProtectedRoutes user={user}/>}>
+                        <Route element={<ProtectedRoutes user={user} isLoading={isLoading}/>}>
+                            <Route element={<Navigate to="/"/>}/>
                             <Route path="/" element={
                                 <HomePage
                                     getAllComparison={getAllComparison}
