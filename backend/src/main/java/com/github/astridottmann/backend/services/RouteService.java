@@ -25,7 +25,6 @@ public class RouteService {
         double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO);
 
         Route routeToAdd = Route.createRouteFromDTO(routeDTO, id, co2EmissionRoute);
-
         return routeRepository.save(routeToAdd);
     }
 
@@ -39,22 +38,22 @@ public class RouteService {
                 .orElseThrow(() -> new NoSuchElementException(errorMessage));
     }
 
-    public void deleteRouteById(String id) throws DependencyException {
+    public void deleteRouteById(String id) {
         String errorMessageNoElement = "Couldn't delete route. Id " + id + " doesn't exist";
         String errorMessageDependency = "Cannot delete element " + id + " because it is still referenced by other elements";
 
         boolean routeExists = routeRepository.existsById(id);
         int listContainedRoutesLength = compareRoutesRepository.findAllByComparedId(id).size();
+        boolean routeIsUsedInComparison = routeExists && listContainedRoutesLength > 0;
 
-        if (routeExists && listContainedRoutesLength == 0) {
-            routeRepository.deleteById(id);
-        } else if (routeExists) {
+        if (!routeExists) {
+            throw new NoSuchElementException(errorMessageNoElement);
+        } else if (routeIsUsedInComparison) {
             throw new DependencyException(errorMessageDependency);
         } else {
-            throw new NoSuchElementException(errorMessageNoElement);
+            routeRepository.deleteById(id);
         }
     }
-
 
     public Route updateRoute(Route route) {
         if (routeRepository.existsById(route.id())) {

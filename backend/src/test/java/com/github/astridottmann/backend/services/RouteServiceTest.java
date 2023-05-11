@@ -1,9 +1,7 @@
 package com.github.astridottmann.backend.services;
 
-import com.github.astridottmann.backend.exceptions.DependencyException;
 import com.github.astridottmann.backend.models.*;
-import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
-import com.github.astridottmann.backend.repositories.RouteRepository;
+import com.github.astridottmann.backend.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -131,7 +129,7 @@ class RouteServiceTest {
     }
 
     @Test
-    void deleteRouteById_shouldDeleteRoute() throws DependencyException {
+    void deleteRouteById_shouldDeleteRoute() {
         Mockito.when(routeRepository.existsById(testId))
                 .thenReturn(true);
 

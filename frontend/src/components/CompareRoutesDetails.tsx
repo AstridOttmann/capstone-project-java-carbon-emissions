@@ -37,7 +37,6 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
         }
         //eslint-disable-next-line
     }, [id])
-    console.log("comparedRoutes", props.comparedRoutes)
 
     function handleClickBack() {
         navigate(-1)

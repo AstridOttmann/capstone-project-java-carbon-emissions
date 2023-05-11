@@ -77,7 +77,7 @@ export default function HomePage(props: HomePageProps) {
                 return <CompareRoutesCard key={route.id} route={route}/>
             })}
             {!addMode && routesToCompare.length === 2 &&
-                <Box sx={{display: "flex", gap: "1rem",}}>
+                <Box sx={{display: "flex", gap: "1rem"}}>
                     {routesToCompare.map((route) => {
                         return <CompareRoutesResults key={route.id} route={route}/>
                     })}

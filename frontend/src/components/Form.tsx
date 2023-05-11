@@ -21,6 +21,7 @@ import EditOffIcon from '@mui/icons-material/EditOff';
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
+import {toast} from "react-toastify";
 
 
 const sxStylePaper = {
@@ -46,7 +47,7 @@ type FormProps = {
     setIsEditMode: (arg0: boolean) => void,
     routesToCompare: Route[]
     setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
-    getAllComparison:()=> Promise<void>,
+    getAllComparison: () => Promise<void>,
 
 }
 export default function Form(props: FormProps) {
@@ -76,25 +77,39 @@ export default function Form(props: FormProps) {
         route && setRoute({...route, [name]: value})
     }
 
+    const handleSuccessfulSubmit = () => {
+        resetRoute();
+        setVehicle(initialStateVehicle)
+        props.setAddMode(false)
+        props.setIsEditMode(false)
+    }
+
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
         if (route) {
             if (props.isEditMode) {
                 const updatedRoute: Route = {...route, vehicle}
                 updateRoute(updatedRoute.id, updatedRoute)
-                    .then(updatedRoute => props.getAllComparison()
-                        .then(()=> navigate(-1)))
+                    .then(() => props.getAllComparison()
+                        .then(() => {
+                            navigate(-1)
+                            handleSuccessfulSubmit();
+                        }))
+
             } else {
                 const routeToAdd = {...route, vehicle}
                 addRoute(routeToAdd)
-                    .then(savedRoute =>
+                    .then(savedRoute => {
                         props.setRoutesToCompare(
-                            [...props.routesToCompare, savedRoute]))
+                            [...props.routesToCompare, savedRoute])
+                        handleSuccessfulSubmit();
+                    })
+                    .catch(error => {
+                        console.error(error)
+                        toast.error("Invalid Input! " + error)
+                    })
             }
-            resetRoute();
-            setVehicle(initialStateVehicle)
-            props.setAddMode(false)
-            props.setIsEditMode(false)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.github.astridottmann.backend.models;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Data
@@ -7,7 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Car extends Vehicle implements GetCo2EmissionFactor {
+    @NotBlank
     private String fuel;
+
+    @NotBlank
     private String carSize;
 
     public Car(String type, double co2Emission, String fuel, String carSize) {

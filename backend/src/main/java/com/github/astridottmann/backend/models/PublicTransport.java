@@ -1,5 +1,6 @@
 package com.github.astridottmann.backend.models;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PublicTransport extends Vehicle implements GetCo2EmissionFactor {
+    @NotBlank
     String distanceLevel;
+    @NotBlank
     String meansOfTransport;
 
     public PublicTransport(String type, double co2Emission, String distanceLevel, String meansOfTransport) {

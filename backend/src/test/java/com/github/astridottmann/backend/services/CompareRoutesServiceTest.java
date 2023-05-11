@@ -124,7 +124,6 @@ class CompareRoutesServiceTest {
     @Test
     void deleteCompareRoutesById_shouldDeleteRequested() {
         CompareRoutes toDelete = createTestCompareRoutesInstance();
-        compareRoutesRepository.save(createTestCompareRoutesInstance());
 
         Mockito.when(compareRoutesRepository.existsById(toDelete.id()))
                 .thenReturn(true);
@@ -164,7 +163,7 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void updateComparison_shouldThrowNoSuchElementException_whenInvaliId() {
+    void updateComparison_shouldThrowNoSuchElementException_whenInvalidId() {
         CompareRoutes toUpdate = createTestCompareRoutesInstance();
         String errorMessage = "Couldn't update Compared Routes. Id " + toUpdate.id() + " doesn't exist";
 
