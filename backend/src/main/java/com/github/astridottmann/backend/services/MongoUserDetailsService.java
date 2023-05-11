@@ -25,4 +25,5 @@ public class MongoUserDetailsService implements UserDetailsService {
                         .orElseThrow(() -> new UsernameNotFoundException("User with name " + username + " not found!"));
         return new User(user.username(), user.password(), Collections.emptyList());
     }
+
 }

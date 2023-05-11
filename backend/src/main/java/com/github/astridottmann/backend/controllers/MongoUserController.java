@@ -1,15 +1,22 @@
 package com.github.astridottmann.backend.controllers;
 
+import com.github.astridottmann.backend.models.MongoUser;
+import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class MongoUserController {
+
+    private final MongoUserRepository mongoUserRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/me")
     public String getMe() {
@@ -32,4 +39,17 @@ public class MongoUserController {
         httpSession.invalidate();
         SecurityContextHolder.clearContext();
     }
+
+    @PostMapping("/signin")
+    public MongoUser signIn(@RequestBody @Valid MongoUser user) {
+        String errorMessage = "Username already exists";
+
+        if (mongoUserRepository.findMongoUserByUsername(user.username()).isPresent()) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+        String encodedPassword = passwordEncoder.encode(user.password());
+        MongoUser newUser = new MongoUser(null, user.username(), encodedPassword);
+        return mongoUserRepository.save(newUser);
+    }
+
 }

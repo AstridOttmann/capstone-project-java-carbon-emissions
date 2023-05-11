@@ -1,7 +1,9 @@
-import {Box, Button, TextField} from "@mui/material";
+import {Box, Button, TextField, ButtonGroup} from "@mui/material";
 import {FormEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {RoutesContext} from "../contexts/RoutesContextProvider";
+import {MongoUser} from "../models/MongoUserModel";
+import {toast} from "react-toastify";
 
 const sxStyleBox = {
     display: "flex",
@@ -12,26 +14,40 @@ const sxStyleBox = {
 
 type LoginPageProps = {
     onLogin: (username: string, password: string) => Promise<string | number | void>,
-    getAllComparison: () => void
+    onSignIn: (user: MongoUser) => Promise<string | number | void>,
+    getAllComparison: () => void,
+    mongoUser: MongoUser
+
 }
 export default function LoginPage(props: LoginPageProps) {
     const {getAllRoutes} = useContext(RoutesContext)
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [signIn, setSignIn] = useState<boolean>();
+
 
     const navigate = useNavigate();
 
     function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        if (signIn) {
+            const user: MongoUser = {username, password}
+            props.onSignIn(user)
+                .then(() => {
+                    toast.success("Created an account!")
+                    setSignIn(false);
+                })
 
-        props.onLogin(username, password)
-            .then(() => {
-                navigate("/");
-                getAllRoutes();
-                props.getAllComparison();
-            })
-            .catch(error => console.error(error));
+        } else {
+            props.onLogin(username, password)
+                .then(() => {
+                    navigate("/");
+                    getAllRoutes();
+                    props.getAllComparison();
+                })
+                .catch(error => console.error(error));
 
+        }
     }
 
     return (
@@ -56,7 +72,13 @@ export default function LoginPage(props: LoginPageProps) {
                            InputLabelProps={{sx: {color: "#3fd44d"}}}
                            InputProps={{sx: {color: "#3fd44d"}}}
                 />
-                <Button type="submit" variant="outlined">Login</Button>
+                <ButtonGroup sx={{display: "flex", justifyContent: "center"}}
+                             variant="text"
+                             aria-label="text button group">
+                    <Button type="submit" onClick={() => setSignIn(true)}>Sign in</Button>
+                    <Button type="submit">Login</Button>
+                </ButtonGroup>
+                {/*  <Button type="submit" variant="outlined">Login</Button>*/}
             </Box>
         </form>
     )

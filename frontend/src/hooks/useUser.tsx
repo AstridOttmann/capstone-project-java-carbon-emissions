@@ -1,10 +1,18 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
+import {MongoUser} from "../models/MongoUserModel";
+
 
 export default function useUser() {
     const [user, setUser] = useState<string>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const initialState = {
+        username: "",
+        password: ""
+    }
+    const [mongoUser, setMongoUser] = useState<MongoUser>(initialState);
 
     useEffect(() => {
         function checkLoggedInUser() {
@@ -41,5 +49,14 @@ export default function useUser() {
             .catch(error => toast.error("Already logged out!" + error))
     }
 
-    return {user, isLoading, login, logout}
+    function signIn(user: MongoUser) {
+        return axios.post("/api/user/signin", user)
+            .then(response => {
+                console.log("Created an account!")
+                setMongoUser(response.data)
+            })
+            .catch(error => toast.error("Sign in not possible. Invalid Input " + error))
+    }
+
+    return {user, isLoading, login, logout, signIn, mongoUser}
 }
