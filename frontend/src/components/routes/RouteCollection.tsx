@@ -6,7 +6,7 @@ import './RouteCollection.css'
 
 import RouteCard from "./RouteCard";
 import {useContext} from "react";
-import {RoutesContext} from "../contexts/RoutesContextProvider";
+import {RoutesContext} from "../../contexts/RoutesContextProvider";
 
 const sxStylePaper = {
     p: "1rem",

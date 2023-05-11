@@ -2,7 +2,7 @@ import {Button, ButtonGroup, Card, Divider, Paper, Stack, styled, Typography} fr
 import EditIcon from "@mui/icons-material/Edit";
 import {useContext, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {RouteContext} from "../contexts/RouteContextProvider";
+import {RouteContext} from "../../contexts/RouteContextProvider";
 import RouteVehicleDetails from "./RouteVehicleDetails";
 
 const sxStylePaper = {

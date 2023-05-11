@@ -3,7 +3,7 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import TrainIcon from "@mui/icons-material/Train";
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
-import {Route} from "../models/RouteModel";
+import {Route} from "../../models/RouteModel";
 
 const Item = styled('div')(({theme}) => ({
     backgroundColor: "#B3BDB3",

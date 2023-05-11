@@ -2,7 +2,7 @@ import {Box, Button, ButtonGroup, Card, Paper, Typography} from "@mui/material";
 import CompareRoutesResults from "./CompareRoutesResults";
 import EditIcon from "@mui/icons-material/Edit";
 import {useNavigate, useParams} from "react-router-dom";
-import RouteVehicleDetails from "./RouteVehicleDetails";
+import RouteVehicleDetails from "./routes/RouteVehicleDetails";
 import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {useContext, useEffect} from "react";
