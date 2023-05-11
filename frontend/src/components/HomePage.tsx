@@ -10,6 +10,7 @@ import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
 import CompareRoutesResults from "./CompareRoutesResults";
 import CloseIcon from "@mui/icons-material/Close";
+import MapComponent from "./map/MapComponent";
 
 
 type HomePageProps = {
@@ -44,15 +45,24 @@ export default function HomePage(props: HomePageProps) {
             backgroundColor: "#282c34"
         }}>
             {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
-                <ButtonGroup
-                    sx={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", gap: "0.5rem", m: "1rem"}}
-                    variant="text"
-                    aria-label="text button group">
-                    <Button variant="outlined"
-                            onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
-                        Add Route
-                    </Button>
-                </ButtonGroup>}
+                <Box sx={{display: "block"}}>
+                    <ButtonGroup
+                        sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "space-evenly",
+                            gap: "0.5rem",
+                            m: "1rem"
+                        }}
+                        variant="text"
+                        aria-label="text button group">
+                        <Button variant="outlined"
+                                onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
+                            Add Route
+                        </Button>
+                    </ButtonGroup>
+                    <MapComponent/>
+                </Box>}
 
             {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {
                 return (
