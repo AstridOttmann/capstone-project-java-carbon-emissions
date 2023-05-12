@@ -7,7 +7,7 @@ import {Container} from "@mui/material";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import RouteCollection from "./components/RouteCollection";
+import RouteCollection from "./components//RouteCollection";
 import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/RouteDetails";
 import useCompareRoutes from "./hooks/useCompareRoutes";
