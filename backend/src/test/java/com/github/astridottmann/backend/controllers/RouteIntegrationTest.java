@@ -1,6 +1,5 @@
 package com.github.astridottmann.backend.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.astridottmann.backend.models.PublicTransport;
 import com.github.astridottmann.backend.models.Route;
@@ -36,7 +35,7 @@ class RouteIntegrationTest {
     private String testRouteWithoutIdJson;
 
     @BeforeEach
-    void setUp() throws JsonProcessingException {
+    void setUp() throws Exception {
         PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
         testRoute = new Route(
                 "123",
