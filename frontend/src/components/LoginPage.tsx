@@ -2,7 +2,6 @@ import {Box, Button, TextField, ButtonGroup} from "@mui/material";
 import {FormEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {RoutesContext} from "../contexts/RoutesContextProvider";
-import {MongoUser} from "../models/MongoUserModel";
 import {toast} from "react-toastify";
 
 const sxStyleBox = {
@@ -14,9 +13,9 @@ const sxStyleBox = {
 
 type LoginPageProps = {
     onLogin: (username: string, password: string) => Promise<string | number | void>,
-    onSignIn: (user: MongoUser) => Promise<string | number | void>,
+    onSignIn: (username: string, password: string) => Promise<string | number | void>,
     getAllComparison: () => void,
-    mongoUser: MongoUser
+    // mongoUser: MongoUser
 
 }
 export default function LoginPage(props: LoginPageProps) {
@@ -31,8 +30,7 @@ export default function LoginPage(props: LoginPageProps) {
     function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (signIn) {
-            const user: MongoUser = {username, password}
-            props.onSignIn(user)
+            props.onSignIn(username, password)
                 .then(() => {
                     toast.success("Created an account!")
                     setSignIn(false);

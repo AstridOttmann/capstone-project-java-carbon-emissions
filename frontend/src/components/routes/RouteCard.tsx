@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
 import {Route} from "../../models/RouteModel";
+
 import RouteVehicleIcon from "./RouteVehicleIcon";
 import RouteInfo from "./RouteInfo";
 

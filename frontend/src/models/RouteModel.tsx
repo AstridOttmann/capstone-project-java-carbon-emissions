@@ -9,7 +9,8 @@ export type Route = {
     numberOfPersons: number,
     oneWay: boolean,
     vehicle: Vehicle,
-    co2EmissionRoute: number
+    co2EmissionRoute: number,
+    userId: string
 }
 
 export type NewRoute = Omit<Route, "id">

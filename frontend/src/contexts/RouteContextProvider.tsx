@@ -34,6 +34,7 @@ export default function RouteContextProvider(props: RouteContextProps) {
         vehicle:
             {type: "", co2Emission: 0, fuel: "", carSize: "", distanceLevel: "", meansOfTransport: ""},
         co2EmissionRoute: 0,
+        userId: ""
     };
 
     const [route, setRoute] = useState<Route>(initialStateRoute);

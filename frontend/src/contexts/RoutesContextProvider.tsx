@@ -8,7 +8,7 @@ export type RoutesContextType = {
     setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
     getAllRoutes: () => void,
     //getRouteById: (id: string) => void,
-    addRoute: (route: NewRoute) => Promise<Route>,
+    addRoute: (route: NewRoute, userId: string) => Promise<Route>,
     deleteRoute: (id: string) => void,
     updateRoute: (id: string, route: Route) => Promise<Route>,
 }
@@ -60,8 +60,8 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
             })
     }
 
-    function addRoute(route: NewRoute) {
-        return axios.post("/api/routes", route)
+    function addRoute(route: NewRoute, userId: string) {
+        return axios.post("/api/routes", {...route, userId: userId })
             .then((response) => {
                 setRoutes([response.data, ...routes])
                 return response.data

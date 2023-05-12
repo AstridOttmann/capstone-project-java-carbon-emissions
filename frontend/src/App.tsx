@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import './App.css';
 import Header from "./components/Header";
@@ -14,12 +14,12 @@ import useCompareRoutes from "./hooks/useCompareRoutes";
 import CompareRoutesCollection from "./components/compare/CompareRoutesCollection";
 import CompareRoutesDetails from "./components/compare/CompareRoutesDetails";
 import LoginPage from "./components/LoginPage";
-import useUser from "./hooks/useUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import {UserContext} from "./contexts/UserContext";
 
 
 function App() {
-    const {user, mongoUser, isLoading, login, logout, signIn} = useUser()
+   const {user, isLoading, login, logout, signIn} = useContext(UserContext)
     const {
         comparedRoutes,
         comparedRoutesList,
@@ -29,6 +29,7 @@ function App() {
         addComparison,
         deleteComparisonById
     } = useCompareRoutes();
+
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
 
     return (
@@ -43,7 +44,7 @@ function App() {
                                    getAllComparison={getAllComparison}
                                    onLogin={login}
                                    onSignIn={signIn}
-                                   mongoUser={mongoUser}/>}
+                                   />}
                         />
 
                         <Route element={<ProtectedRoutes user={user} isLoading={isLoading}/>}>

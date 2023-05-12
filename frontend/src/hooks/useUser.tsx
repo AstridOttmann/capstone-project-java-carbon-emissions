@@ -1,3 +1,8 @@
+
+export default function useUser(){
+   return <div>not empty!</div>
+}
+/*
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
@@ -9,7 +14,8 @@ export default function useUser() {
 
     const initialState = {
         username: "",
-        password: ""
+        password: "",
+        userId: ""
     }
     const [mongoUser, setMongoUser] = useState<MongoUser>(initialState);
 
@@ -20,6 +26,7 @@ export default function useUser() {
                 .then((response) => {
                     if (response.data && response.data !== "anonymousUser") {
                         setUser(response.data);
+                        console.log(user)
                     }
                 })
                 .catch(() => {
@@ -58,4 +65,4 @@ export default function useUser() {
     }
 
     return {user, isLoading, login, logout, signIn, mongoUser}
-}
+}*/

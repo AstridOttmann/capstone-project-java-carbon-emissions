@@ -16,6 +16,7 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final IdService idService;
     private final CalculateCo2EmissionService calculateCo2EmissionService;
+    private final MongoUser user;
     private final CompareRoutesService compareRoutesService;
     private final CompareRoutesRepository compareRoutesRepository;
 
@@ -23,8 +24,9 @@ public class RouteService {
     public Route addRoute(RouteDTO routeDTO) {
         String id = idService.createRandomId();
         double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(routeDTO);
+        String userId = user.id();
 
-        Route routeToAdd = Route.createRouteFromDTO(routeDTO, id, co2EmissionRoute);
+        Route routeToAdd = Route.createRouteFromDTO(routeDTO, id, co2EmissionRoute, userId);
         return routeRepository.save(routeToAdd);
     }
 
