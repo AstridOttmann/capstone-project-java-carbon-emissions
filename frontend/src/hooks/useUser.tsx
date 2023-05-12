@@ -3,7 +3,6 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import {MongoUser} from "../models/MongoUserModel";
 
-
 export default function useUser() {
     const [user, setUser] = useState<string>();
     const [isLoading, setIsLoading] = useState<boolean>(true);

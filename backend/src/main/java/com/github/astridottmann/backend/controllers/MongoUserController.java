@@ -42,9 +42,8 @@ public class MongoUserController {
 
     @PostMapping("/signin")
     public MongoUser signIn(@RequestBody @Valid MongoUser user) {
-        String errorMessage = "Username already exists!";
-
         if (mongoUserRepository.findMongoUserByUsername(user.username()).isPresent()) {
+            String errorMessage = "Username already exists!";
             throw new IllegalArgumentException(errorMessage);
         }
         String encodedPassword = passwordEncoder.encode(user.password());

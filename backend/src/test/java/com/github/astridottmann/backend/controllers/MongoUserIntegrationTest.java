@@ -87,8 +87,7 @@ class MongoUserIntegrationTest {
     void signIn_shouldReturnApiErrorAndStatusIsUnprocessable_whenUsernameAlreadyExists() throws Exception {
         MongoUser testUser = new MongoUser("123", "testUser", "1234abc");
         mongoUserRepository.save(testUser);
-
-        String expectedBody = "{ \"message\": \"Username already exists!\"}";
+        String expectedMessage = "Username already exists!";
 
         mockMvc.perform(post("/api/user/signin")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -97,7 +96,7 @@ class MongoUserIntegrationTest {
                                  """)
                         .with(csrf()))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().json(expectedBody))
+                .andExpect(jsonPath("$.message").value(expectedMessage))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 }
