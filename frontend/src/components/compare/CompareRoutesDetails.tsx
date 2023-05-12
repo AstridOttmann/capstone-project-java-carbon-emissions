@@ -2,12 +2,12 @@ import {Box, Button, ButtonGroup, Card, Paper, Typography} from "@mui/material";
 import CompareRoutesResults from "./CompareRoutesResults";
 import EditIcon from "@mui/icons-material/Edit";
 import {useNavigate, useParams} from "react-router-dom";
-import RouteVehicleDetails from "./RouteVehicleDetails";
-import {CompareRoutes} from "../models/CompareRoutesModel";
+import RouteVehicleDetails from "../routes/RouteVehicleDetails";
+import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {useContext, useEffect} from "react";
-import {RouteContext} from "../contexts/RouteContextProvider";
-import {Route} from "../models/RouteModel";
+import {RouteContext} from "../../contexts/RouteContextProvider";
+import {Route} from "../../models/RouteModel";
 
 
 const sxStylePaper = {

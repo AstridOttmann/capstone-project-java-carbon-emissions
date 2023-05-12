@@ -7,8 +7,8 @@ import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
 import {CompareRoutes} from "../models/CompareRoutesModel";
-import CompareRoutesCard from "./CompareRoutesCard";
-import CompareRoutesResults from "./CompareRoutesResults";
+import CompareRoutesCard from "./compare/CompareRoutesCard";
+import CompareRoutesResults from "./compare/CompareRoutesResults";
 import CloseIcon from "@mui/icons-material/Close";
 
 

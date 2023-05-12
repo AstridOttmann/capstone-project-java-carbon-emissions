@@ -1,5 +1,5 @@
 import {Paper, Typography} from "@mui/material";
-import {CompareRoutes} from "../models/CompareRoutesModel";
+import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesComponent from "./CompareRoutesComponent";
 
 const sxStylePaper = {
