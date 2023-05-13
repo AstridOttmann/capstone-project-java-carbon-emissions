@@ -23,20 +23,22 @@ type HomePageProps = {
     user: MongoUser,
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
-    getAllComparison: () => Promise<void>,
+    getAllComparison: () => void,
     addComparison: (compareRoutes: CompareRoutes) => void,
-    comparedRoutes: CompareRoutes,
-    setComparedRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
+    compareRoutes: CompareRoutes,
+    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
 }
 
 export default function HomePage(props: HomePageProps) {
     const [addMode, setAddMode] = useState<boolean>(false)
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
 
-    function handleAdd() {
-        const comparedRoutesToAdd = {...props.comparedRoutes, compared: routesToCompare}
-        props.setComparedRoutes(comparedRoutesToAdd)
-        props.addComparison(comparedRoutesToAdd)
+    console.log("home", props.user)
+
+    function handleAddComparison() {
+        const compareRoutesToAdd = {...props.compareRoutes, userId: props.user.id, compared: routesToCompare}
+        props.setCompareRoutes(compareRoutesToAdd)
+        props.addComparison(compareRoutesToAdd)
         setRoutesToCompare([])
     }
 
@@ -109,7 +111,7 @@ export default function HomePage(props: HomePageProps) {
                         </Typography>
                     </Box>
                     <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}>
-                        <Button variant="outlined" endIcon={<SaveIcon/>} onClick={handleAdd}>
+                        <Button variant="outlined" endIcon={<SaveIcon/>} onClick={handleAddComparison}>
                             Save
                         </Button>
                         <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}

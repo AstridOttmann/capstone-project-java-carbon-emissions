@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {CompareRoutes} from "../models/CompareRoutesModel";
+import {CompareRoutes, NewCompareRoutes} from "../models/CompareRoutesModel";
 import {toast} from "react-toastify";
 
 export default function useCompareRoutes() {
 
-    const initialStateComparedRoutes: CompareRoutes = {
+    const initialStateCompareRoutes: CompareRoutes = {
         id: "",
         userId: "",
         compared: [
@@ -53,34 +53,34 @@ export default function useCompareRoutes() {
         }
     }
 
-    const [comparedRoutesList, setComparedRoutesList] = useState<CompareRoutes[]>([]);
-    const [comparedRoutes, setComparedRoutes] = useState<CompareRoutes>(initialStateComparedRoutes);
+    const [compareRoutesList, setCompareRoutesList] = useState<CompareRoutes[]>([]);
+    const [compareRoutes, setCompareRoutes] = useState<CompareRoutes>(initialStateCompareRoutes);
 
     useEffect(() => {
         getAllComparison()
     }, [])
 
     function getAllComparison() {
-        return axios.get("/api/compare")
+        axios.get("/api/compare")
             .then((response) => {
-                setComparedRoutesList(response.data)
+                setCompareRoutesList(response.data)
             })
     }
 
     function getComparisonById(id: string) {
         axios.get(`/api/compare/${id}`)
             .then((response) => {
-                setComparedRoutes(response.data)
+                setCompareRoutes(response.data)
             })
             .catch((error) => {
                 toast.error("404 " + error)
             })
     }
 
-    function addComparison(comparedRoutes: CompareRoutes) {
-        axios.post("/api/compare", comparedRoutes.compared)
+    function addComparison(compareRoutes: NewCompareRoutes) {
+        axios.post("/api/compare", compareRoutes)
             .then((response) => {
-                setComparedRoutesList([response.data, ...comparedRoutesList])
+                setCompareRoutesList([response.data, ...compareRoutesList])
             })
             .catch((error) => {
                 toast.error("Error! Try again later " + error)
@@ -90,7 +90,7 @@ export default function useCompareRoutes() {
     function updateComparison(id: string, comparedRoutes: CompareRoutes) {
         axios.put(`api/compare/${id}`, comparedRoutes)
             .then(response => response.data)
-            .then(data => setComparedRoutesList(prevState => {
+            .then(data => setCompareRoutesList(prevState => {
                 return prevState.map(currentState => {
                     return currentState.id === id ? data : currentState
                 })
@@ -100,8 +100,8 @@ export default function useCompareRoutes() {
     function deleteComparisonById(id: string) {
         axios.delete(`/api/compare/${id}`)
             .then(() => {
-                setComparedRoutesList(
-                    comparedRoutesList.filter((comparedRoutes) => comparedRoutes.id !== id))
+                setCompareRoutesList(
+                    compareRoutesList.filter((comparedRoutes) => comparedRoutes.id !== id))
                 toast.success("Deleted!")
             })
             .catch((error) => {
@@ -110,10 +110,10 @@ export default function useCompareRoutes() {
     }
 
     return {
-        comparedRoutes,
-        setComparedRoutes,
-        comparedRoutesList,
-        setComparedRoutesList,
+        compareRoutes,
+        setCompareRoutes,
+        compareRoutesList,
+        setCompareRoutesList,
         getAllComparison,
         getComparisonById,
         addComparison,

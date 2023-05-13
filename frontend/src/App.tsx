@@ -21,9 +21,9 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 function App() {
     const {user, setUser, isLoading, login, logout, signIn} = useUser()
     const {
-        comparedRoutes,
-        comparedRoutesList,
-        setComparedRoutes,
+        compareRoutes,
+        compareRoutesList,
+        setCompareRoutes,
         getAllComparison,
         getComparisonById,
         addComparison,
@@ -57,19 +57,20 @@ function App() {
                                     addComparison={addComparison}
                                     setIsEditMode={setIsEditMode}
                                     isEditMode={isEditMode}
-                                    comparedRoutes={comparedRoutes}
-                                    setComparedRoutes={setComparedRoutes}
+                                    compareRoutes={compareRoutes}
+                                    setCompareRoutes={setCompareRoutes}
                                 />}/>
                             <Route path="/routes" element={
                                 <RouteCollection user={user}/>}/>
                             <Route path="/compared" element={
-                                <CompareRoutesCollection comparedRoutesList={comparedRoutesList}
+                                <CompareRoutesCollection user={user}
+                                                         compareRoutesList={compareRoutesList}
                                                          deleteComparisonById={deleteComparisonById}/>}/>
                             <Route path="/routes/details/:id" element={
                                 <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                             <Route path="/compared/details/:id" element={
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
-                                                      comparedRoutes={comparedRoutes}
+                                                      comparedRoutes={compareRoutes}
                                                       setIsEditMode={setIsEditMode}/>}/>
 
                         </Route>

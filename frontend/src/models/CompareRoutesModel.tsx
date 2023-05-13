@@ -8,4 +8,4 @@ export type CompareRoutes = {
     comparisonResults: ComparisonResults
 
 }
-// export type NewCompareRoutes = Omit<CompareRoutes, "id" | "comparisonResults">
+export type NewCompareRoutes = Omit<CompareRoutes, "id">
