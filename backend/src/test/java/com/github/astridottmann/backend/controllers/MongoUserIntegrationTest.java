@@ -1,7 +1,10 @@
 package com.github.astridottmann.backend.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.astridottmann.backend.models.MongoUser;
+import com.github.astridottmann.backend.models.Route;
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,22 +31,35 @@ class MongoUserIntegrationTest {
     @Autowired
     MongoUserRepository mongoUserRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+    private MongoUser testUser;
+    private String testUserJson;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        testUser = new MongoUser("123", "testUser", "test");
+        testUserJson = objectMapper.writeValueAsString(testUser);
+    }
+
     @Test
     @WithMockUser(username = "testUser")
     void getMe_shouldReturnUser() throws Exception {
+        mongoUserRepository.save(testUser);
         mockMvc.perform(get("/api/user/me"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("testUser"));
+                .andExpect(content().json(testUserJson));
 
     }
 
     @Test
     @WithMockUser(username = "testUser")
     void login_shouldReturnUser() throws Exception {
+        mongoUserRepository.save(testUser);
         mockMvc.perform(post("/api/user/login")
                         .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(content().string("testUser"));
+                .andExpect(content().json(testUserJson));
 
     }
 
