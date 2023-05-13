@@ -19,7 +19,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 
 
 function App() {
-    const {user, mongoUser, isLoading, login, logout, signIn} = useUser()
+    const {user, setUser, isLoading, login, logout, signIn} = useUser()
     const {
         comparedRoutes,
         comparedRoutesList,
@@ -43,13 +43,16 @@ function App() {
                                    getAllComparison={getAllComparison}
                                    onLogin={login}
                                    onSignIn={signIn}
-                                   mongoUser={mongoUser}/>}
+                                   user={user}
+                                   setUser={setUser}
+                               />}
                         />
 
                         <Route element={<ProtectedRoutes user={user} isLoading={isLoading}/>}>
                             <Route element={<Navigate to="/"/>}/>
                             <Route path="/" element={
                                 <HomePage
+                                    user={user}
                                     getAllComparison={getAllComparison}
                                     addComparison={addComparison}
                                     setIsEditMode={setIsEditMode}

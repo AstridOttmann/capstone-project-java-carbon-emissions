@@ -1,5 +1,5 @@
 import {Box, Button, TextField, ButtonGroup} from "@mui/material";
-import {FormEvent, useContext, useState} from "react";
+import {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {MongoUser} from "../models/MongoUserModel";
@@ -16,30 +16,33 @@ type LoginPageProps = {
     onLogin: (username: string, password: string) => Promise<string | number | void>,
     onSignIn: (user: MongoUser) => Promise<string | number | void>,
     getAllComparison: () => void,
-    mongoUser: MongoUser
+    user: MongoUser,
+    setUser: (user: MongoUser) => void
 
 }
 export default function LoginPage(props: LoginPageProps) {
     const {getAllRoutes} = useContext(RoutesContext)
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+   // const [username, setUsername] = useState<string>('');
+   // const [password, setPassword] = useState<string>('');
     const [signIn, setSignIn] = useState<boolean>();
-
 
     const navigate = useNavigate();
 
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = event.target
+        props.setUser({...props.user, [name]: value})
+    }
     function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (signIn) {
-            const user: MongoUser = {username, password}
-            props.onSignIn(user)
+            props.onSignIn(props.user)
                 .then(() => {
                     toast.success("Created an account!")
                     setSignIn(false);
                 })
                 .catch(error => console.error(error));
         } else {
-            props.onLogin(username, password)
+            props.onLogin(props.user.username, props.user.password)
                 .then(() => {
                     navigate("/");
                     getAllRoutes();
@@ -57,8 +60,9 @@ export default function LoginPage(props: LoginPageProps) {
                            type="text"
                            label="User name"
                            id="username"
-                           value={username}
-                           onChange={e => setUsername(e.target.value)}
+                           name="username"
+                           value={props.user.username}
+                           onChange={handleChange}
                            InputLabelProps={{sx: {color: "#3fd44d"}}}
                            InputProps={{sx: {color: "#3fd44d"}}}
                 />
@@ -67,8 +71,9 @@ export default function LoginPage(props: LoginPageProps) {
                            type="password"
                            label="Password"
                            id="password"
-                           value={password}
-                           onChange={e => setPassword(e.target.value)}
+                           name="password"
+                           value={props.user.password}
+                           onChange={handleChange}
                            InputLabelProps={{sx: {color: "#3fd44d"}}}
                            InputProps={{sx: {color: "#3fd44d"}}}
                 />

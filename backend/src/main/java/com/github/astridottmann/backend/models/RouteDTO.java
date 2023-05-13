@@ -16,7 +16,8 @@ public record RouteDTO(
         int numberOfPersons,
         @NotNull
         boolean oneWay,
-        Vehicle vehicle
+        Vehicle vehicle,
+        String userId
 ) {
     public RouteDTO(Route route) {
         this(route.start(),
@@ -24,7 +25,8 @@ public record RouteDTO(
                 route.distance(),
                 route.numberOfPersons(),
                 route.oneWay(),
-                route.vehicle());
+                route.vehicle(),
+                route.userId());
 
     }
 }

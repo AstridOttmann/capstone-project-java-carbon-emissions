@@ -4,22 +4,24 @@ import {toast} from "react-toastify";
 import {MongoUser} from "../models/MongoUserModel";
 
 export default function useUser() {
-    const [user, setUser] = useState<string>();
+    // const [user, setUser] = useState<string>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const initialState = {
+        id: "",
         username: "",
         password: ""
     }
-    const [mongoUser, setMongoUser] = useState<MongoUser>(initialState);
+    const [user, setUser] = useState<MongoUser>(initialState);
 
     useEffect(() => {
         function checkLoggedInUser() {
             axios
-                .get("/api/users/me")
+                .get("/api/user/me")
                 .then((response) => {
-                    if (response.data && response.data !== "anonymousUser") {
+                    if (response.data.username !== "" && response.data.username !== "anonymousUser") {
                         setUser(response.data);
+                        console.log("user", user)
                     }
                 })
                 .catch(() => {
@@ -43,7 +45,7 @@ export default function useUser() {
     function logout() {
         return axios.post("/api/user/logout")
             .then(() => {
-                setUser(undefined);
+                setUser(initialState);
             })
             .catch(error => toast.error("Already logged out!" + error))
     }
@@ -52,10 +54,10 @@ export default function useUser() {
         return axios.post("/api/user/signin", user)
             .then(response => {
                 console.log("Created an account!")
-                setMongoUser(response.data)
+                console.log("sign", response.data);
             })
             .catch(error => toast.error("Sign in not possible. Invalid Input " + error))
     }
 
-    return {user, isLoading, login, logout, signIn, mongoUser}
+    return {user, setUser, isLoading, login, logout, signIn}
 }

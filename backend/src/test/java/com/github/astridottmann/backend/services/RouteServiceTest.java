@@ -34,7 +34,8 @@ class RouteServiceTest {
                 1,
                 false,
                 car,
-                dummyEmission);
+                dummyEmission,
+                "a1b2");
     }
 
     private RouteDTO createTestRouteDTOInstance() {
@@ -45,7 +46,8 @@ class RouteServiceTest {
                 492,
                 1,
                 false,
-                car);
+                car,
+                "a1b2");
     }
 
     @BeforeEach

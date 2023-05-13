@@ -45,7 +45,8 @@ class RouteIntegrationTest {
                 1,
                 false,
                 publicTransport,
-                26.59);
+                26.59,
+                "a1b2");
 
         testRouteJson = objectMapper.writeValueAsString(testRoute);
 
@@ -116,7 +117,8 @@ class RouteIntegrationTest {
                 testRoute.numberOfPersons(),
                 testRoute.oneWay(),
                 testRoute.vehicle(),
-                actual.co2EmissionRoute());
+                actual.co2EmissionRoute(),
+                testRoute.userId());
 
         assertThat(routeRepository.findAll()).contains(expected);
     }

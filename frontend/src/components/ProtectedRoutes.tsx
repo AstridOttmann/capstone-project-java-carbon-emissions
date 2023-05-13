@@ -1,8 +1,9 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
+import {MongoUser} from "../models/MongoUserModel";
 
 type ProtectedRoutesProps = {
-    user: string | undefined,
+    user: MongoUser,
     isLoading: boolean
 }
 export default function ProtectedRoutes(props: ProtectedRoutesProps) {
@@ -21,5 +22,5 @@ export default function ProtectedRoutes(props: ProtectedRoutesProps) {
             </div>
         )
     }
-    return props.user ? <Outlet/> : <Navigate to={"/login"}/>
+    return props.user.id  ? <Outlet/> : <Navigate to={"/login"}/>
 }

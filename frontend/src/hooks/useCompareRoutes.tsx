@@ -23,7 +23,8 @@ export default function useCompareRoutes() {
                     distanceLevel: "",
                     meansOfTransport: ""
                 },
-                "co2EmissionRoute": 0
+                "co2EmissionRoute": 0,
+                userId: ""
             },
             {
                 id: "",
@@ -40,7 +41,8 @@ export default function useCompareRoutes() {
                     distanceLevel: "",
                     meansOfTransport: ""
                 },
-                co2EmissionRoute: 0
+                co2EmissionRoute: 0,
+                userId: ""
             }
         ],
         comparisonResults: {
@@ -77,7 +79,7 @@ export default function useCompareRoutes() {
     function addComparison(comparedRoutes: CompareRoutes) {
         axios.post("/api/compare", comparedRoutes.compared)
             .then((response) => {
-                setComparedRoutesList([...comparedRoutesList, response.data])
+                setComparedRoutesList([response.data, ...comparedRoutesList])
             })
             .catch((error) => {
                 toast.error("Error! Try again later " + error)

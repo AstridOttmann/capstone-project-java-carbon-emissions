@@ -52,7 +52,8 @@ class CompareRoutesIntegrationTest {
                 1,
                 false,
                 car,
-                268.93);
+                268.93,
+        "a1b2");
 
         PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
         Route routeB = new Route(
@@ -63,7 +64,8 @@ class CompareRoutesIntegrationTest {
                 1,
                 false,
                 publicTransport,
-                45.26);
+                45.26,
+                "a1b2");
 
         testCompareRoutes = new CompareRoutes(
                 "999",
@@ -90,7 +92,8 @@ class CompareRoutesIntegrationTest {
                                     "fuel": "petrol",
                                     "carSize": "large"
                                 },
-                                "co2EmissionRoute": 268.93
+                                "co2EmissionRoute": 268.93, 
+                                "userId: "a1b2"
                             },
                             {
                                 "id": "456",
@@ -105,7 +108,8 @@ class CompareRoutesIntegrationTest {
                                     "distanceLevel": "longDistance",
                                     "meansOfTransport": "train"
                                 },
-                                "co2EmissionRoute": 45.26
+                                "co2EmissionRoute": 45.26,
+                                "userId: "a1b2"
                             }
                         ],
                      "comparisonResults": {
@@ -138,11 +142,13 @@ class CompareRoutesIntegrationTest {
                         []
                         """));
     }
+
     @Test
     void expect401_OnGet_whenAnonymousUser() throws Exception {
         mockMvc.perform(get("/api/compare"))
                 .andExpect(status().isUnauthorized());
     }
+
     @Test
     @WithMockUser
     void getCompareRoutesById_shouldReturnRequested() throws Exception {

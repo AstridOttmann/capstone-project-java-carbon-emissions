@@ -4,11 +4,8 @@ import com.github.astridottmann.backend.models.MongoUser;
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,26 +17,26 @@ class MongoUserDetailsServiceTest {
     final MongoUserDetailsService mongoUserDetailsService = new MongoUserDetailsService(mongoUserRepository);
 
     @Test
-    void loadUserByUsername_shouldReturnUser(){
+    void getUserInfo_shouldReturnUser(){
         MongoUser testUser = new MongoUser("1", "testUser", "test");
 
         Mockito.when(mongoUserRepository.findMongoUserByUsername("testUser"))
                 .thenReturn(Optional.of(testUser));
 
-        UserDetails actual = mongoUserDetailsService.loadUserByUsername("testUser");
-        UserDetails expected = new User(testUser.username(), testUser.password(), Collections.emptyList());
+        MongoUser actual = mongoUserDetailsService.getUserInfo("testUser");
+        MongoUser expected = new MongoUser(testUser.id(), testUser.username(), testUser.password());
 
         verify(mongoUserRepository).findMongoUserByUsername("testUser");
         assertEquals(expected, actual);
     }
 
     @Test
-    void loadUserByUsername_shouldThrowException_whenNoUser(){
+    void getUserInfo_shouldThrowException_whenNoUser(){
        /* Mockito.when(mongoUserRepository.findMongoUserByUsername("user"))
                 .thenReturn();*/
 
         Exception exception = assertThrows(UsernameNotFoundException.class,
-                ()-> mongoUserDetailsService.loadUserByUsername("user"));
+                ()-> mongoUserDetailsService.getUserInfo("user"));
 
         verify(mongoUserRepository).findMongoUserByUsername("user");
         String actual = exception.getMessage();

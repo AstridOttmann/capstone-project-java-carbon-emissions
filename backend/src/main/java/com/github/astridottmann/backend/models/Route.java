@@ -11,22 +11,25 @@ public record Route(
         int numberOfPersons,
         boolean oneWay,
         Vehicle vehicle,
-        double co2EmissionRoute
+        double co2EmissionRoute,
+        String userId
 ) {
     public static Route createRouteFromDTO(RouteDTO routeDTO, String id, double co2EmissionRoute) {
-        return new Route(id,
+        return new Route(
+                id,
                 routeDTO.start(),
                 routeDTO.destination(),
                 routeDTO.distance(),
                 routeDTO.numberOfPersons(),
                 routeDTO.oneWay(),
                 routeDTO.vehicle(),
-                co2EmissionRoute);
+                co2EmissionRoute,
+                routeDTO.userId());
     }
 
     public Route withCo2Emission(double co2EmissionRoute) {
         return new Route(id, start,
-                destination, distance, numberOfPersons, oneWay, vehicle, co2EmissionRoute);
+                destination, distance, numberOfPersons, oneWay, vehicle, co2EmissionRoute, userId);
     }
 
 }

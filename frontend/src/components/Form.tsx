@@ -22,6 +22,7 @@ import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
 import {toast} from "react-toastify";
+import {MongoUser} from "../models/MongoUserModel";
 
 
 const sxStylePaper = {
@@ -42,6 +43,7 @@ const sxStyleBox = {
 }
 
 type FormProps = {
+    user: MongoUser,
     isEditMode: boolean,
     setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,
@@ -53,6 +55,8 @@ type FormProps = {
 export default function Form(props: FormProps) {
     const {route, setRoute, resetRoute} = useContext(RouteContext)
     const {addRoute, updateRoute} = useContext(RoutesContext)
+
+    console.log("form", props.user)
 
     const initialStateVehicle = route && props.isEditMode ? route?.vehicle : {
         type: "",
@@ -84,6 +88,7 @@ export default function Form(props: FormProps) {
         props.setIsEditMode(false)
     }
 
+
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
@@ -98,7 +103,8 @@ export default function Form(props: FormProps) {
                         }))
 
             } else {
-                const routeToAdd = {...route, vehicle}
+                console.log(props.user);
+                const routeToAdd = {...route, vehicle, userId: props.user.id}
                 addRoute(routeToAdd)
                     .then(savedRoute => {
                         props.setRoutesToCompare(

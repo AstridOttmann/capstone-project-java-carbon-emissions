@@ -12,7 +12,7 @@ CalculateCo2EmissionService calculateCo2EmissionService = new CalculateCo2Emissi
     @Test
     void calculateCo2EmissionRoute() {
         Vehicle vehicle = new Car("car", 160, "petrol", "small" );
-        RouteDTO route = new RouteDTO("Berlin", "Potsdam", 100, 2,true, vehicle);
+        RouteDTO route = new RouteDTO("Berlin", "Potsdam", 100, 2,true, vehicle, "a1b2");
 
         double expectedCo2Emission = route.vehicle().getCo2Emission() * 100 / 2 / 1000;
 

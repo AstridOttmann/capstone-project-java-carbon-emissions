@@ -2,6 +2,7 @@ package com.github.astridottmann.backend.controllers;
 
 import com.github.astridottmann.backend.models.MongoUser;
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
+import com.github.astridottmann.backend.services.MongoUserDetailsService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,21 +18,24 @@ public class MongoUserController {
     private final MongoUserRepository mongoUserRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private final MongoUserDetailsService mongoUserDetailsService;
 
     @GetMapping("/me")
-    public String getMe() {
-        return SecurityContextHolder
+    public MongoUser getMe() {
+        String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
+        return mongoUserDetailsService.getUserInfo(username);
     }
 
     @PostMapping("/login")
-    public String login() {
-        return SecurityContextHolder
+    public MongoUser login() {
+        String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
+        return mongoUserDetailsService.getUserInfo(username);
     }
 
     @PostMapping("/logout")

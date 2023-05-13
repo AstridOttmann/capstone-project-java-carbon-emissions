@@ -10,9 +10,17 @@ import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./compare/CompareRoutesCard";
 import CompareRoutesResults from "./compare/CompareRoutesResults";
 import CloseIcon from "@mui/icons-material/Close";
+import {MongoUser} from "../models/MongoUserModel";
 
+const sxStyleTitle = {
+    fontSize: "2rem",
+    p: "1rem",
+    color: "#3fd44d",
+    textAlign: "center"
+}
 
 type HomePageProps = {
+    user: MongoUser,
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
     getAllComparison: () => Promise<void>,
@@ -44,15 +52,24 @@ export default function HomePage(props: HomePageProps) {
             backgroundColor: "#282c34"
         }}>
             {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
-                <ButtonGroup
-                    sx={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", gap: "0.5rem", m: "1rem"}}
-                    variant="text"
-                    aria-label="text button group">
-                    <Button variant="outlined"
-                            onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
-                        Add Route
-                    </Button>
-                </ButtonGroup>}
+                <>
+                    <Typography variant="h4" sx={sxStyleTitle}>Welcome {}!</Typography>
+                    <ButtonGroup
+                        sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "space-evenly",
+                            gap: "0.5rem",
+                            m: "1rem"
+                        }}
+                        variant="text"
+                        aria-label="text button group">
+                        <Button variant="outlined"
+                                onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
+                            Add Route
+                        </Button>
+                    </ButtonGroup>
+                </>}
 
             {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {
                 return (
@@ -103,7 +120,8 @@ export default function HomePage(props: HomePageProps) {
                 </>}
 
             {addMode || props.isEditMode ?
-                <Form isEditMode={props.isEditMode}
+                <Form user={props.user}
+                      isEditMode={props.isEditMode}
                       setIsEditMode={props.setIsEditMode}
                       setAddMode={setAddMode}
                       setRoutesToCompare={setRoutesToCompare}
