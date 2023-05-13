@@ -53,7 +53,7 @@ export default function HomePage(props: HomePageProps) {
         }}>
             {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
                 <>
-                    <Typography variant="h4" sx={sxStyleTitle}>Welcome {}!</Typography>
+                    <Typography variant="h4" sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
                     <ButtonGroup
                         sx={{
                             display: "flex",

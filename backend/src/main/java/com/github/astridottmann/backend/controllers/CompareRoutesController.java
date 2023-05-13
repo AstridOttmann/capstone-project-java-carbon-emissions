@@ -1,7 +1,7 @@
 package com.github.astridottmann.backend.controllers;
 
 import com.github.astridottmann.backend.models.CompareRoutes;
-import com.github.astridottmann.backend.models.Route;
+import com.github.astridottmann.backend.models.CompareRoutesDTO;
 import com.github.astridottmann.backend.services.CompareRoutesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +25,8 @@ public class CompareRoutesController {
     }
 
     @PostMapping
-    public CompareRoutes addComparison(@RequestBody List<Route> compared) {
-        return compareRoutesService.addComparison(compared);
+    public CompareRoutes addComparison(@RequestBody CompareRoutesDTO compareRoutesDTO) {
+        return compareRoutesService.addComparison(compareRoutesDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +39,7 @@ public class CompareRoutesController {
 
     @PutMapping("/{id}")
     public CompareRoutes updateCompareRoutes(@PathVariable String id, @RequestBody CompareRoutes compareRoutes) {
-        if(!id.equals(compareRoutes.id())){
+        if (!id.equals(compareRoutes.id())) {
             String errorMessage = "Id " + id + " doesn't match";
             throw new IllegalArgumentException(errorMessage);
         }

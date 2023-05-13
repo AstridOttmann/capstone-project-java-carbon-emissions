@@ -3,6 +3,7 @@ import {ComparisonResults} from "./ComparisonResultsModel";
 
 export type CompareRoutes = {
     id: string,
+    userId: string,
     compared: Route[],
     comparisonResults: ComparisonResults
 

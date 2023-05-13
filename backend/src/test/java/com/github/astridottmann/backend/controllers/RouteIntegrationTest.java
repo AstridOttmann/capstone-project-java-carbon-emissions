@@ -52,7 +52,9 @@ class RouteIntegrationTest {
 
         testRouteWithoutIdJson = """ 
                 {
-                "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "longDistance", "meansOfTransport": "train"}
+                "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, 
+                "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "longDistance", "meansOfTransport": "train"}, 
+                "userId": "a1b2"
                 }
                                 """;
     }

@@ -7,6 +7,7 @@ export default function useCompareRoutes() {
 
     const initialStateComparedRoutes: CompareRoutes = {
         id: "",
+        userId: "",
         compared: [
             {
                 id: " ",

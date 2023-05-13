@@ -61,7 +61,7 @@ function App() {
                                     setComparedRoutes={setComparedRoutes}
                                 />}/>
                             <Route path="/routes" element={
-                                <RouteCollection/>}/>
+                                <RouteCollection user={user}/>}/>
                             <Route path="/compared" element={
                                 <CompareRoutesCollection comparedRoutesList={comparedRoutesList}
                                                          deleteComparisonById={deleteComparisonById}/>}/>
