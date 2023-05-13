@@ -36,7 +36,7 @@ class RouteIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
         testRoute = new Route(
                 "123",
                 "Hamburg",
@@ -53,7 +53,7 @@ class RouteIntegrationTest {
         testRouteWithoutIdJson = """ 
                 {
                 "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, 
-                "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "longDistance", "meansOfTransport": "train"}, 
+                "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "long distance", "meansOfTransport": "train"}, 
                 "userId": "a1b2"
                 }
                                 """;
