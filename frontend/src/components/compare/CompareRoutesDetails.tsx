@@ -22,7 +22,7 @@ const sxStyleCard = {
 }
 
 type CompareRoutesDetailsProps = {
-    comparedRoutes: CompareRoutes
+    compareRoutes: CompareRoutes
     setIsEditMode: (arg0: boolean) => void,
     getComparisonById: (id: string) => void
 }
@@ -51,22 +51,24 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
 
     return (
         <Paper sx={sxStylePaper}>
-            <Typography>Option 1</Typography>
-            <Card sx={sxStyleCard}>
-                {props.comparedRoutes.compared.map((route) => {
-                    return (
-                        <>
+            {props.compareRoutes.compared.map((route) => {
+                return (
+                    <> <Card sx={sxStyleCard}>
+                        <Typography>Option </Typography>
+                        <Box sx={{p: "1rem 0", borderColor: "#3fd44d"}}>
                             <CompareRoutesCard key={route.id} route={route}/>
                             <RouteVehicleDetails route={route}/>
                             <Button variant="contained" endIcon={<EditIcon/>}
                                     onClick={() => editOnClick(route)}>Edit</Button>
-                        </>
-                    )
-                })}
-            </Card>
+                        </Box>
+                    </Card>
+                    </>
+                )
+            })}
+
 
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
-                {props.comparedRoutes.compared.map((route) => {
+                {props.compareRoutes.compared.map((route) => {
                     return <CompareRoutesResults key={route.id} route={route}/>
                 })}
             </Box>
@@ -75,7 +77,7 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
                 <Typography variant="body1"
                             sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
                     You can reduce your CO2-Emission
-                    by {props.comparedRoutes.comparisonResults.difference} kg
+                    by {props.compareRoutes.comparisonResults.difference} kg
                 </Typography>
             </Box>
             <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}

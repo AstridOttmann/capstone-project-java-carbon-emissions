@@ -70,7 +70,7 @@ function App() {
                                 <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                             <Route path="/compared/details/:id" element={
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
-                                                      comparedRoutes={compareRoutes}
+                                                      compareRoutes={compareRoutes}
                                                       setIsEditMode={setIsEditMode}/>}/>
 
                         </Route>
