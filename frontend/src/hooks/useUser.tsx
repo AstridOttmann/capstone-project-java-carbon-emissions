@@ -26,7 +26,7 @@ export default function useUser() {
                     }
                 })
                 .catch(() => {
-                    toast.error("Error checking logged-in user:");
+                    toast.error("Please Sign Up or Login");
                 })
                 .finally(() => {
                     setIsLoading(false);
@@ -42,7 +42,9 @@ export default function useUser() {
             .then((response) => {
                 setUser(response.data)
             })
-            .catch((error) => console.log(error))
+            .catch(() => {
+                toast.error("You have already an account? Check your name and password! No account? Please sign up")
+            })
     }
 
     function logout() {

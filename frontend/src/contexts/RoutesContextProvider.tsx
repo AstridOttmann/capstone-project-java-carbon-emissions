@@ -56,7 +56,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 setRoutes(response.data)
             })
             .catch((error) => {
-                toast.error("Error! Try again later. " + error)
+                toast.error("No Data available! Logged in? " + error)
             })
     }
 

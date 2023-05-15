@@ -16,6 +16,7 @@ import CompareRoutesDetails from "./components/compare/CompareRoutesDetails";
 import LoginPage from "./components/LoginPage";
 import useUser from "./hooks/useUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import UserAccount from "./components/UserAccount";
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
             <main className="App">
                 <BrowserRouter>
                     <Header user={user} onLogout={logout}/>
-                    <ToastContainer autoClose={3000}/>
+                    <ToastContainer autoClose={4000}/>
                     <Routes>
                         <Route path="/login"
                                element={<LoginPage
@@ -72,6 +73,7 @@ function App() {
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
                                                       compareRoutes={compareRoutes}
                                                       setIsEditMode={setIsEditMode}/>}/>
+                          <Route path="/account" element={<UserAccount/>}/>
 
                         </Route>
                     </Routes>

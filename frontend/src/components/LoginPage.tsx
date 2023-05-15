@@ -21,7 +21,7 @@ type LoginPageProps = {
 }
 export default function LoginPage(props: LoginPageProps) {
     const {getAllRoutes} = useContext(RoutesContext)
-    const [signIn, setSignIn] = useState<boolean>();
+    const [signUp, setSignUp] = useState<boolean>();
 
     const navigate = useNavigate();
 
@@ -32,10 +32,10 @@ export default function LoginPage(props: LoginPageProps) {
 
     async function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (signIn) {
+        if (signUp) {
             try {
                 await props.onSignIn(props.user);
-                setSignIn(false);
+                setSignUp(false);
             } catch (error) {
                 console.error("error", error);
             }
@@ -73,7 +73,7 @@ export default function LoginPage(props: LoginPageProps) {
                 <ButtonGroup sx={{display: "flex", justifyContent: "center"}}
                              variant="text"
                              aria-label="text button group">
-                    <Button type="submit" onClick={() => setSignIn(true)}>Sign in</Button>
+                    <Button type="submit" onClick={() => setSignUp(true)}>Sign Up</Button>
                     <Button type="submit">Login</Button>
                 </ButtonGroup>
             </Box>
