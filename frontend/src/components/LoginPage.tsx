@@ -46,26 +46,6 @@ export default function LoginPage(props: LoginPageProps) {
         props.getAllComparison();
     }
 
-  /*  function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        if (signIn) {
-            props.onSignIn(props.user)
-                .then(() => {
-                    setSignIn(false)
-                })
-                .catch(error => console.error("error", error))
-                .finally(() => {
-                    props.onLogin(props.user.username, props.user.password)
-                        .then(() => {
-                            navigate("/")
-                            getAllRoutes();
-                            props.getAllComparison()
-                        })
-                })
-        }
-    }*/
-
     return (
         <form onSubmit={handleLoginOnSubmit}>
             <Box sx={sxStyleBox}>
