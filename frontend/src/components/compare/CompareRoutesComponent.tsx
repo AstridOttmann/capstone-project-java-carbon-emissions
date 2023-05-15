@@ -1,4 +1,4 @@
-import {Box, Button, ButtonGroup, Paper, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup, Paper} from "@mui/material";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -39,13 +39,13 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
 
             </Box>
 
-            <Box>
+           {/* <Box>
                 <Typography variant="body1"
                             sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
                     You can reduce your CO2-Emission
                     by {props.comparedRoutes.comparisonResults.difference} kg
                 </Typography>
-            </Box>
+            </Box>*/}
             <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
                          variant="text"
                          aria-label="text button group">

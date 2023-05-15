@@ -17,24 +17,24 @@ public class CompareRoutesService {
     private final CompareRoutesRepository compareRoutesRepository;
     private final IdService idService;
 
-    public ComparisonResults compareEmissions(List<Route> compared) {
+    public ComparisonResults createComparisonResults(List<Route> compared) {
         double emissionRouteOne = compared.get(0).co2EmissionRoute();
         double emissionRouteTwo = compared.get(1).co2EmissionRoute();
 
         double difference = emissionRouteOne - emissionRouteTwo;
 
-        double bonusOneRounded = Math.round(Math.abs(difference) * 100.0) / 100.0;
-        double bonusTwoRounded = Math.round(-Math.abs(difference) * 100.0) / 100.0;
+        double bonusOne = Math.round(Math.abs(difference) * 100.0) / 100.0;
+        double bonusTwo = Math.round(-Math.abs(difference) * 100.0) / 100.0;
 
         if (emissionRouteOne < emissionRouteTwo) {
-            double temp = bonusOneRounded;
-            bonusOneRounded = bonusTwoRounded;
-            bonusTwoRounded = temp;
+            double temp = bonusOne;
+            bonusOne = bonusTwo;
+            bonusTwo = temp;
         }
 
         double differenceRounded = Math.round(difference * 100.0) / 100.0;
 
-        return new ComparisonResults(bonusOneRounded, bonusTwoRounded, differenceRounded);
+        return new ComparisonResults(bonusOne, bonusTwo, differenceRounded);
     }
 
     public List<CompareRoutes> getAllCompareRoutes() {
@@ -48,7 +48,10 @@ public class CompareRoutesService {
 
     public CompareRoutes addComparison(CompareRoutesDTO compareRoutesDTO) {
         CompareRoutes compareRoutesToAdd =
-                CompareRoutes.createCompareRoutesFromDTO(compareRoutesDTO, idService.createRandomId(), compareEmissions(compareRoutesDTO.compared()));
+                CompareRoutes.createCompareRoutesFromDTO(
+                        compareRoutesDTO,
+                        idService.createRandomId(),
+                        createComparisonResults(compareRoutesDTO.compared()));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }
@@ -76,7 +79,7 @@ public class CompareRoutesService {
                 compareRoutes.id(),
                 compareRoutes.userId(),
                 routes,
-                compareEmissions(compareRoutes.compared()));
+                createComparisonResults(compareRoutes.compared()));
 
         return compareRoutesRepository.save(updatedCompareRoutes);
     }
@@ -89,7 +92,7 @@ public class CompareRoutesService {
                             .stream()
                             .map(currentRoute -> currentRoute.id().equals(route.id()) ? route : currentRoute)
                             .toList();
-                    return new CompareRoutes(compareRoutes.id(), compareRoutes.userId(), currentCompared, compareEmissions(currentCompared));
+                    return new CompareRoutes(compareRoutes.id(), compareRoutes.userId(), currentCompared, createComparisonResults(currentCompared));
                 }))
                 .toList();
 

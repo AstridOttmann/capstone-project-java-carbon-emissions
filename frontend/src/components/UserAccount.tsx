@@ -15,7 +15,7 @@ const sxStyleTitle = {
 const sxStyleCard = {
     color: "#3fd44d",
     width: "20%",
-    pb: "0",
+    p: "0",
     m: "1rem"
 }
 export default function UserAccount() {
@@ -25,9 +25,8 @@ export default function UserAccount() {
             <Card sx={sxStyleCard}>
                 <CardContent sx={{display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center"}}>
                     <ForestIcon fontSize="large"/>
-                    <Typography variant="h5" component="h2" sx={{textAlign: "center"}}>
-                        33
-                    </Typography>
+                        {/*   <Typography variant="h5" component="h2" sx={{textAlign: "center"}}>*/}
+                        <Typography>33</Typography>
                 </CardContent>
             </Card>
         </Paper>
