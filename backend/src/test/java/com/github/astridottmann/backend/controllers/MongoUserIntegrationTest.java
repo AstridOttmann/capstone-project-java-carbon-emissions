@@ -1,8 +1,8 @@
 package com.github.astridottmann.backend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.astridottmann.backend.models.MongoUser;
-import com.github.astridottmann.backend.models.Route;
+import com.github.astridottmann.backend.models.*;
+
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,12 +34,17 @@ class MongoUserIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
     private MongoUser testUser;
+    private MongoUserDTO testUserDTO;
     private String testUserJson;
+    private String testUserDTOJson;
 
     @BeforeEach
     void setUp() throws Exception {
-        testUser = new MongoUser("123", "testUser", "test");
+        testUser = new MongoUser("123", "testUser", "12345678", 0);
         testUserJson = objectMapper.writeValueAsString(testUser);
+
+        testUserDTO = new MongoUserDTO("123", "testUser", 0);
+        testUserDTOJson = objectMapper.writeValueAsString(testUserDTO);
     }
 
     @Test
@@ -48,7 +53,7 @@ class MongoUserIntegrationTest {
         mongoUserRepository.save(testUser);
         mockMvc.perform(get("/api/user/me"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(testUserJson));
+                .andExpect(content().json(testUserDTOJson));
 
     }
 
@@ -59,7 +64,7 @@ class MongoUserIntegrationTest {
         mockMvc.perform(post("/api/user/login")
                         .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(content().json(testUserJson));
+                .andExpect(content().json(testUserDTOJson));
 
     }
 
@@ -86,13 +91,11 @@ class MongoUserIntegrationTest {
     void signIn_shouldReturnANewUser() throws Exception {
         mockMvc.perform(post("/api/user/signin")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                { "username": "testUser", "password": "1234abc"}
-                                 """)
+                        .content(testUserJson)
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
-                        {"username":  "testUser"}
+                        {"username":  "testUser", "co2Score": 0}
                         """))
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.password").isNotEmpty());
@@ -101,7 +104,7 @@ class MongoUserIntegrationTest {
     @Test
     @WithMockUser
     void signIn_shouldReturnApiErrorAndStatusIsUnprocessable_whenUsernameAlreadyExists() throws Exception {
-        MongoUser testUser = new MongoUser("123", "testUser", "1234abc");
+        MongoUser testUser = new MongoUser("123", "testUser", "1234abc", 0);
         mongoUserRepository.save(testUser);
         String expectedMessage = "Username already exists!";
 

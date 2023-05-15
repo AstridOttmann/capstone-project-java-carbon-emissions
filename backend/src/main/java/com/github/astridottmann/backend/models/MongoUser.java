@@ -13,6 +13,15 @@ public record MongoUser(
 
         @NotBlank
         @Size(min = 3, max = 25)
-        String password
+        String password,
+        double co2Score
 ) {
+    public static MongoUser createMongoUserFromDTO(MongoUserDTO mongoUserDTO, String password) {
+        return new MongoUser(
+                mongoUserDTO.id(),
+                mongoUserDTO.username(),
+                password,
+                mongoUserDTO.co2Score()
+        );
+    }
 }

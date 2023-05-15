@@ -2,8 +2,7 @@ import {Box, Button, TextField, ButtonGroup} from "@mui/material";
 import {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {RoutesContext} from "../contexts/RoutesContextProvider";
-import {MongoUser} from "../models/MongoUserModel";
-import {toast} from "react-toastify";
+import {User} from "../models/MongoUserModel";
 
 const sxStyleBox = {
     display: "flex",
@@ -13,17 +12,17 @@ const sxStyleBox = {
 }
 
 type LoginPageProps = {
-    onLogin: (username: string, password: string) => Promise<string | number | void>,
-    onSignIn: (user: MongoUser) => Promise<string | number | void>,
+    onLogin: (username: string, password: string) => Promise<void>,
+    onSignIn: (newMongoUser: User) => Promise<void>,
     getAllComparison: () => void,
-    user: MongoUser,
-    setUser: (user: MongoUser) => void
+    user: User,
+    setUser: (user: User) => void,
 
 }
 export default function LoginPage(props: LoginPageProps) {
     const {getAllRoutes} = useContext(RoutesContext)
-   // const [username, setUsername] = useState<string>('');
-   // const [password, setPassword] = useState<string>('');
+    // const [username, setUsername] = useState<string>('');
+    // const [password, setPassword] = useState<string>('');
     const [signIn, setSignIn] = useState<boolean>();
 
     const navigate = useNavigate();
@@ -32,24 +31,24 @@ export default function LoginPage(props: LoginPageProps) {
         const {name, value} = event.target
         props.setUser({...props.user, [name]: value})
     }
+
     function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
         if (signIn) {
             props.onSignIn(props.user)
                 .then(() => {
-                    toast.success("Created an account. Please login!")
-                    setSignIn(false);
+                    setSignIn(false)
                 })
-                .catch(error => console.error(error));
-        } else {
-            props.onLogin(props.user.username, props.user.password)
-                .then(() => {
-                    navigate("/");
-                    getAllRoutes();
-                    props.getAllComparison();
+                .catch(error => console.error("error", error))
+                .finally(() => {
+                    props.onLogin(props.user.username, props.user.password)
+                        .then(() => {
+                            navigate("/")
+                            getAllRoutes();
+                            props.getAllComparison()
+                        })
                 })
-                .catch(error => console.error(error));
-
         }
     }
 

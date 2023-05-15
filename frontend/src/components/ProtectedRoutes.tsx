@@ -1,9 +1,9 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
-import {MongoUser} from "../models/MongoUserModel";
+import {User} from "../models/MongoUserModel";
 
 type ProtectedRoutesProps = {
-    user: MongoUser,
+    user: User,
     isLoading: boolean
 }
 export default function ProtectedRoutes(props: ProtectedRoutesProps) {

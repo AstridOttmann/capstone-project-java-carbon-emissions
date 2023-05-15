@@ -37,11 +37,8 @@ public class CompareRoutesService {
     }
 
     public CompareRoutes addComparison(CompareRoutesDTO compareRoutesDTO) {
-        CompareRoutes compareRoutesToAdd = new CompareRoutes(
-                idService.createRandomId(),
-                compareRoutesDTO.userId(),
-                compareRoutesDTO.compared(),
-                compareEmissions(compareRoutesDTO.compared()));
+        CompareRoutes compareRoutesToAdd =
+                CompareRoutes.createCompareRoutesFromDTO(compareRoutesDTO, idService.createRandomId(), compareEmissions(compareRoutesDTO.compared()));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }

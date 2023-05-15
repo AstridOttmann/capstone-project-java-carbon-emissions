@@ -1,6 +1,7 @@
 package com.github.astridottmann.backend.services;
 
 import com.github.astridottmann.backend.models.MongoUser;
+import com.github.astridottmann.backend.models.MongoUserDTO;
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,13 +19,13 @@ class MongoUserDetailsServiceTest {
 
     @Test
     void getUserInfo_shouldReturnUser(){
-        MongoUser testUser = new MongoUser("1", "testUser", "test");
+        MongoUser testUser = new MongoUser("1", "testUser", "12345678", 0);
 
         Mockito.when(mongoUserRepository.findMongoUserByUsername("testUser"))
                 .thenReturn(Optional.of(testUser));
 
-        MongoUser actual = mongoUserDetailsService.getUserInfo("testUser");
-        MongoUser expected = new MongoUser(testUser.id(), testUser.username(), testUser.password());
+        MongoUserDTO actual = mongoUserDetailsService.getUserInfoByUsername("testUser");
+        MongoUserDTO expected = new MongoUserDTO(testUser.id(), testUser.username(), testUser.co2Score());
 
         verify(mongoUserRepository).findMongoUserByUsername("testUser");
         assertEquals(expected, actual);
@@ -36,7 +37,7 @@ class MongoUserDetailsServiceTest {
                 .thenReturn();*/
 
         Exception exception = assertThrows(UsernameNotFoundException.class,
-                ()-> mongoUserDetailsService.getUserInfo("user"));
+                ()-> mongoUserDetailsService.getUserInfoByUsername("user"));
 
         verify(mongoUserRepository).findMongoUserByUsername("user");
         String actual = exception.getMessage();

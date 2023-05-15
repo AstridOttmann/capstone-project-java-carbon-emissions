@@ -98,7 +98,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 return updatedRoute;
             })
             .catch((error) =>
-                toast.error(error))
+                toast.error("error", error))
     }
 
     return (

@@ -10,7 +10,7 @@ import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./compare/CompareRoutesCard";
 import CompareRoutesResults from "./compare/CompareRoutesResults";
 import CloseIcon from "@mui/icons-material/Close";
-import {MongoUser} from "../models/MongoUserModel";
+import {User} from "../models/MongoUserModel";
 
 const sxStyleTitle = {
     fontSize: "2rem",
@@ -20,7 +20,7 @@ const sxStyleTitle = {
 }
 
 type HomePageProps = {
-    user: MongoUser,
+    user: User,
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
     getAllComparison: () => void,
@@ -32,8 +32,6 @@ type HomePageProps = {
 export default function HomePage(props: HomePageProps) {
     const [addMode, setAddMode] = useState<boolean>(false)
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
-
-    console.log("home", props.user)
 
     function handleAddComparison() {
         const compareRoutesToAdd = {...props.compareRoutes, userId: props.user.id, compared: routesToCompare}

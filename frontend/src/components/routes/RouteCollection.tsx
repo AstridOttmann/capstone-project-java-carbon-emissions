@@ -7,7 +7,7 @@ import './RouteCollection.css'
 import RouteCard from "./RouteCard";
 import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
-import {MongoUser} from "../../models/MongoUserModel";
+import {User} from "../../models/MongoUserModel";
 
 const sxStylePaper = {
     p: "1rem",
@@ -22,7 +22,7 @@ const sxStyleTitle = {
 }
 
 type RouteCollectionProps ={
-    user: MongoUser
+    user: User
 }
 export default function RouteCollection(props: RouteCollectionProps) {
     const {routes} = useContext(RoutesContext)

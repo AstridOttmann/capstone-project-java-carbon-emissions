@@ -1,6 +1,7 @@
 package com.github.astridottmann.backend.services;
 
 import com.github.astridottmann.backend.models.MongoUser;
+import com.github.astridottmann.backend.models.MongoUserDTO;
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,10 +28,10 @@ public class MongoUserDetailsService implements UserDetailsService {
     }
 
 
-    public MongoUser getUserInfo(String username) {
+    public MongoUserDTO getUserInfoByUsername(String username) {
         MongoUser user = mongoUserRepository.findMongoUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with name " + username + " not found!"));
-        return new MongoUser(user.id(), user.username(), user.password());
+        return new MongoUserDTO(user.id(), user.username(), user.co2Score());
 
     }
 }

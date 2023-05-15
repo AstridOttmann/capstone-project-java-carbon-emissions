@@ -6,11 +6,11 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import {RouteContext} from "../contexts/RouteContextProvider";
 import DifferenceIcon from '@mui/icons-material/Difference';
 import LoginIcon from "@mui/icons-material/Login";
-import {MongoUser} from "../models/MongoUserModel";
+import {User} from "../models/MongoUserModel";
 
 type NavigationBottomProps = {
     setIsEditMode: (arg0: boolean) => void,
-    user: MongoUser
+    user: User
 }
 
 export default function NavigationBottom(props: NavigationBottomProps) {

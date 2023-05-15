@@ -22,7 +22,7 @@ import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
 import {toast} from "react-toastify";
-import {MongoUser} from "../models/MongoUserModel";
+import {User} from "../models/MongoUserModel";
 
 
 const sxStylePaper = {
@@ -43,7 +43,7 @@ const sxStyleBox = {
 }
 
 type FormProps = {
-    user: MongoUser,
+    user: User,
     isEditMode: boolean,
     setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,

@@ -45,7 +45,7 @@ function App() {
                                    onSignIn={signIn}
                                    user={user}
                                    setUser={setUser}
-                               />}
+                                   />}
                         />
 
                         <Route element={<ProtectedRoutes user={user} isLoading={isLoading}/>}>
