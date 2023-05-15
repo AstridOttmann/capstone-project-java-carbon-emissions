@@ -12,7 +12,4 @@ public record MongoUserDTO(
         String username,
         double co2Score
 ) {
-    public MongoUserDTO(MongoUser user) {
-        this(user.id(), user.username(), user.co2Score());
-    }
 }

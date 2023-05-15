@@ -16,12 +16,4 @@ public record MongoUser(
         String password,
         double co2Score
 ) {
-    public static MongoUser createMongoUserFromDTO(MongoUserDTO mongoUserDTO, String password) {
-        return new MongoUser(
-                mongoUserDTO.id(),
-                mongoUserDTO.username(),
-                password,
-                mongoUserDTO.co2Score()
-        );
-    }
 }
