@@ -22,9 +22,19 @@ public class CompareRoutesService {
         double emissionRouteTwo = compared.get(1).co2EmissionRoute();
 
         double difference = emissionRouteOne - emissionRouteTwo;
+
+        double bonusOneRounded = Math.round(Math.abs(difference) * 100.0) / 100.0;
+        double bonusTwoRounded = Math.round(-Math.abs(difference) * 100.0) / 100.0;
+
+        if (emissionRouteOne < emissionRouteTwo) {
+            double temp = bonusOneRounded;
+            bonusOneRounded = bonusTwoRounded;
+            bonusTwoRounded = temp;
+        }
+
         double differenceRounded = Math.round(difference * 100.0) / 100.0;
 
-        return new ComparisonResults(emissionRouteOne, emissionRouteTwo, differenceRounded);
+        return new ComparisonResults(bonusOneRounded, bonusTwoRounded, differenceRounded);
     }
 
     public List<CompareRoutes> getAllCompareRoutes() {

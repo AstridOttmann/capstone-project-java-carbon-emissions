@@ -67,9 +67,9 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
             })}
 
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
-                {props.compareRoutes.compared.map((route) => {
-                    return <CompareRoutesResults key={route.id} route={route}/>
-                })}
+                {/*   {props.compareRoutes.compared.map((route) => {*/}
+                <CompareRoutesResults compareRoutes={props.compareRoutes}/>
+                {/*   })}*/}
             </Box>
 
             <Box>

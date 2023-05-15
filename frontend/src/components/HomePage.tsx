@@ -95,9 +95,9 @@ export default function HomePage(props: HomePageProps) {
             })}
             {!addMode && routesToCompare.length === 2 &&
                 <Box sx={{display: "flex", gap: "1rem"}}>
-                    {routesToCompare.map((route) => {
-                        return <CompareRoutesResults key={route.id} route={route}/>
-                    })}
+                    {/*    {routesToCompare.map((route) => {*/}
+                    <CompareRoutesResults compareRoutes={props.compareRoutes}/>
+                    {/*  })}*/}
                 </Box>}
             {!addMode && routesToCompare.length === 2 &&
                 <>
