@@ -37,7 +37,7 @@ export default function LoginPage(props: LoginPageProps) {
         if (signIn) {
             props.onSignIn(props.user)
                 .then(() => {
-                    toast.success("Created an account!")
+                    toast.success("Created an account. Please login!")
                     setSignIn(false);
                 })
                 .catch(error => console.error(error));

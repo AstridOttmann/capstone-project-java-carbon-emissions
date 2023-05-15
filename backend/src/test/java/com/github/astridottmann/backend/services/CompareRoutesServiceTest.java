@@ -32,7 +32,7 @@ class CompareRoutesServiceTest {
                 268.93,
                 "a1b2");
 
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
         Route routeB = new Route(
                 "456",
                 "Hamburg",
@@ -65,7 +65,7 @@ class CompareRoutesServiceTest {
                 268.93,
                 "a1b2");
 
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
         Route routeB = new Route(
                 "456",
                 "Hamburg",

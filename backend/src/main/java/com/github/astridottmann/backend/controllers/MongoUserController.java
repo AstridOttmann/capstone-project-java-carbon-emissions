@@ -36,6 +36,7 @@ public class MongoUserController {
                 .getAuthentication()
                 .getName();
         return mongoUserDetailsService.getUserInfo(username);
+
     }
 
     @PostMapping("/logout")

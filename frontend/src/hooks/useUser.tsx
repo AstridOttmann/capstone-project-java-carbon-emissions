@@ -53,7 +53,7 @@ export default function useUser() {
     function signIn(user: MongoUser) {
         return axios.post("/api/user/signin", user)
             .then(response => {
-                console.log("Created an account!")
+                console.log("Created an account! Please login")
                 console.log("sign", response.data);
             })
             .catch(error => toast.error("Sign in not possible. Invalid Input " + error))

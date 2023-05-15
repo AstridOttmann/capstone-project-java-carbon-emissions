@@ -87,7 +87,7 @@ class CompareRoutesIntegrationTest {
     //  testComparedJson = objectMapper.writeValueAsString(testCompared);
 
       /*  testCompareRoutesDTOJson = """
-                {"userId": "a1b2", "compared": [{"id": "123", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": { "type": "car", "co2Emission": 253.3, "fuel": "petrol", "carSize": "large"}, "co2EmissionRoute": 268.93, "userId: "a1b2"}, {"id": "456", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "longDistance", "meansOfTransport": "train"}, "co2EmissionRoute": 45.26, "userId: "a1b2"}]}
+                {"userId": "a1b2", "compared": [{"id": "123", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": { "type": "car", "co2Emission": 253.3, "fuel": "petrol", "carSize": "large"}, "co2EmissionRoute": 268.93, "userId: "a1b2"}, {"id": "456", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "long distance", "meansOfTransport": "train"}, "co2EmissionRoute": 45.26, "userId: "a1b2"}]}
                 """;
     }*/
 
