@@ -32,7 +32,23 @@ export default function LoginPage(props: LoginPageProps) {
         props.setUser({...props.user, [name]: value})
     }
 
-    function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (signIn) {
+            try {
+                await props.onSignIn(props.user);
+                setSignIn(false);
+            } catch (error) {
+                console.error("error", error);
+            }
+        }
+        await props.onLogin(props.user.username, props.user.password);
+        navigate("/");
+        await getAllRoutes();
+        props.getAllComparison();
+    }
+
+  /*  function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         if (signIn) {
@@ -50,7 +66,7 @@ export default function LoginPage(props: LoginPageProps) {
                         })
                 })
         }
-    }
+    }*/
 
     return (
         <form onSubmit={handleLoginOnSubmit}>
