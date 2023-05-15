@@ -4,7 +4,6 @@ import {toast} from "react-toastify";
 import {User} from "../models/MongoUserModel";
 
 export default function useUser() {
-    // const [user, setUser] = useState<string>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const initialStateUser = {
@@ -13,14 +12,8 @@ export default function useUser() {
         password: "",
         co2Score: 0
     }
-    /*const newMongoUser = {
-        id: "",
-        username: "",
 
-        co2Score: 0
-    }*/
     const [user, setUser] = useState<User>(initialStateUser);
-    //const [mongoUser, setMongoUser] = useState<MongoUser>(initialStateMongoUser);
 
     useEffect(() => {
         function checkLoggedInUser() {

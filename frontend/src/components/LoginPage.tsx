@@ -21,8 +21,6 @@ type LoginPageProps = {
 }
 export default function LoginPage(props: LoginPageProps) {
     const {getAllRoutes} = useContext(RoutesContext)
-    // const [username, setUsername] = useState<string>('');
-    // const [password, setPassword] = useState<string>('');
     const [signIn, setSignIn] = useState<boolean>();
 
     const navigate = useNavigate();
@@ -98,7 +96,6 @@ export default function LoginPage(props: LoginPageProps) {
                     <Button type="submit" onClick={() => setSignIn(true)}>Sign in</Button>
                     <Button type="submit">Login</Button>
                 </ButtonGroup>
-                {/*  <Button type="submit" variant="outlined">Login</Button>*/}
             </Box>
         </form>
     )
