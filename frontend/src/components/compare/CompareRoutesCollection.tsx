@@ -23,7 +23,9 @@ type CompareRoutesCollectionProps = {
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     compareRoutesList: CompareRoutes[],
-    deleteComparisonById: (id: string) => void
+    deleteComparisonById: (id: string) => void,
+    getAllComparison: () => void,
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
     const userCompareRoutes = props.compareRoutesList.filter((element)=>
@@ -40,6 +42,8 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                setUser={props.setUser}
                                                compareRoutes={element}
                                                setCompareRoutes={props.setCompareRoutes}
+                                               updateComparison={props.updateComparison}
+                                               getAllComparison={props.getAllComparison}
                                                deleteComparisonById={props.deleteComparisonById}/>
             })}
         </Paper>

@@ -28,7 +28,9 @@ type CompareRoutesDetailsProps = {
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     setIsEditMode: (arg0: boolean) => void,
-    getComparisonById: (id: string) => void
+    getComparisonById: (id: string) => void,
+    getAllComparison: () => void,
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
 }
 export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
     const {setRoute} = useContext(RouteContext);
@@ -72,7 +74,12 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
 
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
                 {/*   {props.compareRoutes.compared.map((route) => {*/}
-                <CompareRoutesResults user={props.user} setUser={props.setUser} compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}/>
+                <CompareRoutesResults user={props.user}
+                                      setUser={props.setUser}
+                                      compareRoutes={props.compareRoutes}
+                                      setCompareRoutes={props.setCompareRoutes}
+                                      updateComparison={props.updateComparison}
+                                      getAllComparison={props.getAllComparison}/>
                 {/*   })}*/}
             </Box>
 

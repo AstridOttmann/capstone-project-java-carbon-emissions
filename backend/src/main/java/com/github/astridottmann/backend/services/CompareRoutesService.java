@@ -17,7 +17,7 @@ public class CompareRoutesService {
     private final CompareRoutesRepository compareRoutesRepository;
     private final IdService idService;
 
-    public ComparisonResults createComparisonResults(List<Route> compared) {
+    public ComparisonResults createComparisonResults(List<Route> compared, double clickHistory) {
         double emissionRouteOne = compared.get(0).co2EmissionRoute();
         double emissionRouteTwo = compared.get(1).co2EmissionRoute();
 
@@ -32,9 +32,7 @@ public class CompareRoutesService {
             bonusTwo = temp;
         }
 
-        double differenceRounded = Math.round(difference * 100.0) / 100.0;
-
-        return new ComparisonResults(bonusOne, bonusTwo, differenceRounded);
+        return new ComparisonResults(bonusOne, bonusTwo, clickHistory);
     }
 
     public List<CompareRoutes> getAllCompareRoutes() {
@@ -51,7 +49,7 @@ public class CompareRoutesService {
                 CompareRoutes.createCompareRoutesFromDTO(
                         compareRoutesDTO,
                         idService.createRandomId(),
-                        createComparisonResults(compareRoutesDTO.compared()));
+                        createComparisonResults(compareRoutesDTO.compared(), 0));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }
@@ -71,6 +69,8 @@ public class CompareRoutesService {
             throw new NoSuchElementException(errorMessage);
         }
 
+        double clickHistory = compareRoutes.comparisonResults().difference();
+
         List<Route> routes = List.of(
                 compareRoutes.compared().get(0),
                 compareRoutes.compared().get(1));
@@ -79,7 +79,7 @@ public class CompareRoutesService {
                 compareRoutes.id(),
                 compareRoutes.userId(),
                 routes,
-                createComparisonResults(compareRoutes.compared()));
+                createComparisonResults(compareRoutes.compared(), clickHistory));
 
         return compareRoutesRepository.save(updatedCompareRoutes);
     }
@@ -92,7 +92,11 @@ public class CompareRoutesService {
                             .stream()
                             .map(currentRoute -> currentRoute.id().equals(route.id()) ? route : currentRoute)
                             .toList();
-                    return new CompareRoutes(compareRoutes.id(), compareRoutes.userId(), currentCompared, createComparisonResults(currentCompared));
+                    return new CompareRoutes(
+                            compareRoutes.id(),
+                            compareRoutes.userId(),
+                            currentCompared,
+                            createComparisonResults(currentCompared, compareRoutes.comparisonResults().difference()));
                 }))
                 .toList();
 

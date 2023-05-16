@@ -3,6 +3,7 @@ import {CompareRoutes} from "../../models/CompareRoutesModel";
 import React, {useState} from "react";
 import {User} from "../../models/MongoUserModel";
 import {ComparisonResults} from "../../models/ComparisonResultsModel";
+import {useNavigate} from "react-router-dom";
 
 const sxStyleBox1 = {
     display: "flex",
@@ -27,10 +28,12 @@ type CompareRoutesResultsProps = {
     user: User,
     setUser: (user: User) => void,
     compareRoutes: CompareRoutes,
-    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
+    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
+    getAllComparison: () => void,
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
 }
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
-   // const [bonusScore, setBonusScore] = useState<number>(0);
+    const navigate = useNavigate();
     const [comparisonResults, setComparisonResults] = useState<ComparisonResults>({
         resultRouteOne: 0,
         resultRouteTwo: 0,
@@ -40,11 +43,18 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     const resultOne: number = props.compareRoutes.comparisonResults.resultRouteOne;
     const resultTwo: number = props.compareRoutes.comparisonResults.resultRouteTwo;
 
-    function handleSelectOption(result: number) {
+    async function handleSelectOption(result: number) {
         const newScore = props.user.co2Score + result;
         props.setUser({...props.user, co2Score: newScore})
-        setComparisonResults({...comparisonResults, difference: newScore})
-        props.setCompareRoutes({...props.compareRoutes, comparisonResults});
+
+        const updatedComparisonResults: ComparisonResults =
+            {...comparisonResults, difference: newScore};
+        const updatedComparison: CompareRoutes =
+            {...props.compareRoutes, comparisonResults: updatedComparisonResults};
+
+        await props.updateComparison(updatedComparison.id, updatedComparison);
+        await props.getAllComparison();
+        navigate("/account");
     }
 
     console.log("comparison", props.compareRoutes)
