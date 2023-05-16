@@ -17,7 +17,6 @@ export default function NavigationBottom(props: NavigationBottomProps) {
     const {resetRoute} = useContext(RouteContext);
     const [value, setValue] = useState('/');
     const navigate = useNavigate();
-    //  const authenticated = props.user !== undefined && props.user !== "anonymousUser"
 
     const handleChange = (event: SyntheticEvent, newValue: string) => {
         setValue(newValue)
