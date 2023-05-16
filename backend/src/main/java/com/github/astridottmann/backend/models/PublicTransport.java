@@ -32,7 +32,7 @@ public class PublicTransport extends Vehicle implements GetCo2EmissionFactor {
                     setCo2Emission(86.5);
                 }
             }
-            case "longDistance" -> {
+            case "long distance" -> {
                 if (meansOfTransport.equals("bus")) {
                     setCo2Emission(37.0);
                 } else {

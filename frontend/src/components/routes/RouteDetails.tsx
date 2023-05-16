@@ -2,7 +2,7 @@ import {Button, ButtonGroup, Card, Divider, Paper, Stack, styled, Typography} fr
 import EditIcon from "@mui/icons-material/Edit";
 import {useContext, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {RouteContext} from "../contexts/RouteContextProvider";
+import {RouteContext} from "../../contexts/RouteContextProvider";
 import RouteVehicleDetails from "./RouteVehicleDetails";
 
 const sxStylePaper = {
@@ -74,34 +74,8 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         </Stack>
                         <Divider sx={{borderColor: "#808080"}}/>
                         <RouteVehicleDetails route={route}/>
-                        {/* <Typography variant="overline">Vehicle</Typography>
-                        <div>
-                            {route.vehicle.type === "car" && <DirectionsCarIcon/>}
-                            {route.vehicle.type === "publicTransport" && <TrainIcon/>}
-                            {route.vehicle.type === "flight" && <FlightIcon/>}
-                            {route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
-                        </div>
-                        {route.vehicle.type === "flight" &&
-                            <Stack>
-                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
-                            </Stack>}
-                        {route.vehicle.type === "bike" &&
-                            <Stack>
-                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
-                            </Stack>}
-                        {route.vehicle.type === "car" &&
-                            <Stack direction="row" gap="0.5rem">
-                                <Item>Fuel: {route.vehicle.fuel}</Item>
-                                <Item>Car size: {route.vehicle.carSize}</Item>
-                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
-                            </Stack>}
-                        {route.vehicle.type === "publicTransport" &&
-                            <Stack direction="row" gap="0.5rem">
-                                <Item>Distance Level: <br/>{route.vehicle.distanceLevel}</Item>
-                                <Item>Means of Transport: <br/>{route.vehicle.meansOfTransport}</Item>
-                                <Item>CO2-Emission in g/km: {route.vehicle.co2Emission}</Item>
-                            </Stack>}*/}
-                        <Typography variant="overline">CO2-Emission </Typography>
+
+                        <Typography variant="overline">CO2-Emission Route</Typography>
                         <Stack sx={{textAlign: "center"}}>
                             <Item><small>PRO PERSON IN KG: </small> {route.co2EmissionRoute}</Item>
                         </Stack>

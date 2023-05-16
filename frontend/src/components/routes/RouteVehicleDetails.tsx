@@ -1,9 +1,9 @@
-import {Stack, styled, Typography} from "@mui/material";
+import {Box, Stack, styled, Typography} from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import TrainIcon from "@mui/icons-material/Train";
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
-import {Route} from "../models/RouteModel";
+import {Route} from "../../models/RouteModel";
 
 const Item = styled('div')(({theme}) => ({
     backgroundColor: "#B3BDB3",
@@ -19,7 +19,7 @@ type RouteVehicleDetailsProps = {
 }
 export default function RouteVehicleDetails(props: RouteVehicleDetailsProps) {
     return (
-        <>
+        <Box>
             <Typography variant="overline">Vehicle</Typography>
             <div>
                 {props.route.vehicle.type === "car" && <DirectionsCarIcon/>}
@@ -47,7 +47,7 @@ export default function RouteVehicleDetails(props: RouteVehicleDetailsProps) {
                     <Item><small>MEANS OF TRANSPORT: </small> <br/>{props.route.vehicle.meansOfTransport}</Item>
                     <Item><small>CO2-EMISSION in g/km: </small> {props.route.vehicle.co2Emission}</Item>
                 </Stack>}
-        </>
+        </Box>
 
     )
 }

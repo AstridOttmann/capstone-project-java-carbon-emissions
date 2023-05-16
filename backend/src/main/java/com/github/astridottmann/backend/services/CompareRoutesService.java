@@ -1,6 +1,7 @@
 package com.github.astridottmann.backend.services;
 
 import com.github.astridottmann.backend.models.CompareRoutes;
+import com.github.astridottmann.backend.models.CompareRoutesDTO;
 import com.github.astridottmann.backend.models.ComparisonResults;
 import com.github.astridottmann.backend.models.Route;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
@@ -35,11 +36,9 @@ public class CompareRoutesService {
                 .orElseThrow(() -> new NoSuchElementException("Not found!"));
     }
 
-    public CompareRoutes addComparison(List<Route> compared) {
-        CompareRoutes compareRoutesToAdd = new CompareRoutes(
-                idService.createRandomId(),
-                List.of(compared.get(0), compared.get(1)),
-                compareEmissions(compared));
+    public CompareRoutes addComparison(CompareRoutesDTO compareRoutesDTO) {
+        CompareRoutes compareRoutesToAdd =
+                CompareRoutes.createCompareRoutesFromDTO(compareRoutesDTO, idService.createRandomId(), compareEmissions(compareRoutesDTO.compared()));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }
@@ -65,6 +64,7 @@ public class CompareRoutesService {
 
         CompareRoutes updatedCompareRoutes = new CompareRoutes(
                 compareRoutes.id(),
+                compareRoutes.userId(),
                 routes,
                 compareEmissions(compareRoutes.compared()));
 
@@ -79,7 +79,7 @@ public class CompareRoutesService {
                             .stream()
                             .map(currentRoute -> currentRoute.id().equals(route.id()) ? route : currentRoute)
                             .toList();
-                    return new CompareRoutes(compareRoutes.id(), currentCompared, compareEmissions(currentCompared));
+                    return new CompareRoutes(compareRoutes.id(), compareRoutes.userId(), currentCompared, compareEmissions(currentCompared));
                 }))
                 .toList();
 

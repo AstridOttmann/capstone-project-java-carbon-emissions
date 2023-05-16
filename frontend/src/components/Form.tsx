@@ -22,6 +22,7 @@ import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
 import {toast} from "react-toastify";
+import {User} from "../models/MongoUserModel";
 
 
 const sxStylePaper = {
@@ -42,12 +43,13 @@ const sxStyleBox = {
 }
 
 type FormProps = {
+    user: User,
     isEditMode: boolean,
     setAddMode: (arg0: boolean) => void,
     setIsEditMode: (arg0: boolean) => void,
     routesToCompare: Route[]
     setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
-    getAllComparison: () => Promise<void>,
+    getAllComparison: () => void,
 
 }
 export default function Form(props: FormProps) {
@@ -84,6 +86,7 @@ export default function Form(props: FormProps) {
         props.setIsEditMode(false)
     }
 
+
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
@@ -91,14 +94,15 @@ export default function Form(props: FormProps) {
             if (props.isEditMode) {
                 const updatedRoute: Route = {...route, vehicle}
                 updateRoute(updatedRoute.id, updatedRoute)
-                    .then(() => props.getAllComparison()
-                        .then(() => {
-                            navigate(-1)
-                            handleSuccessfulSubmit();
-                        }))
+                    .then(() => {
+                        props.getAllComparison();
+                        navigate(-1)
+                        handleSuccessfulSubmit();
+                    })
 
             } else {
-                const routeToAdd = {...route, vehicle}
+                console.log(props.user);
+                const routeToAdd = {...route, vehicle, userId: props.user.id}
                 addRoute(routeToAdd)
                     .then(savedRoute => {
                         props.setRoutesToCompare(
@@ -244,7 +248,7 @@ export default function Form(props: FormProps) {
                                     name="distanceLevel"
                                     onChange={handleChangeSelectVehicle}>
                                     <MenuItem value="local">local</MenuItem>
-                                    <MenuItem value="longDistance">long distance</MenuItem>
+                                    <MenuItem value="long distance">long distance</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl>

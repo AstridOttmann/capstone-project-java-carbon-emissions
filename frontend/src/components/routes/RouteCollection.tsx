@@ -6,7 +6,8 @@ import './RouteCollection.css'
 
 import RouteCard from "./RouteCard";
 import {useContext} from "react";
-import {RoutesContext} from "../contexts/RoutesContextProvider";
+import {RoutesContext} from "../../contexts/RoutesContextProvider";
+import {User} from "../../models/MongoUserModel";
 
 const sxStylePaper = {
     p: "1rem",
@@ -20,8 +21,13 @@ const sxStyleTitle = {
     color: "#3fd44d"
 }
 
-export default function RouteCollection() {
+type RouteCollectionProps ={
+    user: User
+}
+export default function RouteCollection(props: RouteCollectionProps) {
     const {routes} = useContext(RoutesContext)
+
+    const userRoutes = routes.filter((route)=> route.userId === props.user.id)
 
     return (
         <Paper sx={sxStylePaper}>
@@ -29,7 +35,7 @@ export default function RouteCollection() {
                 Single Routes
             </Typography>
             <ul className="route-list">
-                {routes.map((route) => {
+                {userRoutes.map((route) => {
                     return (
                         <RouteCard key={route.id} route={route}/>
                     )

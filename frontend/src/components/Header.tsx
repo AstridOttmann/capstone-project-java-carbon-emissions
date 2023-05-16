@@ -1,6 +1,7 @@
 import {Box, Button, Divider, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import {User} from "../models/MongoUserModel";
 
 const sxStyleTypo = {
     fontSize: "2rem",
@@ -17,26 +18,22 @@ const sxStyleBox = {
 }
 
 type HeaderProps = {
-    user: string | undefined,
-    onLogout:()=> Promise<string | number | void>
+    user: User,
+    onLogout: () => void
 }
 export default function Header(props: HeaderProps) {
     const navigate = useNavigate();
-    const authenticated = props.user !== undefined && props.user !== "anonymousUser";
 
     function logoutOnClick() {
         props.onLogout()
-            .then(() => {
-                navigate("/login");
-            })
-            .catch(error => console.error(error));
+        navigate("/login");
     }
 
     return (
         <header>
             <Box sx={sxStyleBox}>
                 <Typography variant="h1" sx={sxStyleTypo}>Move Green!</Typography>
-                {authenticated &&
+                {props.user.id !== "" &&
                     <Button type="button" onClick={logoutOnClick}><LogoutIcon/></Button>}
             </Box>
             <Divider sx={{borderColor: "#808080"}}/>

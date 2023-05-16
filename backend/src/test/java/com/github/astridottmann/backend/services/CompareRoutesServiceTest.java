@@ -17,6 +17,7 @@ class CompareRoutesServiceTest {
     final IdService idService = mock(IdService.class);
     final CompareRoutesRepository compareRoutesRepository = mock(CompareRoutesRepository.class);
     private final String testId = "1";
+    private final String dummyUserId = "123";
 
     private CompareRoutes createTestCompareRoutesInstance() {
         Car car = new Car("car", 253.3, "petrol", "large");
@@ -28,9 +29,10 @@ class CompareRoutesServiceTest {
                 1,
                 false,
                 car,
-                268.93);
+                268.93,
+                "a1b2");
 
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
         Route routeB = new Route(
                 "456",
                 "Hamburg",
@@ -39,12 +41,45 @@ class CompareRoutesServiceTest {
                 1,
                 false,
                 publicTransport,
-                45.26);
+                45.26,
+                "a1b2");
 
         return new CompareRoutes(
                 testId,
+                dummyUserId,
                 List.of(routeA, routeB),
                 new ComparisonResults(268.93, 45.26, 223.67)
+        );
+    }
+
+    private CompareRoutesDTO createTestCompareRoutesDTOInstance() {
+        Car car = new Car("car", 253.3, "petrol", "large");
+        Route routeA = new Route(
+                "123",
+                "Hamburg",
+                "Frankfurt",
+                492,
+                1,
+                false,
+                car,
+                268.93,
+                "a1b2");
+
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
+        Route routeB = new Route(
+                "456",
+                "Hamburg",
+                "Frankfurt",
+                492,
+                1,
+                false,
+                publicTransport,
+                45.26,
+                "a1b2");
+
+        return new CompareRoutesDTO(
+                dummyUserId,
+                List.of(routeA, routeB)
         );
     }
 
@@ -56,14 +91,14 @@ class CompareRoutesServiceTest {
     @Test
     void addComparison() {
         CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
-        List<Route> testCompared = testCompareRoutes.compared();
+        CompareRoutesDTO testCompareRoutesDTO = createTestCompareRoutesDTOInstance();
 
         Mockito.when(compareRoutesRepository.save(testCompareRoutes))
                 .thenReturn(testCompareRoutes);
         Mockito.when(idService.createRandomId())
                 .thenReturn(testId);
 
-        CompareRoutes actual = compareRoutesService.addComparison(testCompared);
+        CompareRoutes actual = compareRoutesService.addComparison(testCompareRoutesDTO);
 
         verify(compareRoutesRepository).save(testCompareRoutes);
         assertEquals(testCompareRoutes, actual);

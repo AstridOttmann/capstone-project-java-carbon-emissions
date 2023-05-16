@@ -36,7 +36,7 @@ class RouteIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
         testRoute = new Route(
                 "123",
                 "Hamburg",
@@ -45,13 +45,16 @@ class RouteIntegrationTest {
                 1,
                 false,
                 publicTransport,
-                26.59);
+                26.59,
+                "a1b2");
 
         testRouteJson = objectMapper.writeValueAsString(testRoute);
 
         testRouteWithoutIdJson = """ 
                 {
-                "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "longDistance", "meansOfTransport": "train"}
+                "start":"Hamburg", "destination":"Berlin", "distance": 289, "numberOfPersons": 1, "oneWay": false, 
+                "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "long distance", "meansOfTransport": "train"}, 
+                "userId": "a1b2"
                 }
                                 """;
     }
@@ -116,7 +119,8 @@ class RouteIntegrationTest {
                 testRoute.numberOfPersons(),
                 testRoute.oneWay(),
                 testRoute.vehicle(),
-                actual.co2EmissionRoute());
+                actual.co2EmissionRoute(),
+                testRoute.userId());
 
         assertThat(routeRepository.findAll()).contains(expected);
     }

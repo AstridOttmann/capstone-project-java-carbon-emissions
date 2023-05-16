@@ -1,9 +1,8 @@
 import {Box, Button, TextField, ButtonGroup} from "@mui/material";
-import {FormEvent, useContext, useState} from "react";
+import {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {RoutesContext} from "../contexts/RoutesContextProvider";
-import {MongoUser} from "../models/MongoUserModel";
-import {toast} from "react-toastify";
+import {User} from "../models/MongoUserModel";
 
 const sxStyleBox = {
     display: "flex",
@@ -13,41 +12,38 @@ const sxStyleBox = {
 }
 
 type LoginPageProps = {
-    onLogin: (username: string, password: string) => Promise<string | number | void>,
-    onSignIn: (user: MongoUser) => Promise<string | number | void>,
+    onLogin: (username: string, password: string) => Promise<void>,
+    onSignIn: (newMongoUser: User) => Promise<void>,
     getAllComparison: () => void,
-    mongoUser: MongoUser
+    user: User,
+    setUser: (user: User) => void,
 
 }
 export default function LoginPage(props: LoginPageProps) {
     const {getAllRoutes} = useContext(RoutesContext)
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
     const [signIn, setSignIn] = useState<boolean>();
-
 
     const navigate = useNavigate();
 
-    function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = event.target
+        props.setUser({...props.user, [name]: value})
+    }
+
+    async function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (signIn) {
-            const user: MongoUser = {username, password}
-            props.onSignIn(user)
-                .then(() => {
-                    toast.success("Created an account!")
-                    setSignIn(false);
-                })
-                .catch(error => console.error(error));
-        } else {
-            props.onLogin(username, password)
-                .then(() => {
-                    navigate("/");
-                    getAllRoutes();
-                    props.getAllComparison();
-                })
-                .catch(error => console.error(error));
-
+            try {
+                await props.onSignIn(props.user);
+                setSignIn(false);
+            } catch (error) {
+                console.error("error", error);
+            }
         }
+        await props.onLogin(props.user.username, props.user.password);
+        navigate("/");
+        await getAllRoutes();
+        props.getAllComparison();
     }
 
     return (
@@ -57,8 +53,9 @@ export default function LoginPage(props: LoginPageProps) {
                            type="text"
                            label="User name"
                            id="username"
-                           value={username}
-                           onChange={e => setUsername(e.target.value)}
+                           name="username"
+                           value={props.user.username}
+                           onChange={handleChange}
                            InputLabelProps={{sx: {color: "#3fd44d"}}}
                            InputProps={{sx: {color: "#3fd44d"}}}
                 />
@@ -67,8 +64,9 @@ export default function LoginPage(props: LoginPageProps) {
                            type="password"
                            label="Password"
                            id="password"
-                           value={password}
-                           onChange={e => setPassword(e.target.value)}
+                           name="password"
+                           value={props.user.password}
+                           onChange={handleChange}
                            InputLabelProps={{sx: {color: "#3fd44d"}}}
                            InputProps={{sx: {color: "#3fd44d"}}}
                 />
@@ -78,7 +76,6 @@ export default function LoginPage(props: LoginPageProps) {
                     <Button type="submit" onClick={() => setSignIn(true)}>Sign in</Button>
                     <Button type="submit">Login</Button>
                 </ButtonGroup>
-                {/*  <Button type="submit" variant="outlined">Login</Button>*/}
             </Box>
         </form>
     )

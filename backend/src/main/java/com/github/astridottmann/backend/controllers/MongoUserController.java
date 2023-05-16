@@ -1,7 +1,9 @@
 package com.github.astridottmann.backend.controllers;
 
 import com.github.astridottmann.backend.models.MongoUser;
+import com.github.astridottmann.backend.models.MongoUserDTO;
 import com.github.astridottmann.backend.repositories.MongoUserRepository;
+import com.github.astridottmann.backend.services.MongoUserDetailsService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,21 +19,24 @@ public class MongoUserController {
     private final MongoUserRepository mongoUserRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private final MongoUserDetailsService mongoUserDetailsService;
 
     @GetMapping("/me")
-    public String getMe() {
-        return SecurityContextHolder
+    public MongoUserDTO getMe() {
+        String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
+        return mongoUserDetailsService.getUserInfoByUsername(username);
     }
 
     @PostMapping("/login")
-    public String login() {
-        return SecurityContextHolder
+    public MongoUserDTO login() {
+        String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
+       return mongoUserDetailsService.getUserInfoByUsername(username);
     }
 
     @PostMapping("/logout")
@@ -42,13 +47,12 @@ public class MongoUserController {
 
     @PostMapping("/signin")
     public MongoUser signIn(@RequestBody @Valid MongoUser user) {
-        String errorMessage = "Username already exists!";
-
         if (mongoUserRepository.findMongoUserByUsername(user.username()).isPresent()) {
+            String errorMessage = "Username already exists!";
             throw new IllegalArgumentException(errorMessage);
         }
         String encodedPassword = passwordEncoder.encode(user.password());
-        MongoUser newUser = new MongoUser(null, user.username(), encodedPassword);
+        MongoUser newUser = new MongoUser(null, user.username(), encodedPassword, user.co2Score());
         return mongoUserRepository.save(newUser);
     }
 

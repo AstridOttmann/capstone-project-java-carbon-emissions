@@ -1,6 +1,6 @@
 import {Box, Button, ButtonGroup, Paper, Typography} from "@mui/material";
 import CompareRoutesCard from "./CompareRoutesCard";
-import {CompareRoutes} from "../models/CompareRoutesModel";
+import {CompareRoutes} from "../../models/CompareRoutesModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router-dom";
 import CompareRoutesResults from "./CompareRoutesResults";

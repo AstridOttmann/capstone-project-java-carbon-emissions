@@ -1,5 +1,5 @@
 import {Box, Typography} from "@mui/material";
-import {Route} from "../models/RouteModel";
+import {Route} from "../../models/RouteModel";
 
 type CompareRoutesResultsProps = {
     route: Route

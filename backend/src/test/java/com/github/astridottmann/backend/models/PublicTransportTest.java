@@ -23,7 +23,7 @@ class PublicTransportTest {
 
     @Test
     void getCo2Emission() {
-        Vehicle vehicle = new PublicTransport("PublicTransport", 37.0, "longDistance","bus");
+        Vehicle vehicle = new PublicTransport("PublicTransport", 37.0, "long distance","bus");
 
         double expectedCo2Emission = 37.0;
 

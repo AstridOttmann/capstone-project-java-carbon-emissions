@@ -1,6 +1,7 @@
 import {Paper, Typography} from "@mui/material";
-import {CompareRoutes} from "../models/CompareRoutesModel";
+import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesComponent from "./CompareRoutesComponent";
+import {User} from "../../models/MongoUserModel";
 
 const sxStylePaper = {
     p: "1rem",
@@ -16,16 +17,20 @@ const sxStyleTitle = {
 }
 
 type CompareRoutesCollectionProps = {
-    comparedRoutesList: CompareRoutes[],
+    user: User,
+    compareRoutesList: CompareRoutes[],
     deleteComparisonById: (id: string) => void
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
+    const userCompareRoutes = props.compareRoutesList.filter((element)=>
+        element.userId === props.user.id)
+
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
                 My Compared Routes
             </Typography>
-            {props.comparedRoutesList.map((element) => {
+            {userCompareRoutes.map((element) => {
                 return <CompareRoutesComponent key={element.id}
                                                comparedRoutes={element}
                                                deleteComparisonById={props.deleteComparisonById}/>

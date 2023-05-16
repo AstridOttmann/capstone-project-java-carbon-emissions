@@ -37,7 +37,8 @@ class CompareRoutesIntegrationTest {
     private ObjectMapper objectMapper;
     private CompareRoutes testCompareRoutes;
     private String testCompareRoutesJson;
-    private String testCompareRoutesWithoutIdJson;
+    private String testCompareRoutesDTOJson;
+    private CompareRoutesDTO testCompareRoutesDTO;
     private String expectedBodyJson;
     private String testComparedJson;
 
@@ -52,9 +53,10 @@ class CompareRoutesIntegrationTest {
                 1,
                 false,
                 car,
-                268.93);
+                268.93,
+                "a1b2");
 
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "longDistance", "train");
+        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
         Route routeB = new Route(
                 "456",
                 "Hamburg",
@@ -63,59 +65,31 @@ class CompareRoutesIntegrationTest {
                 1,
                 false,
                 publicTransport,
-                45.26);
+                45.26,
+                "a1b2");
 
         testCompareRoutes = new CompareRoutes(
                 "999",
+                "a1b2",
                 List.of(routeA, routeB),
                 new ComparisonResults(268.93, 45.26, 223.67)
         );
         testCompareRoutesJson = objectMapper.writeValueAsString(testCompareRoutes);
 
-        List<Route> testCompared = new ArrayList<>(List.of(routeA, routeB));
-        testComparedJson = objectMapper.writeValueAsString(testCompared);
-
-        testCompareRoutesWithoutIdJson = """
-                 { "compared": [
-                            {
-                                "id": "123",
-                                "start": "Hamburg",
-                                "destination": "Frankfurt",
-                                "distance": 492,
-                                "numberOfPersons": 1,
-                                "oneWay": false,
-                                "vehicle": {
-                                    "type": "car",
-                                    "co2Emission": 253.3,
-                                    "fuel": "petrol",
-                                    "carSize": "large"
-                                },
-                                "co2EmissionRoute": 268.93
-                            },
-                            {
-                                "id": "456",
-                                "start": "Hamburg",
-                                "destination": "Frankfurt",
-                                "distance": 492,
-                                "numberOfPersons": 1,
-                                "oneWay": false,
-                                "vehicle": {
-                                    "type": "publicTransport",
-                                    "co2Emission": 46.0,
-                                    "distanceLevel": "longDistance",
-                                    "meansOfTransport": "train"
-                                },
-                                "co2EmissionRoute": 45.26
-                            }
-                        ],
-                     "comparisonResults": {
-                            "resultRouteOne": 268.93,
-                            "resultRouteTwo": 45.26,
-                            "difference": 223.67
-                        }
-                    }
-                """;
+        testCompareRoutesDTO = new CompareRoutesDTO(
+                "a1b2",
+                List.of(routeA, routeB)
+        );
+        testCompareRoutesDTOJson = objectMapper.writeValueAsString(testCompareRoutesDTO);
     }
+
+    //List<Route> testCompared = new ArrayList<>(List.of(routeA, routeB));
+    //  testComparedJson = objectMapper.writeValueAsString(testCompared);
+
+      /*  testCompareRoutesDTOJson = """
+                {"userId": "a1b2", "compared": [{"id": "123", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": { "type": "car", "co2Emission": 253.3, "fuel": "petrol", "carSize": "large"}, "co2EmissionRoute": 268.93, "userId: "a1b2"}, {"id": "456", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "long distance", "meansOfTransport": "train"}, "co2EmissionRoute": 45.26, "userId: "a1b2"}]}
+                """;
+    }*/
 
     @Test
     @WithMockUser
@@ -138,11 +112,13 @@ class CompareRoutesIntegrationTest {
                         []
                         """));
     }
+
     @Test
     void expect401_OnGet_whenAnonymousUser() throws Exception {
         mockMvc.perform(get("/api/compare"))
                 .andExpect(status().isUnauthorized());
     }
+
     @Test
     @WithMockUser
     void getCompareRoutesById_shouldReturnRequested() throws Exception {
@@ -170,11 +146,12 @@ class CompareRoutesIntegrationTest {
         String addedCompareRoutesJson =
                 mockMvc.perform(post("/api/compare")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(testComparedJson)
+                                .content(testCompareRoutesDTOJson)
                                 .with(csrf()))
                         .andExpect(status().isOk())
-                        .andExpect(content().json(testCompareRoutesWithoutIdJson))
+                        .andExpect(content().json(testCompareRoutesDTOJson))
                         .andExpect(jsonPath("$.id").isNotEmpty())
+                        .andExpect(jsonPath("$.comparisonResults").isNotEmpty())
                         .andReturn()
                         .getResponse()
                         .getContentAsString();
@@ -183,6 +160,7 @@ class CompareRoutesIntegrationTest {
 
         CompareRoutes expected = new CompareRoutes(
                 actual.id(),
+                testCompareRoutes.userId(),
                 testCompareRoutes.compared(),
                 testCompareRoutes.comparisonResults()
         );

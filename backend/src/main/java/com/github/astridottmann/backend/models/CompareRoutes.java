@@ -8,7 +8,16 @@ import java.util.List;
 public record CompareRoutes(
         @Id
         String id,
+        String userId,
         List<Route> compared,
         ComparisonResults comparisonResults
 ) {
+        public static CompareRoutes createCompareRoutesFromDTO(CompareRoutesDTO compareRoutesDTO, String id, ComparisonResults comparisonResults){
+                return new CompareRoutes(
+                        id,
+                        compareRoutesDTO.userId(),
+                        compareRoutesDTO.compared(),
+                        comparisonResults
+                );
+        }
 }

@@ -1,7 +1,7 @@
 import {Card} from "@mui/material";
-import {Route} from "../models/RouteModel";
-import RouteVehicleIcon from "./RouteVehicleIcon";
-import RouteInfo from "./RouteInfo";
+import {Route} from "../../models/RouteModel";
+import RouteVehicleIcon from "../routes/RouteVehicleIcon";
+import RouteInfo from "../routes/RouteInfo";
 
 const sxStyleCard = {
     p: "1rem",
