@@ -33,8 +33,8 @@ export default function useUser() {
                 });
         }
 
-        //eslint-disable-next-line
         checkLoggedInUser();
+        //eslint-disable-next-line
     }, []);
 
     function login(username: string, password: string) {
