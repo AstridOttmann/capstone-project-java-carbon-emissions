@@ -36,7 +36,7 @@ public class MongoUserController {
                 .getContext()
                 .getAuthentication()
                 .getName();
-       return mongoUserDetailsService.getUserInfoByUsername(username);
+        return mongoUserDetailsService.getUserInfoByUsername(username);
     }
 
     @PostMapping("/logout")
@@ -54,6 +54,23 @@ public class MongoUserController {
         String encodedPassword = passwordEncoder.encode(user.password());
         MongoUser newUser = new MongoUser(null, user.username(), encodedPassword, user.co2Score());
         return mongoUserRepository.save(newUser);
+    }
+
+    @PutMapping("/score/{id}")
+    public MongoUserDTO updateScore(@PathVariable String id, @RequestBody MongoUserDTO userDTO) {
+      /*  String username = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();*/
+    /*    Optional<MongoUser> loggedInUser = mongoUserRepository.findMongoUserByUsername(username);*/
+        /*  securityContext id*/
+        if (!id.equals(userDTO.id()) && id.equals(login().id())) {
+            String errorMessage = "Not allowed";
+            throw new IllegalArgumentException(errorMessage);
+        }
+        MongoUser updated = mongoUserDetailsService.updateScore(id, userDTO);
+        return new MongoUserDTO(id, updated.username(), updated.co2Score());
+
     }
 
 }

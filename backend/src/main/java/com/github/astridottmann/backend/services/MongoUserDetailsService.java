@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.NoSuchElementException;
 
 @Service
 public class MongoUserDetailsService implements UserDetailsService {
@@ -32,6 +33,14 @@ public class MongoUserDetailsService implements UserDetailsService {
         MongoUser user = mongoUserRepository.findMongoUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with name " + username + " not found!"));
         return new MongoUserDTO(user.id(), user.username(), user.co2Score());
+    }
+
+    public MongoUser updateScore(String id, MongoUserDTO userDTO) {
+        MongoUser user =
+                mongoUserRepository.findById(id)
+                        .orElseThrow(() -> new NoSuchElementException("User not found!"));
+        return mongoUserRepository.save(new MongoUser(
+                id, userDTO.username(), user.password(), userDTO.co2Score()));
 
     }
 }

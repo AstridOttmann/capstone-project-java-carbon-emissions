@@ -30,7 +30,8 @@ type CompareRoutesDetailsProps = {
     setIsEditMode: (arg0: boolean) => void,
     getComparisonById: (id: string) => void,
     getAllComparison: () => void,
-    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
+    updateScore: (id: string, user: User) => void
 }
 export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
     const {setRoute} = useContext(RouteContext);
@@ -76,6 +77,7 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
                 {/*   {props.compareRoutes.compared.map((route) => {*/}
                 <CompareRoutesResults user={props.user}
                                       setUser={props.setUser}
+                                      updateScore={props.updateScore}
                                       compareRoutes={props.compareRoutes}
                                       setCompareRoutes={props.setCompareRoutes}
                                       updateComparison={props.updateComparison}

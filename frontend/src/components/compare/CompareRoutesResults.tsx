@@ -30,7 +30,8 @@ type CompareRoutesResultsProps = {
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     getAllComparison: () => void,
-    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
+    updateScore: (id: string,user: User) => void
 }
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     const navigate = useNavigate();
@@ -45,7 +46,9 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
 
     async function handleSelectOption(result: number) {
         const newScore = props.user.co2Score + result;
-        props.setUser({...props.user, co2Score: newScore})
+        const updatedUser = {...props.user, co2Score: newScore};
+        await props.updateScore(updatedUser.id, updatedUser);
+        console.log("userUP", updatedUser)
 
         const updatedComparisonResults: ComparisonResults =
             {...comparisonResults, difference: newScore};

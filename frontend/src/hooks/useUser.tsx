@@ -68,5 +68,21 @@ export default function useUser() {
             .catch(error => console.log(error))
     }
 
-    return {user, setUser, isLoading, login, logout, signIn}
+    function updateScore(id: string, userDTO: User) {
+        axios.put(`/api/user/score/${id}`, userDTO)
+            .then((response) => {
+                const updatedUser = response.data;
+                setUser((user) => {
+                    if (id === updatedUser.id) {
+                        return updatedUser;
+                    }
+                    return userDTO;
+                });
+                return updatedUser;
+            })
+            .catch((error) =>
+                toast.error("error", error))
+    }
+
+    return {user, setUser, isLoading, login, logout, signIn, updateScore}
 }

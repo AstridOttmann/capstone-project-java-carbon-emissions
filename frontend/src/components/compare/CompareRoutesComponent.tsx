@@ -17,11 +17,12 @@ const sxStylePaper = {
 type CompareRoutesComponentProps = {
     user: User,
     setUser: (user: User) => void,
+    updateScore: (id: string, user: User) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     deleteComparisonById: (id: string) => void,
     getAllComparison: () => void,
-    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
 }
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 gap: "1rem",
                 borderRadius: 1
             }}>
-                <CompareRoutesResults user={props.user} setUser={props.setUser} compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes} updateComparison={props.updateComparison} getAllComparison={props.getAllComparison}/>
+                <CompareRoutesResults user={props.user} setUser={props.setUser} updateScore={props.updateScore} compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes} updateComparison={props.updateComparison} getAllComparison={props.getAllComparison}/>
             </Box>
 
             <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}

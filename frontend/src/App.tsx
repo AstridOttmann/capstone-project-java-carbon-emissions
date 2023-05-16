@@ -20,7 +20,7 @@ import UserAccount from "./components/UserAccount";
 
 
 function App() {
-    const {user, setUser, isLoading, login, logout, signIn} = useUser()
+    const {user, setUser, isLoading, login, logout, signIn, updateScore} = useUser()
     const {
         compareRoutes,
         compareRoutesList,
@@ -67,6 +67,7 @@ function App() {
                             <Route path="/compared" element={
                                 <CompareRoutesCollection user={user}
                                                          setUser={setUser}
+                                                         updateScore={updateScore}
                                                          compareRoutes={compareRoutes}
                                                          setCompareRoutes={setCompareRoutes}
                                                          compareRoutesList={compareRoutesList}
@@ -80,6 +81,7 @@ function App() {
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
                                                       user={user}
                                                       setUser={setUser}
+                                                      updateScore={updateScore}
                                                       compareRoutes={compareRoutes}
                                                       setCompareRoutes={setCompareRoutes}
                                                       setIsEditMode={setIsEditMode}
