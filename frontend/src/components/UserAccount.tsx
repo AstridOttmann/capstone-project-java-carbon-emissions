@@ -1,6 +1,7 @@
 import {Card, CardContent, Paper, Typography} from "@mui/material";
 import React from "react";
 import ForestIcon from '@mui/icons-material/Forest';
+import {User} from "../models/MongoUserModel";
 
 const sxStylePaper = {
     p: "1rem",
@@ -15,10 +16,12 @@ const sxStyleTitle = {
 const sxStyleCard = {
     color: "#3fd44d",
     width: "20%",
-    p: "0",
     m: "1rem"
 }
-export default function UserAccount() {
+type UserAccountProps ={
+    user: User
+}
+export default function UserAccount(props: UserAccountProps) {
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" sx={sxStyleTitle}>My CO2-Bonus-Score</Typography>
@@ -26,7 +29,7 @@ export default function UserAccount() {
                 <CardContent sx={{display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center"}}>
                     <ForestIcon fontSize="large"/>
                         {/*   <Typography variant="h5" component="h2" sx={{textAlign: "center"}}>*/}
-                        <Typography>33</Typography>
+                        <Typography>{props.user.co2Score.toFixed(2)}</Typography>
                 </CardContent>
             </Card>
         </Paper>

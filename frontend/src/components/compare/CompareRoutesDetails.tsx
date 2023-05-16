@@ -5,9 +5,10 @@ import {useNavigate, useParams} from "react-router-dom";
 import RouteVehicleDetails from "../routes/RouteVehicleDetails";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
-import {useContext, useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {RouteContext} from "../../contexts/RouteContextProvider";
 import {Route} from "../../models/RouteModel";
+import {User} from "../../models/MongoUserModel";
 
 
 const sxStylePaper = {
@@ -22,7 +23,10 @@ const sxStyleCard = {
 }
 
 type CompareRoutesDetailsProps = {
-    compareRoutes: CompareRoutes
+    user: User,
+    setUser: (user: User) => void,
+    compareRoutes: CompareRoutes,
+    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     setIsEditMode: (arg0: boolean) => void,
     getComparisonById: (id: string) => void
 }
@@ -68,7 +72,7 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
 
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
                 {/*   {props.compareRoutes.compared.map((route) => {*/}
-                <CompareRoutesResults compareRoutes={props.compareRoutes}/>
+                <CompareRoutesResults user={props.user} setUser={props.setUser} compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}/>
                 {/*   })}*/}
             </Box>
 

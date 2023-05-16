@@ -37,7 +37,7 @@ function App() {
             <main className="App">
                 <BrowserRouter>
                     <Header user={user} onLogout={logout}/>
-                    <ToastContainer autoClose={4000}/>
+                    <ToastContainer autoClose={5000}/>
                     <Routes>
                         <Route path="/login"
                                element={<LoginPage
@@ -65,15 +65,21 @@ function App() {
                                 <RouteCollection user={user}/>}/>
                             <Route path="/compared" element={
                                 <CompareRoutesCollection user={user}
+                                                         setUser={setUser}
+                                                         compareRoutes={compareRoutes}
+                                                         setCompareRoutes={setCompareRoutes}
                                                          compareRoutesList={compareRoutesList}
                                                          deleteComparisonById={deleteComparisonById}/>}/>
                             <Route path="/routes/details/:id" element={
                                 <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                             <Route path="/compared/details/:id" element={
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
+                                                      user={user}
+                                                      setUser={setUser}
                                                       compareRoutes={compareRoutes}
+                                                      setCompareRoutes={setCompareRoutes}
                                                       setIsEditMode={setIsEditMode}/>}/>
-                          <Route path="/account" element={<UserAccount/>}/>
+                          <Route path="/account" element={<UserAccount user={user}/>}/>
 
                         </Route>
                     </Routes>

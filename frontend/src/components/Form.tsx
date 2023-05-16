@@ -86,7 +86,6 @@ export default function Form(props: FormProps) {
         props.setIsEditMode(false)
     }
 
-
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
@@ -107,7 +106,7 @@ export default function Form(props: FormProps) {
                     .then(savedRoute => {
                         props.setRoutesToCompare(
                             [...props.routesToCompare, savedRoute])
-                        handleSuccessfulSubmit();
+                        handleSuccessfulSubmit()
                     })
                     .catch(error => {
                         console.error(error)

@@ -1,5 +1,8 @@
 import {Button, Typography} from "@mui/material";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
+import React, {useState} from "react";
+import {User} from "../../models/MongoUserModel";
+import {ComparisonResults} from "../../models/ComparisonResultsModel";
 
 const sxStyleBox1 = {
     display: "flex",
@@ -21,21 +24,40 @@ const sxStyleBox2 = {
 }
 
 type CompareRoutesResultsProps = {
-    compareRoutes: CompareRoutes
+    user: User,
+    setUser: (user: User) => void,
+    compareRoutes: CompareRoutes,
+    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
 }
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
-    console.log("comparison", props.compareRoutes)
+   // const [bonusScore, setBonusScore] = useState<number>(0);
+    const [comparisonResults, setComparisonResults] = useState<ComparisonResults>({
+        resultRouteOne: 0,
+        resultRouteTwo: 0,
+        difference: 0
+    })
+
     const resultOne: number = props.compareRoutes.comparisonResults.resultRouteOne;
     const resultTwo: number = props.compareRoutes.comparisonResults.resultRouteTwo;
 
+    function handleSelectOption(result: number) {
+        const newScore = props.user.co2Score + result;
+        props.setUser({...props.user, co2Score: newScore})
+        setComparisonResults({...comparisonResults, difference: newScore})
+        props.setCompareRoutes({...props.compareRoutes, comparisonResults});
+    }
+
+    console.log("comparison", props.compareRoutes)
     return (
         <>
-            <Button sx={resultOne > resultTwo ? sxStyleBox2 : sxStyleBox1}>
+            <Button sx={resultOne > resultTwo ? sxStyleBox2 : sxStyleBox1}
+                    onClick={() => handleSelectOption(resultOne)}>
                 <Typography sx={{textAlign: "center"}}>{props.compareRoutes.compared[0].vehicle.type}</Typography>
                 <Typography
                     sx={{textAlign: "center"}}>{resultOne}</Typography>
             </Button>
-            <Button sx={resultTwo > resultOne ? sxStyleBox2 : sxStyleBox1}>
+            <Button sx={resultTwo > resultOne ? sxStyleBox2 : sxStyleBox1}
+                    onClick={() => handleSelectOption(resultTwo)}>
                 <Typography sx={{textAlign: "center"}}>{props.compareRoutes.compared[1].vehicle.type}</Typography>
                 <Typography
                     sx={{textAlign: "center"}}>{resultTwo}</Typography>
