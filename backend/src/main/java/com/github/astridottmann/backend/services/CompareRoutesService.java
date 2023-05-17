@@ -1,13 +1,11 @@
 package com.github.astridottmann.backend.services;
 
-import com.github.astridottmann.backend.models.CompareRoutes;
-import com.github.astridottmann.backend.models.CompareRoutesDTO;
-import com.github.astridottmann.backend.models.ComparisonResults;
-import com.github.astridottmann.backend.models.Route;
+import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -17,7 +15,7 @@ public class CompareRoutesService {
     private final CompareRoutesRepository compareRoutesRepository;
     private final IdService idService;
 
-    public ComparisonResults createComparisonResults(List<Route> compared, double clickHistory) {
+    public ComparisonResults createComparisonResults(List<Route> compared, List<Usage> usages) {
         double emissionRouteOne = compared.get(0).co2EmissionRoute();
         double emissionRouteTwo = compared.get(1).co2EmissionRoute();
 
@@ -32,7 +30,7 @@ public class CompareRoutesService {
             bonusTwo = temp;
         }
 
-        return new ComparisonResults(bonusOne, bonusTwo, clickHistory);
+        return new ComparisonResults(bonusOne, bonusTwo, usages);
     }
 
     public List<CompareRoutes> getAllCompareRoutes() {
@@ -49,7 +47,7 @@ public class CompareRoutesService {
                 CompareRoutes.createCompareRoutesFromDTO(
                         compareRoutesDTO,
                         idService.createRandomId(),
-                        createComparisonResults(compareRoutesDTO.compared(), 0));
+                        createComparisonResults(compareRoutesDTO.compared(), Collections.emptyList()));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }
@@ -69,7 +67,7 @@ public class CompareRoutesService {
             throw new NoSuchElementException(errorMessage);
         }
 
-        double clickHistory = compareRoutes.comparisonResults().difference();
+        List<Usage> usages = compareRoutes.comparisonResults().usages();
 
         List<Route> routes = List.of(
                 compareRoutes.compared().get(0),
@@ -79,7 +77,7 @@ public class CompareRoutesService {
                 compareRoutes.id(),
                 compareRoutes.userId(),
                 routes,
-                createComparisonResults(compareRoutes.compared(), clickHistory));
+                createComparisonResults(compareRoutes.compared(), usages));
 
         return compareRoutesRepository.save(updatedCompareRoutes);
     }
@@ -96,7 +94,7 @@ public class CompareRoutesService {
                             compareRoutes.id(),
                             compareRoutes.userId(),
                             currentCompared,
-                            createComparisonResults(currentCompared, compareRoutes.comparisonResults().difference()));
+                            createComparisonResults(currentCompared, compareRoutes.comparisonResults().usages()));
                 }))
                 .toList();
 

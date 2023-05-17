@@ -28,7 +28,7 @@ export default function UserAccount(props: UserAccountProps) {
             <Card sx={sxStyleCard}>
                 <CardContent sx={{display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center"}}>
                     <ForestIcon fontSize="large"/>
-                    <Typography>{props.user.co2Score.toFixed(2)}</Typography>
+                    <Typography>{props.user.co2Score.toFixed(2)} kg/CO2</Typography>
                 </CardContent>
             </Card>
         </Paper>

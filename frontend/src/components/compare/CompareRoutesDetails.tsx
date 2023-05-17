@@ -86,10 +86,8 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
             </Box>
 
             <Box>
-                <Typography variant="body1"
-                            sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
-                    You can reduce your CO2-Emission
-                    by {props.compareRoutes.comparisonResults.difference} kg
+                <Typography variant="body1" sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
+                    You can reduce your CO2-Emission by {props.compareRoutes.comparisonResults.resultRouteTwo} kg
                 </Typography>
             </Box>
             <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}

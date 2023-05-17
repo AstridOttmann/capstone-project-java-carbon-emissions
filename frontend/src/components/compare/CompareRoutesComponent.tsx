@@ -6,6 +6,13 @@ import {useNavigate} from "react-router-dom";
 import CompareRoutesResults from "./CompareRoutesResults";
 import React from "react";
 import {User} from "../../models/MongoUserModel";
+import AccordionComponent from "../AccordionComponent";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Typography from "@mui/material/Typography";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Accordion from '@mui/material/Accordion';
+import CheckIcon from '@mui/icons-material/Check';
 
 const sxStylePaper = {
     p: "1rem",
@@ -36,14 +43,37 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
             {props.compareRoutes.compared.map((route) => {
                 return <CompareRoutesCard key={route.id} route={route}/>
             })}
+            <AccordionComponent/>
             <Box sx={{
                 display: "flex",
                 gap: "1rem",
-                borderRadius: 1
+                borderRadius: 1,
+                mt: "0.5rem"
             }}>
-                <CompareRoutesResults user={props.user} setUser={props.setUser} updateScore={props.updateScore} compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes} updateComparison={props.updateComparison} getAllComparison={props.getAllComparison}/>
+                <CompareRoutesResults user={props.user} setUser={props.setUser} updateScore={props.updateScore}
+                                      compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}
+                                      updateComparison={props.updateComparison}
+                                      getAllComparison={props.getAllComparison}/>
             </Box>
 
+            <Accordion disabled={!props.compareRoutes.comparisonResults.usages}
+                sx={{backgroundColor: "#454C5A", color: "#3fd44d", mt: "0.5rem"}}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    {props.compareRoutes.comparisonResults.usages?.length > 0 ?
+                        <><CheckIcon/>
+                            <Typography>Usages</Typography></> :
+                        <Typography>No Usages</Typography>}
+                </AccordionSummary>
+                <AccordionDetails>
+                    {props.compareRoutes.comparisonResults.usages?.map((usage) => {
+                        return <Typography>{usage.datetime}: {usage.bonus} kg/CO2</Typography>
+                    })}
+                </AccordionDetails>
+            </Accordion>
             <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
                          variant="text"
                          aria-label="text button group">

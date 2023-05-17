@@ -49,7 +49,7 @@ export default function useCompareRoutes() {
         comparisonResults: {
             resultRouteOne: 0,
             resultRouteTwo: 0,
-            difference: 0
+            usages: []
         }
     }
 
