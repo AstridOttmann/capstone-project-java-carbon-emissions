@@ -20,7 +20,8 @@ class RouteServiceTest {
     final IdService idService = mock(IdService.class);
     final CalculateCo2EmissionService calculateCo2EmissionService = mock(CalculateCo2EmissionService.class);
     final CompareRoutesService compareRoutesService = mock(CompareRoutesService.class);
-    final CompareRoutesRepository compareRoutesRepository = mock(CompareRoutesRepository.class);
+    final MongoUserDetailsService mongoUserDetailsService = mock(MongoUserDetailsService.class);
+   // final CompareRoutesRepository compareRoutesRepository = mock(CompareRoutesRepository.class);
     final RouteRepository routeRepository = mock(RouteRepository.class);
     private final String testId = "1";
     private final double dummyEmission = 162;
@@ -52,7 +53,8 @@ class RouteServiceTest {
 
     @BeforeEach
     void init() {
-        this.routeService = new RouteService(routeRepository, idService, calculateCo2EmissionService, compareRoutesService, compareRoutesRepository);
+        this.routeService = new RouteService(
+                routeRepository, idService, calculateCo2EmissionService, compareRoutesService, mongoUserDetailsService);
     }
 
     @Test

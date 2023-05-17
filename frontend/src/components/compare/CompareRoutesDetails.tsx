@@ -29,7 +29,7 @@ type CompareRoutesDetailsProps = {
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     setIsEditMode: (arg0: boolean) => void,
     getComparisonById: (id: string) => void,
-    getAllComparison: () => void,
+    getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
     updateScore: (id: string, user: User) => void
 }
@@ -81,7 +81,7 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
                                       compareRoutes={props.compareRoutes}
                                       setCompareRoutes={props.setCompareRoutes}
                                       updateComparison={props.updateComparison}
-                                      getAllComparison={props.getAllComparison}/>
+                                      getAllComparisonByUserId={props.getAllComparisonByUserId}/>
                 {/*   })}*/}
             </Box>
 

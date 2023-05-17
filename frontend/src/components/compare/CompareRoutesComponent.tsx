@@ -28,7 +28,7 @@ type CompareRoutesComponentProps = {
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     deleteComparisonById: (id: string) => void,
-    getAllComparison: () => void,
+    getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
 }
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
@@ -53,7 +53,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 <CompareRoutesResults user={props.user} setUser={props.setUser} updateScore={props.updateScore}
                                       compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}
                                       updateComparison={props.updateComparison}
-                                      getAllComparison={props.getAllComparison}/>
+                                      getAllComparisonByUserId={props.getAllComparisonByUserId}/>
             </Box>
 
             <Accordion disabled={props.compareRoutes.comparisonResults.usages?.length === 0}

@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,7 +41,7 @@ class CompareRoutesIntegrationTest {
     private String testCompareRoutesDTOJson;
     private CompareRoutesDTO testCompareRoutesDTO;
     private String expectedBodyJson;
-    private String testComparedJson;
+   // private String testComparedJson;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -72,7 +73,7 @@ class CompareRoutesIntegrationTest {
                 "999",
                 "a1b2",
                 List.of(routeA, routeB),
-                new ComparisonResults(268.93, 45.26, 223.67)
+                new ComparisonResults(223.67, -223.67, Collections.emptyList())
         );
         testCompareRoutesJson = objectMapper.writeValueAsString(testCompareRoutes);
 

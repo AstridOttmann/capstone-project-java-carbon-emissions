@@ -25,7 +25,7 @@ function App() {
         compareRoutes,
         compareRoutesList,
         setCompareRoutes,
-        getAllComparison,
+        getAllComparisonByUserId,
         getComparisonById,
         addComparison,
         updateComparison,
@@ -42,7 +42,7 @@ function App() {
                     <Routes>
                         <Route path="/login"
                                element={<LoginPage
-                                   getAllComparison={getAllComparison}
+                                   getAllComparisonByUserId={getAllComparisonByUserId}
                                    onLogin={login}
                                    onSignIn={signIn}
                                    user={user}
@@ -55,7 +55,7 @@ function App() {
                             <Route path="/" element={
                                 <HomePage
                                     user={user}
-                                    getAllComparison={getAllComparison}
+                                    getAllComparisonByUserId={getAllComparisonByUserId}
                                     addComparison={addComparison}
                                     setIsEditMode={setIsEditMode}
                                     isEditMode={isEditMode}
@@ -72,7 +72,7 @@ function App() {
                                                          setCompareRoutes={setCompareRoutes}
                                                          compareRoutesList={compareRoutesList}
                                                          updateComparison={updateComparison}
-                                                         getAllComparison={getAllComparison}
+                                                         getAllComparisonByUserId={getAllComparisonByUserId}
                                                          deleteComparisonById={deleteComparisonById}/>}
                             />
                             <Route path="/routes/details/:id" element={
@@ -86,7 +86,7 @@ function App() {
                                                       setCompareRoutes={setCompareRoutes}
                                                       setIsEditMode={setIsEditMode}
                                                       updateComparison={updateComparison}
-                                                      getAllComparison={getAllComparison}
+                                                      getAllComparisonByUserId={getAllComparisonByUserId}
                                 />}/>
                             <Route path="/account" element={<UserAccount user={user}/>}/>
 

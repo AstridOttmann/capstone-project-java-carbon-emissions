@@ -3,7 +3,7 @@ import {
     Typography
 } from "@mui/material";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
-import React, {useState} from "react";
+import React from "react";
 import {User} from "../../models/MongoUserModel";
 import {ComparisonResults} from "../../models/ComparisonResultsModel";
 import {useNavigate} from "react-router-dom";
@@ -32,7 +32,7 @@ type CompareRoutesResultsProps = {
     setUser: (user: User) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
-    getAllComparison: () => void,
+    getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
     updateScore: (id: string, user: User) => void
 }
@@ -70,7 +70,7 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
             {...props.compareRoutes, comparisonResults: updatedComparisonResults};
 
         await props.updateComparison(updatedComparison.id, updatedComparison);
-        await props.getAllComparison();
+        await props.getAllComparisonByUserId(props.user.id);
         navigate("/account");
     }
 

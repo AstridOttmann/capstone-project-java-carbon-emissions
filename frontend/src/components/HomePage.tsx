@@ -2,7 +2,7 @@ import Form from "./Form";
 import {Button, ButtonGroup, Paper, Typography} from "@mui/material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
@@ -22,7 +22,7 @@ type HomePageProps = {
     user: User,
     isEditMode: boolean,
     setIsEditMode: (arg0: boolean) => void,
-    getAllComparison: () => void,
+    getAllComparisonByUserId: (userId: string) => void,
     addComparison: (compareRoutes: CompareRoutes) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>
@@ -32,6 +32,12 @@ export default function HomePage(props: HomePageProps) {
     const [addMode, setAddMode] = useState<boolean>(false)
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
     const navigate = useNavigate();
+
+    console.log("Home-User", props.user)
+    useEffect(() => {
+        props.getAllComparisonByUserId(props.user.id)
+        //eslint-disable-next-line
+    }, [])
 
     function handleAddComparison() {
         const compareRoutesToAdd = {...props.compareRoutes, userId: props.user.id, compared: routesToCompare}
@@ -113,7 +119,7 @@ export default function HomePage(props: HomePageProps) {
                       setAddMode={setAddMode}
                       setRoutesToCompare={setRoutesToCompare}
                       routesToCompare={routesToCompare}
-                      getAllComparison={props.getAllComparison}
+                      getAllComparisonByUserId={props.getAllComparisonByUserId}
                 /> : null
             }
         </Paper>)

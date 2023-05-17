@@ -25,19 +25,19 @@ type CompareRoutesCollectionProps = {
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     compareRoutesList: CompareRoutes[],
     deleteComparisonById: (id: string) => void,
-    getAllComparison: () => void,
+    getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
-    const userCompareRoutes = props.compareRoutesList.filter((element) =>
+   /* const userCompareRoutes = props.compareRoutesList.filter((element) =>
         element.userId === props.user.id)
-
+*/
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>
                 My Compared Routes
             </Typography>
-            {userCompareRoutes.map((element) => {
+            {props.compareRoutesList.map((element) => {
                 return <CompareRoutesComponent key={element.id}
                                                user={props.user}
                                                setUser={props.setUser}
@@ -45,7 +45,7 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                compareRoutes={element}
                                                setCompareRoutes={props.setCompareRoutes}
                                                updateComparison={props.updateComparison}
-                                               getAllComparison={props.getAllComparison}
+                                               getAllComparisonByUserId={props.getAllComparisonByUserId}
                                                deleteComparisonById={props.deleteComparisonById}/>
             })}
         </Paper>

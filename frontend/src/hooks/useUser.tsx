@@ -39,8 +39,13 @@ export default function useUser() {
 
     function login(username: string, password: string) {
         return axios.post("/api/user/login", undefined, {auth: {username, password}})
-            .then((response) => {
-                setUser(response.data)
+            .then(response => {
+                setUser({
+                    id: response.data.id,
+                    username: response.data.username,
+                    password: "",
+                    co2Score: response.data.co2Score
+                })
             })
             .catch(() => {
                 toast.error("You have already an account? Check your name and password! No account? Please sign up")

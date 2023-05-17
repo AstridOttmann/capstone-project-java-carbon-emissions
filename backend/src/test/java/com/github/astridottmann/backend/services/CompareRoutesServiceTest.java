@@ -51,8 +51,7 @@ class CompareRoutesServiceTest {
                 testId,
                 dummyUserId,
                 List.of(routeA, routeB),
-                new ComparisonResults(268.93, 45.26, 223.67)
-        );
+                new ComparisonResults(223.67, -223.67, Collections.emptyList()));
     }
 
     private CompareRoutesDTO createTestCompareRoutesDTOInstance() {
