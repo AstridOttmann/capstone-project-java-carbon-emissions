@@ -67,6 +67,12 @@ export default function useCompareRoutes() {
             })
     }
 
+    function getAllByUserId(userId: string) {
+        axios.get("/api/compare")
+            .then((response) => {
+                setCompareRoutesList(response.data)
+            })
+    }
     function getComparisonById(id: string) {
         axios.get(`/api/compare/${id}`)
             .then((response) => {

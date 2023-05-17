@@ -2,6 +2,7 @@ package com.github.astridottmann.backend.services;
 
 import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
+import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.NoSuchElementException;
 public class CompareRoutesService {
     private final CompareRoutesRepository compareRoutesRepository;
     private final IdService idService;
+    private final MongoUserDetailsService mongoUserDetailsService;
 
     public ComparisonResults createComparisonResults(List<Route> compared, List<Usage> usages) {
         double emissionRouteOne = compared.get(0).co2EmissionRoute();
@@ -37,6 +39,19 @@ public class CompareRoutesService {
         return compareRoutesRepository.findAll();
     }
 
+    public List<CompareRoutes> getAllByUserId(String userId) {
+        String errorMessage = "Unable to load data. User not found!";
+
+        if (!mongoUserDetailsService.existsById(userId)) {
+            throw new NoSuchElementException(errorMessage);
+        }
+        return compareRoutesRepository.findAllByUserId(userId);
+        //@todo gibt es userId
+    }
+
+    public List<CompareRoutes> getAllByRouteId(String id){
+        return compareRoutesRepository.findAllByComparedId(id);
+    }
     public CompareRoutes getCompareRoutesById(String id) {
         return compareRoutesRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Not found!"));

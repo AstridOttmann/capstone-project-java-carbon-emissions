@@ -15,6 +15,7 @@ import static org.mockito.Mockito.verify;
 class CompareRoutesServiceTest {
     CompareRoutesService compareRoutesService;
     final IdService idService = mock(IdService.class);
+    final MongoUserDetailsService mongoUserDetailsService = mock(MongoUserDetailsService.class);
     final CompareRoutesRepository compareRoutesRepository = mock(CompareRoutesRepository.class);
     private final String testId = "1";
     private final String dummyUserId = "123";
@@ -32,7 +33,9 @@ class CompareRoutesServiceTest {
                 268.93,
                 "a1b2");
 
-        PublicTransport publicTransport = new PublicTransport("publicTransport", 46.0, "long distance", "train");
+        PublicTransport publicTransport = new PublicTransport(
+                "publicTransport", 46.0, "long distance", "train");
+
         Route routeB = new Route(
                 "456",
                 "Hamburg",
@@ -85,7 +88,7 @@ class CompareRoutesServiceTest {
 
     @BeforeEach
     void init() {
-        this.compareRoutesService = new CompareRoutesService(compareRoutesRepository, idService);
+        this.compareRoutesService = new CompareRoutesService(compareRoutesRepository, idService, mongoUserDetailsService);
     }
 
     @Test

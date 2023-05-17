@@ -41,6 +41,9 @@ public class MongoUserDetailsService implements UserDetailsService {
                         .orElseThrow(() -> new NoSuchElementException("User not found!"));
         return mongoUserRepository.save(new MongoUser(
                 id, userDTO.username(), user.password(), userDTO.co2Score()));
+    }
 
+    public boolean existsById(String userId){
+        return mongoUserRepository.existsById(userId);
     }
 }

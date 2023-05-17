@@ -56,7 +56,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                                       getAllComparison={props.getAllComparison}/>
             </Box>
 
-            <Accordion disabled={!props.compareRoutes.comparisonResults.usages}
+            <Accordion disabled={props.compareRoutes.comparisonResults.usages?.length === 0}
                 sx={{backgroundColor: "#454C5A", color: "#3fd44d", mt: "0.5rem"}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}

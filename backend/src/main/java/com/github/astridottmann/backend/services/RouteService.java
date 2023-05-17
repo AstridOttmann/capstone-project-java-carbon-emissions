@@ -17,7 +17,7 @@ public class RouteService {
     private final IdService idService;
     private final CalculateCo2EmissionService calculateCo2EmissionService;
     private final CompareRoutesService compareRoutesService;
-    private final CompareRoutesRepository compareRoutesRepository;
+    private final MongoUserDetailsService mongoUserDetailsService;
 
 
     public Route addRoute(RouteDTO routeDTO) {
@@ -32,6 +32,16 @@ public class RouteService {
         return routeRepository.findAll();
     }
 
+    public List<Route> getAllByUserId(String userId) {
+        String errorMessage = "Unable to load data. User not found!";
+
+        if (!mongoUserDetailsService.existsById(userId)) {
+            throw new NoSuchElementException(errorMessage);
+        }
+        return routeRepository.findAllByUserId(userId);
+        //@todo gibt es userId
+    }
+
     public Route getRouteById(String id) {
         String errorMessage = "Route with Id " + id + " not found!";
         return routeRepository.findById(id)
@@ -43,7 +53,7 @@ public class RouteService {
         String errorMessageDependency = "Cannot delete element " + id + " because it is still referenced by other elements";
 
         boolean routeExists = routeRepository.existsById(id);
-        int listContainedRoutesLength = compareRoutesRepository.findAllByComparedId(id).size();
+        int listContainedRoutesLength = compareRoutesService.getAllByRouteId(id).size();
         boolean routeIsUsedInComparison = routeExists && listContainedRoutesLength > 0;
 
         if (!routeExists) {

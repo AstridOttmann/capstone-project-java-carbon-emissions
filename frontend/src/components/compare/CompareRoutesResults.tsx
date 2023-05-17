@@ -39,11 +39,11 @@ type CompareRoutesResultsProps = {
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     const navigate = useNavigate();
 
-    const [comparisonResults, setComparisonResults] = useState<ComparisonResults>({
+    /*const [comparisonResults, setComparisonResults] = useState<ComparisonResults>({
         resultRouteOne: 0,
         resultRouteTwo: 0,
         usages: []
-    })
+    })*/
 
     const resultOne: number = props.compareRoutes.comparisonResults.resultRouteOne;
     const resultTwo: number = props.compareRoutes.comparisonResults.resultRouteTwo;
@@ -63,9 +63,8 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
             bonus: result
         };
 
-        console.log("Usage", newUsage)
         const updatedComparisonResults: ComparisonResults =
-            {...comparisonResults, usages: [...comparisonResults!.usages, newUsage] };
+            {...props.compareRoutes.comparisonResults, usages: [...props.compareRoutes.comparisonResults.usages, newUsage] };
 
         const updatedComparison: CompareRoutes =
             {...props.compareRoutes, comparisonResults: updatedComparisonResults};
