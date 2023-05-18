@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import './App.css';
 import Header from "./components/Header";
@@ -17,11 +17,11 @@ import LoginPage from "./components/LoginPage";
 import useUser from "./hooks/useUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import UserAccount from "./components/UserAccount";
-
-
+import {RoutesContext} from "./contexts/RoutesContextProvider";
 
 function App() {
     const {user, setUser, isLoading, login, logout, signIn, updateScore} = useUser()
+    const {getAllRoutesByUserId} = useContext(RoutesContext)
     const {
         compareRoutes,
         compareRoutesList,
@@ -37,6 +37,7 @@ function App() {
     useEffect(() => {
         if (user) {
             getAllComparisonByUserId(user.id)
+            getAllRoutesByUserId(user.id)
         }
         //eslint-disable-next-line
     }, [user.id])
@@ -71,7 +72,7 @@ function App() {
                                     setCompareRoutes={setCompareRoutes}
                                 />}/>
                             <Route path="/routes" element={
-                                <RouteCollection user={user}/>}/>
+                                <RouteCollection/>}/>
                             <Route path="/compared" element={
                                 <CompareRoutesCollection user={user}
                                                          setUser={setUser}

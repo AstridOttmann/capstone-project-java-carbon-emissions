@@ -1,7 +1,6 @@
 import {Box, Button, TextField, ButtonGroup} from "@mui/material";
-import {ChangeEvent, FormEvent, useContext, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {User} from "../models/MongoUserModel";
 
 const sxStyleBox = {
@@ -19,7 +18,6 @@ type LoginPageProps = {
 
 }
 export default function LoginPage(props: LoginPageProps) {
-    const {getAllRoutes} = useContext(RoutesContext)
     const [signUp, setSignUp] = useState<boolean>();
 
     const navigate = useNavigate();
@@ -41,8 +39,6 @@ export default function LoginPage(props: LoginPageProps) {
         }
         await props.onLogin(props.user.username, props.user.password);
         navigate("/");
-
-        await getAllRoutes();
     }
 
     return (
