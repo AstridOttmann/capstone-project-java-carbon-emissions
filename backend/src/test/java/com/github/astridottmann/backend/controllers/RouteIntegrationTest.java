@@ -1,8 +1,8 @@
 package com.github.astridottmann.backend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.astridottmann.backend.models.PublicTransport;
-import com.github.astridottmann.backend.models.Route;
+import com.github.astridottmann.backend.models.*;
+import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import com.github.astridottmann.backend.repositories.RouteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -28,6 +31,8 @@ class RouteIntegrationTest {
 
     @Autowired
     private RouteRepository routeRepository;
+    @Autowired
+    private MongoUserRepository mongoUserRepository;
     @Autowired
     private ObjectMapper objectMapper;
     private Route testRoute;
@@ -73,6 +78,21 @@ class RouteIntegrationTest {
     void expect401_OnGet_whenAnonymousUser() throws Exception {
         mockMvc.perform(get("/api/routes"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void getAllByUserId_shouldReturnFilteredRoutes() throws Exception {
+        MongoUser testUser = new MongoUser("a1b2", "testUser", "", 0);
+        mongoUserRepository.save(testUser);
+        routeRepository.save(testRoute);
+
+        List<Route> expectedList = new ArrayList<>(List.of(testRoute));
+        String expectedListJson = objectMapper.writeValueAsString(expectedList);
+
+        mockMvc.perform(get("/api/routes/userId/" + testRoute.userId()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedListJson));
     }
 
     @Test

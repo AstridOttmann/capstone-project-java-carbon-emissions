@@ -3,6 +3,7 @@ package com.github.astridottmann.backend.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
+import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ class CompareRoutesIntegrationTest {
     MockMvc mockMvc;
     @Autowired
     private CompareRoutesRepository compareRoutesRepository;
+    @Autowired
+    private MongoUserRepository mongoUserRepository;
     @Autowired
     private ObjectMapper objectMapper;
     private CompareRoutes testCompareRoutes;
@@ -120,6 +123,20 @@ class CompareRoutesIntegrationTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    @WithMockUser
+    void getAllByUserId_shouldReturnFilteredCompareRoutes() throws Exception {
+        MongoUser testUser = new MongoUser("a1b2", "testUser", "", 0);
+        mongoUserRepository.save(testUser);
+        compareRoutesRepository.save(testCompareRoutes);
+
+        List<CompareRoutes> expectedList = new ArrayList<>(List.of(testCompareRoutes));
+        String expectedListJson = objectMapper.writeValueAsString(expectedList);
+
+        mockMvc.perform(get("/api/compare/userId/" + testCompareRoutes.userId()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedListJson));
+    }
     @Test
     @WithMockUser
     void getCompareRoutesById_shouldReturnRequested() throws Exception {

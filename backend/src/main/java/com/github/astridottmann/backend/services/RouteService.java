@@ -38,7 +38,6 @@ public class RouteService {
             throw new NoSuchElementException(errorMessage);
         }
         return routeRepository.findAllByUserId(userId);
-        //@todo gibt es userId
     }
 
     public Route getRouteById(String id) {

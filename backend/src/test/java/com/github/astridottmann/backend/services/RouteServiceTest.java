@@ -6,10 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -21,7 +18,6 @@ class RouteServiceTest {
     final CalculateCo2EmissionService calculateCo2EmissionService = mock(CalculateCo2EmissionService.class);
     final CompareRoutesService compareRoutesService = mock(CompareRoutesService.class);
     final MongoUserDetailsService mongoUserDetailsService = mock(MongoUserDetailsService.class);
-   // final CompareRoutesRepository compareRoutesRepository = mock(CompareRoutesRepository.class);
     final RouteRepository routeRepository = mock(RouteRepository.class);
     private final String testId = "1";
     private final double dummyEmission = 162;
@@ -61,6 +57,7 @@ class RouteServiceTest {
     void addRoute_shouldReturnAddedRoute() {
         RouteDTO routeToAddDTO = createTestRouteDTOInstance();
         Route routeToAdd = createTestRouteInstance();
+
         Mockito.when(routeRepository.save(routeToAdd))
                 .thenReturn(routeToAdd);
         Mockito.when(idService.createRandomId())
@@ -103,6 +100,39 @@ class RouteServiceTest {
         List<Route> expected = new ArrayList<>();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getAllByUserId_shouldReturnFilteredRoutes() {
+        Route testRoute = createTestRouteInstance();
+        String userId = "a1b2";
+
+        Mockito.when(mongoUserDetailsService.existsById(userId))
+                .thenReturn(true);
+        Mockito.when(routeRepository.findAllByUserId(userId))
+                .thenReturn(new ArrayList<>(List.of(testRoute)));
+
+        List<Route> actual = routeService.getAllByUserId(userId);
+        List<Route> expected = new ArrayList<>(List.of(testRoute));
+
+        verify(mongoUserDetailsService).existsById(userId);
+        verify(routeRepository).findAllByUserId(userId);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getAllByUserId_shouldThrowException_whenUserDoesntExist() {
+        String userId = "aabb";
+        String errorMessage = "Unable to load data. User not found!";
+
+        Mockito.when(mongoUserDetailsService.existsById(userId))
+                .thenReturn(false);
+
+        Exception exception = assertThrows(NoSuchElementException.class,
+                () -> routeService.getAllByUserId(userId));
+
+        verify(mongoUserDetailsService).existsById(userId);
+        assertEquals(errorMessage, exception.getMessage());
     }
 
     @Test

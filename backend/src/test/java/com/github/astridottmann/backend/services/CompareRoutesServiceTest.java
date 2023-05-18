@@ -134,6 +134,39 @@ class CompareRoutesServiceTest {
     }
 
     @Test
+    void getAllByUserId_shouldReturnFilteredCompareRoutes(){
+        CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
+        String userId = "a1b2";
+
+        Mockito.when(mongoUserDetailsService.existsById(userId))
+                .thenReturn(true);
+        Mockito.when(compareRoutesRepository.findAllByUserId(userId))
+                .thenReturn(new ArrayList<>(List.of(testCompareRoutes)));
+
+        List<CompareRoutes> actual = compareRoutesService.getAllByUserId(userId);
+        List<CompareRoutes> expected = new ArrayList<>(List.of(testCompareRoutes));
+
+        verify(mongoUserDetailsService).existsById(userId);
+        verify(compareRoutesRepository).findAllByUserId(userId);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getAllByUserId_shouldThrowException_whenUserDoesntExist() {
+        String userId = "aabb";
+        String errorMessage = "Unable to load data. User not found!";
+
+        Mockito.when(mongoUserDetailsService.existsById(userId))
+                .thenReturn(false);
+
+        Exception exception = assertThrows(NoSuchElementException.class,
+                () -> compareRoutesService.getAllByUserId(userId));
+
+        verify(mongoUserDetailsService).existsById(userId);
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
     void getCompareRoutesById_shouldReturnRequested() {
         CompareRoutes requested = createTestCompareRoutesInstance();
         Mockito.when(compareRoutesRepository.findById(testId))
