@@ -2,7 +2,6 @@ package com.github.astridottmann.backend.services;
 
 import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
-import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,12 +45,12 @@ public class CompareRoutesService {
             throw new NoSuchElementException(errorMessage);
         }
         return compareRoutesRepository.findAllByUserId(userId);
-        //@todo gibt es userId
     }
 
-    public List<CompareRoutes> getAllByRouteId(String id){
+    public List<CompareRoutes> getAllByRouteId(String id) {
         return compareRoutesRepository.findAllByComparedId(id);
     }
+
     public CompareRoutes getCompareRoutesById(String id) {
         return compareRoutesRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Not found!"));

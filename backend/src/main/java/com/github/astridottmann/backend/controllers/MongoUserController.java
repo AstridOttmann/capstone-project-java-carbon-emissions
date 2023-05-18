@@ -58,12 +58,6 @@ public class MongoUserController {
 
     @PutMapping("/score/{id}")
     public MongoUserDTO updateScore(@PathVariable String id, @RequestBody MongoUserDTO userDTO) {
-      /*  String username = SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getName();*/
-    /*    Optional<MongoUser> loggedInUser = mongoUserRepository.findMongoUserByUsername(username);*/
-        /*  securityContext id*/
         if (!id.equals(userDTO.id()) && id.equals(login().id())) {
             String errorMessage = "Not allowed";
             throw new IllegalArgumentException(errorMessage);

@@ -70,7 +70,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 </AccordionSummary>
                 <AccordionDetails>
                     {props.compareRoutes.comparisonResults.usages?.map((usage) => {
-                        return <Typography>{usage.datetime}: {usage.bonus} kg/CO2</Typography>
+                        return <Typography key={usage.datetime}>{usage.datetime}: {usage.bonus} kg/CO2</Typography>
                     })}
                 </AccordionDetails>
             </Accordion>

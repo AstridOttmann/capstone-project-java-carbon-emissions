@@ -2,7 +2,6 @@ package com.github.astridottmann.backend.services;
 
 import com.github.astridottmann.backend.exceptions.DependencyException;
 import com.github.astridottmann.backend.models.*;
-import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import com.github.astridottmann.backend.repositories.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

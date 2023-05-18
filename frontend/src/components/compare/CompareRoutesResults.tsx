@@ -39,22 +39,16 @@ type CompareRoutesResultsProps = {
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     const navigate = useNavigate();
 
-    /*const [comparisonResults, setComparisonResults] = useState<ComparisonResults>({
-        resultRouteOne: 0,
-        resultRouteTwo: 0,
-        usages: []
-    })*/
-
     const resultOne: number = props.compareRoutes.comparisonResults.resultRouteOne;
     const resultTwo: number = props.compareRoutes.comparisonResults.resultRouteTwo;
 
-    async function handleSelectOption(result: number) {
+    function handleSelectOption(result: number) {
         // updateUserScore
         const newScore = props.user.co2Score + result;
         const updatedUser =
             {...props.user, co2Score: newScore};
 
-        await props.updateScore(updatedUser.id, updatedUser);
+        props.updateScore(updatedUser.id, updatedUser);
         console.log("userUP", updatedUser)
 
         // updateComparison - usage
@@ -64,17 +58,19 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
         };
 
         const updatedComparisonResults: ComparisonResults =
-            {...props.compareRoutes.comparisonResults, usages: [...props.compareRoutes.comparisonResults.usages, newUsage] };
+            {
+                ...props.compareRoutes.comparisonResults,
+                usages: [...props.compareRoutes.comparisonResults.usages, newUsage]
+            };
 
         const updatedComparison: CompareRoutes =
             {...props.compareRoutes, comparisonResults: updatedComparisonResults};
 
-        await props.updateComparison(updatedComparison.id, updatedComparison);
-        await props.getAllComparisonByUserId(props.user.id);
+        props.updateComparison(updatedComparison.id, updatedComparison);
+        props.getAllComparisonByUserId(props.user.id);
         navigate("/account");
     }
 
-    console.log("comparison", props.compareRoutes)
     return (
         <>
             {/*  <Box sx={{display: "flex", width: "100vw", gap: "1rem"}}>*/}

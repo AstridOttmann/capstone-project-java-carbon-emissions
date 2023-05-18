@@ -1,6 +1,5 @@
 package com.github.astridottmann.backend.controllers;
 
-import com.github.astridottmann.backend.models.CompareRoutes;
 import com.github.astridottmann.backend.models.Route;
 import com.github.astridottmann.backend.models.RouteDTO;
 import com.github.astridottmann.backend.services.RouteService;
@@ -24,7 +23,6 @@ public class RouteController {
     @GetMapping("/userId/{userId}")
     public List<Route> getAllByUserId(@PathVariable String userId){
         return routeService.getAllByUserId(userId);
-        //@todo
     }
 
     @GetMapping("/{id}")
