@@ -59,7 +59,7 @@ public class MongoUserController {
     @PutMapping("/score/{id}")
     public MongoUserDTO updateScore(@PathVariable String id, @RequestBody MongoUserDTO userDTO) {
         if (!id.equals(userDTO.id()) && id.equals(login().id())) {
-            String errorMessage = "Not allowed";
+            String errorMessage = "Not allowed!";
             throw new IllegalArgumentException(errorMessage);
         }
         MongoUser updated = mongoUserDetailsService.updateScore(id, userDTO);
