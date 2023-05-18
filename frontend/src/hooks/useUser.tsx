@@ -22,7 +22,7 @@ export default function useUser() {
                 .then((response) => {
                     if (response.data.username !== "" && response.data.username !== "anonymousUser") {
                         setUser(response.data);
-                        console.log("user", user)
+                        console.log("user1", user)
                     }
                 })
                 .catch(() => {
@@ -39,16 +39,18 @@ export default function useUser() {
 
     function login(username: string, password: string) {
         return axios.post("/api/user/login", undefined, {auth: {username, password}})
-            .then(response => {
+            .then((response) => {
                 setUser({
                     id: response.data.id,
                     username: response.data.username,
                     password: "",
                     co2Score: response.data.co2Score
                 })
+                return user
             })
-            .catch(() => {
+            .catch((error) => {
                 toast.error("You have already an account? Check your name and password! No account? Please sign up")
+                throw error;
             })
     }
 
@@ -89,5 +91,5 @@ export default function useUser() {
                 toast.error("error", error))
     }
 
-    return {user, setUser, isLoading, login, logout, signIn, updateScore}
+    return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore}
 }

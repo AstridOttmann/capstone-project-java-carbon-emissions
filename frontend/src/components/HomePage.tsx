@@ -2,7 +2,7 @@ import Form from "./Form";
 import {Button, ButtonGroup, Paper, Typography} from "@mui/material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
@@ -32,12 +32,6 @@ export default function HomePage(props: HomePageProps) {
     const [addMode, setAddMode] = useState<boolean>(false)
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
     const navigate = useNavigate();
-
-    console.log("Home-User", props.user)
-    useEffect(() => {
-        props.getAllComparisonByUserId(props.user.id)
-        //eslint-disable-next-line
-    }, [])
 
     function handleAddComparison() {
         const compareRoutesToAdd = {...props.compareRoutes, userId: props.user.id, compared: routesToCompare}

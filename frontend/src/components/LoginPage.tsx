@@ -12,9 +12,8 @@ const sxStyleBox = {
 }
 
 type LoginPageProps = {
-    onLogin: (username: string, password: string) => Promise<void>,
+    onLogin: (username: string, password: string) => Promise<User>,
     onSignIn: (newMongoUser: User) => Promise<void>,
-    getAllComparisonByUserId: (userId: string) => void,
     user: User,
     setUser: (user: User) => void,
 
@@ -42,8 +41,8 @@ export default function LoginPage(props: LoginPageProps) {
         }
         await props.onLogin(props.user.username, props.user.password);
         navigate("/");
+
         await getAllRoutes();
-        //console.log("User", props.user)
     }
 
     return (

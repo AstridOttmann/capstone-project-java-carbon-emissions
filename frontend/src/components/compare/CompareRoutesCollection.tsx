@@ -29,9 +29,11 @@ type CompareRoutesCollectionProps = {
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
-   /* const userCompareRoutes = props.compareRoutesList.filter((element) =>
-        element.userId === props.user.id)
-*/
+    console.log("compare", props.compareRoutesList)
+    if (!Array.isArray(props.compareRoutesList)) {
+        return null; // Oder  Meldung rendern
+    }
+
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" component="h3" sx={sxStyleTitle}>

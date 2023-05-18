@@ -22,7 +22,6 @@ public class CompareRoutesController {
     @GetMapping("/userId/{userId}")
     public List<CompareRoutes> getAllByUserId(@PathVariable String userId){
         return compareRoutesService.getAllByUserId(userId);
-        //@todo
     }
 
     @GetMapping("/{id}")

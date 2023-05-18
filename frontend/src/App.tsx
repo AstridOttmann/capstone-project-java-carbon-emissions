@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './App.css';
 import Header from "./components/Header";
@@ -19,6 +19,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import UserAccount from "./components/UserAccount";
 
 
+
 function App() {
     const {user, setUser, isLoading, login, logout, signIn, updateScore} = useUser()
     const {
@@ -33,6 +34,14 @@ function App() {
     } = useCompareRoutes();
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
 
+    useEffect(() => {
+        if (user) {
+            getAllComparisonByUserId(user.id)
+        }
+        //eslint-disable-next-line
+    }, [user.id])
+
+    console.log("app", user)
     return (
         <Container maxWidth="lg">
             <main className="App">
@@ -42,7 +51,6 @@ function App() {
                     <Routes>
                         <Route path="/login"
                                element={<LoginPage
-                                   getAllComparisonByUserId={getAllComparisonByUserId}
                                    onLogin={login}
                                    onSignIn={signIn}
                                    user={user}
