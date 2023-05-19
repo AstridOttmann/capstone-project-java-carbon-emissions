@@ -20,17 +20,11 @@ const sxStyleCard = {
 }
 type UserAccountProps = {
     user: User,
-    setUser: (user: User) => void,
-    updateScore: (id: string, user: User) => void,
     resetAllUsages: (userId: string) => void,
     resetScore: (userId: string) => void
 }
 export default function UserAccount(props: UserAccountProps) {
     function resetScore() {
-        /* const updatedUser =
-             {...props.user, co2Score: 0};
-         props.setUser(updatedUser);
-         props.updateScore(updatedUser.id, updatedUser)*/
         props.resetScore(props.user.id)
         props.resetAllUsages(props.user.id)
     }

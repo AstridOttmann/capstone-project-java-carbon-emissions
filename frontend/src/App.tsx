@@ -76,7 +76,6 @@ function App() {
                                 <RouteCollection/>}/>
                             <Route path="/compared" element={
                                 <CompareRoutesCollection user={user}
-                                                         setUser={setUser}
                                                          updateScore={updateScore}
                                                          compareRoutes={compareRoutes}
                                                          setCompareRoutes={setCompareRoutes}
@@ -90,7 +89,6 @@ function App() {
                             <Route path="/compared/details/:id" element={
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
                                                       user={user}
-                                                      setUser={setUser}
                                                       updateScore={updateScore}
                                                       compareRoutes={compareRoutes}
                                                       setCompareRoutes={setCompareRoutes}
@@ -99,8 +97,6 @@ function App() {
                                                       getAllComparisonByUserId={getAllComparisonByUserId}
                                 />}/>
                             <Route path="/account" element={<UserAccount user={user}
-                                                                         setUser={setUser}
-                                                                         updateScore={updateScore}
                                                                          resetScore={resetScore}
                                                                          resetAllUsages={resetAllUsages}/>}/>
 

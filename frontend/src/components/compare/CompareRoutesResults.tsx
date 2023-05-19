@@ -29,12 +29,11 @@ const sxStyleBox2 = {
 
 type CompareRoutesResultsProps = {
     user: User,
-    setUser: (user: User) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
-    updateScore: (id: string, user: User) => void
+    updateScore: (id: string, bonus: number) => void
 }
 export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     const navigate = useNavigate();
@@ -42,19 +41,12 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     const resultOne: number = props.compareRoutes.comparisonResults.resultRouteOne;
     const resultTwo: number = props.compareRoutes.comparisonResults.resultRouteTwo;
 
-    function handleSelectOption(result: number) {
-        // updateUserScore
-        const newScore = props.user.co2Score + result;
-        const updatedUser =
-            {...props.user, co2Score: newScore};
+    function handleSelectOption(bonus: number) {
+        props.updateScore(props.user.id, bonus);
 
-        props.updateScore(updatedUser.id, updatedUser);
-        console.log("userUP", updatedUser)
-
-        // updateComparison - usage
         const newUsage = {
             datetime: new Date().toLocaleString("en-EN"),
-            bonus: result
+            bonus: bonus
         };
 
         const updatedComparisonResults: ComparisonResults =

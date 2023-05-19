@@ -53,7 +53,7 @@ class MongoUserDetailsServiceTest {
         Mockito.when(mongoUserRepository.save(expectedUser))
                 .thenReturn(expectedUser);
 
-        MongoUser updatedUser = mongoUserDetailsService.updateScore(userDTO.id(), userDTO);
+        MongoUser updatedUser = mongoUserDetailsService.updateScore(userDTO.id(), 100);
 
         verify(mongoUserRepository).findById(userDTO.id());
         verify(mongoUserRepository).save(expectedUser);
@@ -66,7 +66,7 @@ class MongoUserDetailsServiceTest {
         MongoUserDTO userDTO = new MongoUserDTO("1", "testUser", newScore);
 
         Exception exception = assertThrows(NoSuchElementException.class,
-                () -> mongoUserDetailsService.updateScore("1", userDTO));
+                () -> mongoUserDetailsService.updateScore("1", 100));
 
         verify(mongoUserRepository).findById(userDTO.id());
         String expected = "User not found!";

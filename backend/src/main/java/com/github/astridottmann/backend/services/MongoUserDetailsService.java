@@ -35,19 +35,16 @@ public class MongoUserDetailsService implements UserDetailsService {
         return new MongoUserDTO(user.id(), user.username(), user.co2Score());
     }
 
-    public MongoUser updateScore(String id, MongoUserDTO userDTO) {
+    public boolean existsById(String userId) {
+        return mongoUserRepository.existsById(userId);
+    }
+
+    public MongoUser updateScore(String id, double bonus) {
         MongoUser user =
                 mongoUserRepository.findById(id)
                         .orElseThrow(() -> new NoSuchElementException("User not found!"));
-        return mongoUserRepository.save(
-                new MongoUser(
-                        id, userDTO.username(),
-                        user.password(),
-                        userDTO.co2Score()));
-    }
-
-    public boolean existsById(String userId) {
-        return mongoUserRepository.existsById(userId);
+        double newScore = user.co2Score() + bonus;
+        return mongoUserRepository.save(user.withCo2Score(newScore));
     }
 
     public MongoUser resetScore(String id) {
