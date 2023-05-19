@@ -64,7 +64,13 @@ public class RouteService {
     }
 
     public Route updateRoute(Route route) {
-        if (routeRepository.existsById(route.id())) {
+        List<CompareRoutes> withRoute = compareRoutesService.getAllByRouteId(route.id());
+        List<CompareRoutes> list = withRoute
+                .stream()
+                .map(current -> !current.comparisonResults().usages().isEmpty() ? current : null)
+                .toList();
+
+        if (routeRepository.existsById(route.id()) && list.isEmpty()) {
             RouteDTO toUpdate = new RouteDTO(route);
             double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
 
@@ -72,7 +78,7 @@ public class RouteService {
             compareRoutesService.updateAllComparisonContainingRoute(updatedRoute);
             return routeRepository.save(updatedRoute);
         }
-        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist";
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist or is in usage";
         throw new NoSuchElementException(errorMessage);
     }
 }
