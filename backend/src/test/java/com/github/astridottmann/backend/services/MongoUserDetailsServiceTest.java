@@ -44,31 +44,52 @@ class MongoUserDetailsServiceTest {
 
     @Test
     void updateScore_shouldReturnUpdatedUser() {
-        int newScore = 100;
-        MongoUserDTO userDTO = new MongoUserDTO("1", "testUser", newScore);
         MongoUser expectedUser = new MongoUser("1", "testUser", "12345678", 100);
 
-        Mockito.when(mongoUserRepository.findById(userDTO.id()))
+        Mockito.when(mongoUserRepository.findById(testUser.id()))
                 .thenReturn(Optional.of(testUser));
         Mockito.when(mongoUserRepository.save(expectedUser))
                 .thenReturn(expectedUser);
 
-        MongoUser updatedUser = mongoUserDetailsService.updateScore(userDTO.id(), 100);
+        MongoUser updatedUser = mongoUserDetailsService.updateScore(testUser.id(), 100);
 
-        verify(mongoUserRepository).findById(userDTO.id());
+        verify(mongoUserRepository).findById(testUser.id());
         verify(mongoUserRepository).save(expectedUser);
         assertEquals(expectedUser, updatedUser);
     }
 
     @Test
     void updateScore_shouldThrowException_whenUserNotFound() {
-        int newScore = 100;
-        MongoUserDTO userDTO = new MongoUserDTO("1", "testUser", newScore);
-
         Exception exception = assertThrows(NoSuchElementException.class,
                 () -> mongoUserDetailsService.updateScore("1", 100));
 
-        verify(mongoUserRepository).findById(userDTO.id());
+        verify(mongoUserRepository).findById("1");
+        String expected = "User not found!";
+        assertEquals(expected, exception.getMessage());
+    }
+
+    @Test
+    void resetScore_shouldResetScore(){
+        MongoUser userToReset = new MongoUser("1", "testUser", "12345678", 100);
+
+        Mockito.when(mongoUserRepository.findById(userToReset.id()))
+                .thenReturn(Optional.of(userToReset));
+        Mockito.when(mongoUserRepository.save(testUser))
+                .thenReturn(testUser);
+
+        MongoUser actual = mongoUserDetailsService.resetScore(userToReset.id());
+
+        verify(mongoUserRepository).findById(userToReset.id());
+        verify(mongoUserRepository).save(testUser);
+        assertEquals(testUser, actual);
+    }
+
+    @Test
+    void resetScore_shouldThrowException_whenUserNotFound() {
+        Exception exception = assertThrows(NoSuchElementException.class,
+                () -> mongoUserDetailsService.resetScore("1"));
+
+        verify(mongoUserRepository).findById("1");
         String expected = "User not found!";
         assertEquals(expected, exception.getMessage());
     }

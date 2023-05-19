@@ -44,7 +44,7 @@ public class RouteController {
     }
 
     @PutMapping("/{id}")
-    public Route updateRoute(@PathVariable String id, @RequestBody Route route) {
+    public Route updateRoute(@PathVariable String id, @RequestBody @Valid Route route) {
         if (!id.equals(route.id())){
             String errorMessage = "Id " + id + " doesn't match with route-id " + route.id();
             throw new IllegalArgumentException(errorMessage);

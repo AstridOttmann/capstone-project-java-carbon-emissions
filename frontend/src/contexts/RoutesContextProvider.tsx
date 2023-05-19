@@ -110,7 +110,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 return updatedRoute;
             })
             .catch((error) =>
-                toast.error("Edit not possible, route is in use!", error))
+                toast.error("Edit not possible, invalid input or route is in use!", error))
     }
 
     return (

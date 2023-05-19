@@ -64,7 +64,7 @@ public class RouteService {
     }
 
     public Route updateRoute(Route route) {
-        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist or is in usage.";
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist.";
         String errorMessageDependency = "Edit not possible, route is in usage!";
 
         List<CompareRoutes> compareWithRoute = compareRoutesService.getAllByRouteId(route.id());

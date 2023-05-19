@@ -134,35 +134,33 @@ class CompareRoutesServiceTest {
     }
 
     @Test
-    void getAllByUserId_shouldReturnFilteredCompareRoutes(){
+    void getAllByUserId_shouldReturnFilteredCompareRoutes() {
         CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
-        String userId = "a1b2";
 
-        Mockito.when(mongoUserDetailsService.existsById(userId))
+        Mockito.when(mongoUserDetailsService.existsById(dummyUserId))
                 .thenReturn(true);
-        Mockito.when(compareRoutesRepository.findAllByUserId(userId))
+        Mockito.when(compareRoutesRepository.findAllByUserId(dummyUserId))
                 .thenReturn(new ArrayList<>(List.of(testCompareRoutes)));
 
-        List<CompareRoutes> actual = compareRoutesService.getAllByUserId(userId);
+        List<CompareRoutes> actual = compareRoutesService.getAllByUserId(dummyUserId);
         List<CompareRoutes> expected = new ArrayList<>(List.of(testCompareRoutes));
 
-        verify(mongoUserDetailsService).existsById(userId);
-        verify(compareRoutesRepository).findAllByUserId(userId);
+        verify(mongoUserDetailsService).existsById(dummyUserId);
+        verify(compareRoutesRepository).findAllByUserId(dummyUserId);
         assertEquals(expected, actual);
     }
 
     @Test
     void getAllByUserId_shouldThrowException_whenUserDoesntExist() {
-        String userId = "aabb";
         String errorMessage = "Unable to load data. User not found!";
 
-        Mockito.when(mongoUserDetailsService.existsById(userId))
+        Mockito.when(mongoUserDetailsService.existsById(dummyUserId))
                 .thenReturn(false);
 
         Exception exception = assertThrows(NoSuchElementException.class,
-                () -> compareRoutesService.getAllByUserId(userId));
+                () -> compareRoutesService.getAllByUserId(dummyUserId));
 
-        verify(mongoUserDetailsService).existsById(userId);
+        verify(mongoUserDetailsService).existsById(dummyUserId);
         assertEquals(errorMessage, exception.getMessage());
     }
 
@@ -263,4 +261,22 @@ class CompareRoutesServiceTest {
         verify(compareRoutesRepository).findAllByComparedId(updatedRoute.id());
         verify(compareRoutesRepository).saveAll(testList);
     }
+
+    @Test
+    void resetAllUsages_ShouldResetUsagesForAllCompareRoutes() {
+        CompareRoutes testCompareRoutes = createTestCompareRoutesInstance();
+        List<CompareRoutes> reseted = new ArrayList<>(List.of(testCompareRoutes));
+
+        Mockito.when(compareRoutesRepository.findAllByUserId(dummyUserId))
+                .thenReturn(reseted);
+        Mockito.when(compareRoutesRepository.saveAll(reseted))
+                .thenReturn(reseted);
+
+        List<CompareRoutes> actual = compareRoutesService.resetAllUsages(dummyUserId);
+
+        verify(compareRoutesRepository).findAllByUserId(dummyUserId);
+        verify(compareRoutesRepository).saveAll(reseted);
+        assertEquals(reseted, actual);
+    }
 }
+

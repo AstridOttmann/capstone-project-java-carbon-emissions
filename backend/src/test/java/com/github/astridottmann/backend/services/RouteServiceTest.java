@@ -211,7 +211,7 @@ class RouteServiceTest {
     @Test
     void updateRoute_shouldThrowNoSuchElementException_whenIdNotExists() {
         Route routeToUpdate = createTestRouteInstance();
-        String errorMessage = "Couldn't update route. Id " + routeToUpdate.id() + " doesn't exist or is in usage.";
+        String errorMessage = "Couldn't update route. Id " + routeToUpdate.id() + " doesn't exist.";
 
         Mockito.when(routeRepository.existsById(routeToUpdate.id()))
                 .thenReturn(false);
@@ -222,4 +222,5 @@ class RouteServiceTest {
         verify(routeRepository).existsById(routeToUpdate.id());
         assertEquals(errorMessage, exception.getMessage());
     }
+
 }
