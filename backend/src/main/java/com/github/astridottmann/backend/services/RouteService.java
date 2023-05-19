@@ -78,7 +78,7 @@ public class RouteService {
             compareRoutesService.updateAllComparisonContainingRoute(updatedRoute);
             return routeRepository.save(updatedRoute);
         }
-        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist or is in usage";
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist or is in usage.";
         throw new NoSuchElementException(errorMessage);
     }
 }
