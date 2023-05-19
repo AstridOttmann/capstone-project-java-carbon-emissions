@@ -91,7 +91,14 @@ export default function useUser() {
                 toast.error("error", error))
     }
 
+    function resetScore(id: string) {
+        axios.post(`/api/user/score/reset/${id}`)
+            .then((response) =>
+                setUser(response.data))
+            .catch((error) =>
+                toast.error("Reset failed!", error))
+    }
 
 
-    return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore}
+    return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore, resetScore}
 }

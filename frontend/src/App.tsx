@@ -20,7 +20,7 @@ import UserAccount from "./components/UserAccount";
 import {RoutesContext} from "./contexts/RoutesContextProvider";
 
 function App() {
-    const {user, setUser, isLoading, login, logout, signIn, updateScore} = useUser()
+    const {user, setUser, isLoading, login, logout, signIn, updateScore, resetScore} = useUser()
     const {getAllRoutesByUserId} = useContext(RoutesContext)
     const {
         compareRoutes,
@@ -101,6 +101,7 @@ function App() {
                             <Route path="/account" element={<UserAccount user={user}
                                                                          setUser={setUser}
                                                                          updateScore={updateScore}
+                                                                         resetScore={resetScore}
                                                                          resetAllUsages={resetAllUsages}/>}/>
 
                         </Route>

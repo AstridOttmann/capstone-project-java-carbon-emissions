@@ -39,11 +39,22 @@ public class MongoUserDetailsService implements UserDetailsService {
         MongoUser user =
                 mongoUserRepository.findById(id)
                         .orElseThrow(() -> new NoSuchElementException("User not found!"));
-        return mongoUserRepository.save(new MongoUser(
-                id, userDTO.username(), user.password(), userDTO.co2Score()));
+        return mongoUserRepository.save(
+                new MongoUser(
+                        id, userDTO.username(),
+                        user.password(),
+                        userDTO.co2Score()));
     }
 
-    public boolean existsById(String userId){
+    public boolean existsById(String userId) {
         return mongoUserRepository.existsById(userId);
+    }
+
+    public MongoUser resetScore(String id) {
+        MongoUser userToReset = mongoUserRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found!"));
+        MongoUser resetedUser = userToReset.withCo2Score(0);
+        return mongoUserRepository.save(resetedUser);
+
     }
 }

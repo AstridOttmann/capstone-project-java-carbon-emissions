@@ -58,12 +58,23 @@ public class MongoUserController {
 
     @PutMapping("/score/{id}")
     public MongoUserDTO updateScore(@PathVariable String id, @RequestBody MongoUserDTO userDTO) {
-        if (!id.equals(userDTO.id()) && id.equals(login().id())) {
+        if (!id.equals(userDTO.id()) || !id.equals(login().id())) {
             String errorMessage = "Not allowed!";
             throw new IllegalArgumentException(errorMessage);
         }
         MongoUser updated = mongoUserDetailsService.updateScore(id, userDTO);
         return new MongoUserDTO(id, updated.username(), updated.co2Score());
+
+    }
+
+    @PostMapping("/score/reset/{id}")
+    public MongoUserDTO resetScore(@PathVariable String id){
+        if (!id.equals(login().id())) {
+            String errorMessage = "Not allowed!";
+            throw new IllegalArgumentException(errorMessage);
+        }
+        MongoUser reseted = mongoUserDetailsService.resetScore(id);
+        return new MongoUserDTO(id, reseted.username(), reseted.co2Score());
 
     }
 

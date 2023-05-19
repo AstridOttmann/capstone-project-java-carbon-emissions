@@ -60,7 +60,7 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
         const updatedComparisonResults: ComparisonResults =
             {
                 ...props.compareRoutes.comparisonResults,
-                usages: [...props.compareRoutes.comparisonResults.usages, newUsage]
+                usages: [newUsage, ...props.compareRoutes.comparisonResults.usages]
             };
 
         const updatedComparison: CompareRoutes =
