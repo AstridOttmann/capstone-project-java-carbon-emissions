@@ -50,5 +50,10 @@ public class CompareRoutesController {
         }
         return compareRoutesService.updateComparison(compareRoutes);
     }
+
+    @PostMapping("/usages/{userId}")
+    public List<CompareRoutes> resetAllUsages(@PathVariable String userId){
+        return compareRoutesService.resetAllUsages(userId);
+    }
 }
 

@@ -44,7 +44,6 @@ class CompareRoutesIntegrationTest {
     private String testCompareRoutesDTOJson;
     private CompareRoutesDTO testCompareRoutesDTO;
     private String expectedBodyJson;
-   // private String testComparedJson;
 
     @BeforeEach
     void setUp() throws Exception {

@@ -1,4 +1,4 @@
-import {Card, CardContent, Paper, Typography} from "@mui/material";
+import {Button, Card, CardContent, Paper, Typography} from "@mui/material";
 import React from "react";
 import ForestIcon from '@mui/icons-material/Forest';
 import {User} from "../models/MongoUserModel";
@@ -19,9 +19,20 @@ const sxStyleCard = {
     m: "1rem"
 }
 type UserAccountProps = {
-    user: User
+    user: User,
+    setUser: (user: User) => void,
+    updateScore: (id: string, user: User) => void,
+    resetAllUsages: (userId: string)=> void
 }
 export default function UserAccount(props: UserAccountProps) {
+    function resetScore(){
+        const updatedUser =
+            {...props.user, co2Score: 0};
+        props.setUser(updatedUser);
+        props.updateScore(updatedUser.id, updatedUser)
+        props.resetAllUsages(props.user.id)
+    }
+
     return (
         <Paper sx={sxStylePaper}>
             <Typography variant="h3" sx={sxStyleTitle}>My CO2-Bonus-Score</Typography>
@@ -31,6 +42,7 @@ export default function UserAccount(props: UserAccountProps) {
                     <Typography>{props.user.co2Score.toFixed(2)} kg/CO2</Typography>
                 </CardContent>
             </Card>
+            <Button variant="outlined" onClick={resetScore}>Reset Score</Button>
         </Paper>
     )
 }

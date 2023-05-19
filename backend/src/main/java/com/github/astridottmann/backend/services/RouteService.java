@@ -64,13 +64,23 @@ public class RouteService {
     }
 
     public Route updateRoute(Route route) {
+        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist or is in usage.";
+        String errorMessageDependency = "Edit not possible, route is in usage!";
+
         List<CompareRoutes> compareWithRoute = compareRoutesService.getAllByRouteId(route.id());
         List<CompareRoutes> listWithUsages = compareWithRoute
                 .stream()
                 .filter(current -> !current.comparisonResults().usages().isEmpty())
                 .toList();
 
-        if (routeRepository.existsById(route.id()) && listWithUsages.isEmpty()) {
+        boolean routeExists = routeRepository.existsById(route.id());
+        boolean routeIsUsedInCompareWithUsages = routeExists && !listWithUsages.isEmpty();
+
+        if (!routeExists) {
+            throw new NoSuchElementException(errorMessage);
+        } else if (routeIsUsedInCompareWithUsages) {
+            throw new DependencyException(errorMessageDependency);
+        } else {
             RouteDTO toUpdate = new RouteDTO(route);
             double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
 
@@ -78,8 +88,7 @@ public class RouteService {
             compareRoutesService.updateAllComparisonContainingRoute(updatedRoute);
             return routeRepository.save(updatedRoute);
         }
-        String errorMessage = "Couldn't update route. Id " + route.id() + " doesn't exist or is in usage.";
-        throw new NoSuchElementException(errorMessage);
     }
 }
+
 

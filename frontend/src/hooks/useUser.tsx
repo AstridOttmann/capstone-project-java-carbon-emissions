@@ -91,5 +91,7 @@ export default function useUser() {
                 toast.error("error", error))
     }
 
+
+
     return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore}
 }

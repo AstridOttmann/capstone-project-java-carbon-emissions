@@ -1,7 +1,9 @@
 package com.github.astridottmann.backend.models;
 
-import java.util.List;
+import lombok.With;
 
+import java.util.List;
+@With
 public record ComparisonResults(
         double resultRouteOne,
         double resultRouteTwo,

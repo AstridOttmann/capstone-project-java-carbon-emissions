@@ -114,4 +114,24 @@ public class CompareRoutesService {
 
         compareRoutesRepository.saveAll(updatedCompareRoutes);
     }
+
+    public List<CompareRoutes> resetAllUsages(String userId) {
+        List<CompareRoutes> comparesToReset = getAllByUserId(userId);
+        List<CompareRoutes> reseted = comparesToReset
+                .stream()
+                .map(current -> current.withComparisonResults(current.comparisonResults().withUsages(Collections.emptyList())))
+                .toList();
+        return compareRoutesRepository.saveAll(reseted);
+    }
 }
+
+/*
+new CompareRoutes(
+        current.id(),
+        current.userId(),
+        current.compared(),
+        new ComparisonResults(
+        current.comparisonResults().resultRouteOne(),
+        current.comparisonResults().resultRouteTwo(),
+        Collections.emptyList())
+        )*/

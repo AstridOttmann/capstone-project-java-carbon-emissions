@@ -30,7 +30,8 @@ function App() {
         getComparisonById,
         addComparison,
         updateComparison,
-        deleteComparisonById
+        deleteComparisonById,
+        resetAllUsages
     } = useCompareRoutes();
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
 
@@ -97,7 +98,10 @@ function App() {
                                                       updateComparison={updateComparison}
                                                       getAllComparisonByUserId={getAllComparisonByUserId}
                                 />}/>
-                            <Route path="/account" element={<UserAccount user={user}/>}/>
+                            <Route path="/account" element={<UserAccount user={user}
+                                                                         setUser={setUser}
+                                                                         updateScore={updateScore}
+                                                                         resetAllUsages={resetAllUsages}/>}/>
 
                         </Route>
                     </Routes>

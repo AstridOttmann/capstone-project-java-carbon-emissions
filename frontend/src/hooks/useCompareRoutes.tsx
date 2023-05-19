@@ -115,6 +115,15 @@ export default function useCompareRoutes() {
             })
     }
 
+    function resetAllUsages(userId: string){
+        axios.post(`/api/compare/usages/${userId}`)
+            .then((response)=> {
+                setCompareRoutesList(response.data)
+            })
+            .catch((error) =>
+            toast.error("Reset failed!"))
+    }
+
     return {
         compareRoutes,
         setCompareRoutes,
@@ -125,6 +134,7 @@ export default function useCompareRoutes() {
         getComparisonById,
         addComparison,
         updateComparison,
-        deleteComparisonById
+        deleteComparisonById,
+        resetAllUsages
     }
 }
