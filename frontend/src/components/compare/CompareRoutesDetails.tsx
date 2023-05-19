@@ -5,9 +5,10 @@ import {useNavigate, useParams} from "react-router-dom";
 import RouteVehicleDetails from "../routes/RouteVehicleDetails";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesCard from "./CompareRoutesCard";
-import {useContext, useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {RouteContext} from "../../contexts/RouteContextProvider";
 import {Route} from "../../models/RouteModel";
+import {User} from "../../models/MongoUserModel";
 
 
 const sxStylePaper = {
@@ -22,9 +23,15 @@ const sxStyleCard = {
 }
 
 type CompareRoutesDetailsProps = {
-    compareRoutes: CompareRoutes
+    user: User,
+    setUser: (user: User) => void,
+    compareRoutes: CompareRoutes,
+    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     setIsEditMode: (arg0: boolean) => void,
-    getComparisonById: (id: string) => void
+    getComparisonById: (id: string) => void,
+    getAllComparisonByUserId: (userId: string) => void,
+    updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
+    updateScore: (id: string, user: User) => void
 }
 export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
     const {setRoute} = useContext(RouteContext);
@@ -67,16 +74,20 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
             })}
 
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
-                {props.compareRoutes.compared.map((route) => {
-                    return <CompareRoutesResults key={route.id} route={route}/>
-                })}
+                {/*   {props.compareRoutes.compared.map((route) => {*/}
+                <CompareRoutesResults user={props.user}
+                                      setUser={props.setUser}
+                                      updateScore={props.updateScore}
+                                      compareRoutes={props.compareRoutes}
+                                      setCompareRoutes={props.setCompareRoutes}
+                                      updateComparison={props.updateComparison}
+                                      getAllComparisonByUserId={props.getAllComparisonByUserId}/>
+                {/*   })}*/}
             </Box>
 
             <Box>
-                <Typography variant="body1"
-                            sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
-                    You can reduce your CO2-Emission
-                    by {props.compareRoutes.comparisonResults.difference} kg
+                <Typography variant="body1" sx={{p: "1rem", mt: "1rem", textAlign: "center", backgroundColor: "ghostwhite"}}>
+                    You can reduce your CO2-Emission by {props.compareRoutes.comparisonResults.resultRouteTwo} kg
                 </Typography>
             </Box>
             <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}

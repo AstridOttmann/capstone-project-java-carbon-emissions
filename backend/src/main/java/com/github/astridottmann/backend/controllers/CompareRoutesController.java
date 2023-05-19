@@ -19,6 +19,11 @@ public class CompareRoutesController {
         return compareRoutesService.getAllCompareRoutes();
     }
 
+    @GetMapping("/userId/{userId}")
+    public List<CompareRoutes> getAllByUserId(@PathVariable String userId){
+        return compareRoutesService.getAllByUserId(userId);
+    }
+
     @GetMapping("/{id}")
     public CompareRoutes getCompareRoutesById(@PathVariable String id) {
         return compareRoutesService.getCompareRoutesById(id);
@@ -44,6 +49,11 @@ public class CompareRoutesController {
             throw new IllegalArgumentException(errorMessage);
         }
         return compareRoutesService.updateComparison(compareRoutes);
+    }
+
+    @PostMapping("/usages/{userId}")
+    public List<CompareRoutes> resetAllUsages(@PathVariable String userId){
+        return compareRoutesService.resetAllUsages(userId);
     }
 }
 

@@ -49,7 +49,7 @@ type FormProps = {
     setIsEditMode: (arg0: boolean) => void,
     routesToCompare: Route[]
     setRoutesToCompare: React.Dispatch<React.SetStateAction<Route[]>>,
-    getAllComparison: () => void,
+    getAllComparisonByUserId: (userId: string) => void,
 
 }
 export default function Form(props: FormProps) {
@@ -86,7 +86,6 @@ export default function Form(props: FormProps) {
         props.setIsEditMode(false)
     }
 
-
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
@@ -95,7 +94,7 @@ export default function Form(props: FormProps) {
                 const updatedRoute: Route = {...route, vehicle}
                 updateRoute(updatedRoute.id, updatedRoute)
                     .then(() => {
-                        props.getAllComparison();
+                        props.getAllComparisonByUserId(props.user.id);
                         navigate(-1)
                         handleSuccessfulSubmit();
                     })
@@ -107,7 +106,7 @@ export default function Form(props: FormProps) {
                     .then(savedRoute => {
                         props.setRoutesToCompare(
                             [...props.routesToCompare, savedRoute])
-                        handleSuccessfulSubmit();
+                        handleSuccessfulSubmit()
                     })
                     .catch(error => {
                         console.error(error)

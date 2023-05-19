@@ -22,27 +22,36 @@ export default function useUser() {
                 .then((response) => {
                     if (response.data.username !== "" && response.data.username !== "anonymousUser") {
                         setUser(response.data);
-                        console.log("user", user)
+                        console.log("user1", user)
                     }
                 })
                 .catch(() => {
-                    toast.error("Error checking logged-in user:");
+                    toast.error("Please Sign Up or Login");
                 })
                 .finally(() => {
                     setIsLoading(false);
                 });
         }
 
-        //eslint-disable-next-line
         checkLoggedInUser();
+        //eslint-disable-next-line
     }, []);
 
     function login(username: string, password: string) {
         return axios.post("/api/user/login", undefined, {auth: {username, password}})
             .then((response) => {
-                setUser(response.data)
+                setUser({
+                    id: response.data.id,
+                    username: response.data.username,
+                    password: "",
+                    co2Score: response.data.co2Score
+                })
+                return user
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                toast.error("You have already an account? Check your name and password! No account? Please sign up")
+                throw error;
+            })
     }
 
     function logout() {
@@ -66,5 +75,23 @@ export default function useUser() {
             .catch(error => console.log(error))
     }
 
-    return {user, setUser, isLoading, login, logout, signIn}
+    function updateScore(id: string, userDTO: User) {
+        axios.put(`/api/user/score/${id}`, userDTO)
+            .then((response) => {
+                const updatedUser = response.data;
+                setUser((user) => {
+                    if (id === updatedUser.id) {
+                        return updatedUser;
+                    }
+                    return userDTO;
+                });
+                return updatedUser;
+            })
+            .catch((error) =>
+                toast.error("error", error))
+    }
+
+
+
+    return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore}
 }

@@ -15,8 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -104,7 +103,6 @@ class MongoUserIntegrationTest {
     @Test
     @WithMockUser
     void signIn_shouldReturnApiErrorAndStatusIsUnprocessable_whenUsernameAlreadyExists() throws Exception {
-        MongoUser testUser = new MongoUser("123", "testUser", "1234abc", 0);
         mongoUserRepository.save(testUser);
         String expectedMessage = "Username already exists!";
 
@@ -118,4 +116,38 @@ class MongoUserIntegrationTest {
                 .andExpect(jsonPath("$.message").value(expectedMessage))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
+
+    @Test
+    @WithMockUser
+    void updateScore_shouldReturnUpdatedUser() throws Exception {
+        mongoUserRepository.save(testUser);
+
+        mockMvc.perform(put("/api/user/score/" + testUser.id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"id":"123" ,"username": "testUser", "co2Score": 100}
+                                """)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {"id":"123" ,"username": "testUser", "co2Score": 100}
+                        """));
+    }
+    @Test
+    @WithMockUser(username = "testUser")
+    void updateScore_shouldThrowApiErrorAndStatusIsUnprocessable_whenIdNotUserIdOrUserNotLoggedIn() throws Exception {
+        mongoUserRepository.save(testUser);
+        String expectedMessage = "Not allowed!";
+
+        mockMvc.perform(put("/api/user/score/" + testUser.id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"id":"333" ,"username": "testUser", "co2Score": 100}
+                                """)
+                        .with(csrf()))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.message").value(expectedMessage))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
+
 }

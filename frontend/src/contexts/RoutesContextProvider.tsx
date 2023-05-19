@@ -1,5 +1,5 @@
 import {NewRoute, Route} from "../models/RouteModel";
-import React, {createContext, ReactElement, useEffect, useMemo, useState} from "react";
+import React, {createContext, ReactElement, useMemo, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
 
@@ -7,7 +7,7 @@ export type RoutesContextType = {
     routes: Route[],
     setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
     getAllRoutes: () => void,
-    //getRouteById: (id: string) => void,
+    getAllRoutesByUserId:(userId: string)=> void,
     addRoute: (route: NewRoute) => Promise<Route>,
     deleteRoute: (id: string) => void,
     updateRoute: (id: string, route: Route) => Promise<Route>,
@@ -27,6 +27,8 @@ export const RoutesContext = createContext<RoutesContextType>({
     ,
     getAllRoutes: () => {
     },
+    getAllRoutesByUserId:()=> {
+    }
 })
 
 type RoutesContextProps = {
@@ -43,12 +45,13 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
         deleteRoute,
         updateRoute,
         getAllRoutes,
+        getAllRoutesByUserId
         //eslint-disable-next-line
     }), [routes]);
 
-    useEffect(() => {
+   /* useEffect(() => {
         getAllRoutes()
-    }, [])
+    }, [])*/
 
     function getAllRoutes() {
         axios.get("/api/routes")
@@ -56,10 +59,19 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 setRoutes(response.data)
             })
             .catch((error) => {
-                toast.error("Error! Try again later. " + error)
+                toast.error("No Data available! Logged in? " + error)
             })
     }
 
+    function getAllRoutesByUserId(userId: string){
+        axios.get(`/api/routes/userId/${userId}`)
+            .then((response)=> {
+                setRoutes(response.data)
+            })
+            .catch((error)=> {
+                toast.error("No Data available! Logged in? " + error)
+            })
+    }
     function addRoute(route: NewRoute) {
         return axios.post("/api/routes", route)
             .then((response) => {
@@ -98,7 +110,7 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
                 return updatedRoute;
             })
             .catch((error) =>
-                toast.error("error", error))
+                toast.error("Edit not possible, route is in use!", error))
     }
 
     return (

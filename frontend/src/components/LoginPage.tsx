@@ -1,7 +1,6 @@
 import {Box, Button, TextField, ButtonGroup} from "@mui/material";
-import {ChangeEvent, FormEvent, useContext, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {User} from "../models/MongoUserModel";
 
 const sxStyleBox = {
@@ -12,16 +11,14 @@ const sxStyleBox = {
 }
 
 type LoginPageProps = {
-    onLogin: (username: string, password: string) => Promise<void>,
+    onLogin: (username: string, password: string) => Promise<User>,
     onSignIn: (newMongoUser: User) => Promise<void>,
-    getAllComparison: () => void,
     user: User,
     setUser: (user: User) => void,
 
 }
 export default function LoginPage(props: LoginPageProps) {
-    const {getAllRoutes} = useContext(RoutesContext)
-    const [signIn, setSignIn] = useState<boolean>();
+    const [signUp, setSignUp] = useState<boolean>();
 
     const navigate = useNavigate();
 
@@ -32,18 +29,16 @@ export default function LoginPage(props: LoginPageProps) {
 
     async function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (signIn) {
+        if (signUp) {
             try {
                 await props.onSignIn(props.user);
-                setSignIn(false);
+                setSignUp(false);
             } catch (error) {
                 console.error("error", error);
             }
         }
         await props.onLogin(props.user.username, props.user.password);
         navigate("/");
-        await getAllRoutes();
-        props.getAllComparison();
     }
 
     return (
@@ -73,7 +68,7 @@ export default function LoginPage(props: LoginPageProps) {
                 <ButtonGroup sx={{display: "flex", justifyContent: "center"}}
                              variant="text"
                              aria-label="text button group">
-                    <Button type="submit" onClick={() => setSignIn(true)}>Sign in</Button>
+                    <Button type="submit" onClick={() => setSignUp(true)}>Sign Up</Button>
                     <Button type="submit">Login</Button>
                 </ButtonGroup>
             </Box>

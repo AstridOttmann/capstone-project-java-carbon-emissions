@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import './App.css';
 import Header from "./components/Header";
@@ -16,36 +16,48 @@ import CompareRoutesDetails from "./components/compare/CompareRoutesDetails";
 import LoginPage from "./components/LoginPage";
 import useUser from "./hooks/useUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-
+import UserAccount from "./components/UserAccount";
+import {RoutesContext} from "./contexts/RoutesContextProvider";
 
 function App() {
-    const {user, setUser, isLoading, login, logout, signIn} = useUser()
+    const {user, setUser, isLoading, login, logout, signIn, updateScore} = useUser()
+    const {getAllRoutesByUserId} = useContext(RoutesContext)
     const {
         compareRoutes,
         compareRoutesList,
         setCompareRoutes,
-        getAllComparison,
+        getAllComparisonByUserId,
         getComparisonById,
         addComparison,
-        deleteComparisonById
+        updateComparison,
+        deleteComparisonById,
+        resetAllUsages
     } = useCompareRoutes();
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
 
+    useEffect(() => {
+        if (user) {
+            getAllComparisonByUserId(user.id)
+            getAllRoutesByUserId(user.id)
+        }
+        //eslint-disable-next-line
+    }, [user.id])
+
+    console.log("app", user)
     return (
         <Container maxWidth="lg">
             <main className="App">
                 <BrowserRouter>
                     <Header user={user} onLogout={logout}/>
-                    <ToastContainer autoClose={3000}/>
+                    <ToastContainer autoClose={5000}/>
                     <Routes>
                         <Route path="/login"
                                element={<LoginPage
-                                   getAllComparison={getAllComparison}
                                    onLogin={login}
                                    onSignIn={signIn}
                                    user={user}
                                    setUser={setUser}
-                                   />}
+                               />}
                         />
 
                         <Route element={<ProtectedRoutes user={user} isLoading={isLoading}/>}>
@@ -53,7 +65,7 @@ function App() {
                             <Route path="/" element={
                                 <HomePage
                                     user={user}
-                                    getAllComparison={getAllComparison}
+                                    getAllComparisonByUserId={getAllComparisonByUserId}
                                     addComparison={addComparison}
                                     setIsEditMode={setIsEditMode}
                                     isEditMode={isEditMode}
@@ -61,17 +73,35 @@ function App() {
                                     setCompareRoutes={setCompareRoutes}
                                 />}/>
                             <Route path="/routes" element={
-                                <RouteCollection user={user}/>}/>
+                                <RouteCollection/>}/>
                             <Route path="/compared" element={
                                 <CompareRoutesCollection user={user}
+                                                         setUser={setUser}
+                                                         updateScore={updateScore}
+                                                         compareRoutes={compareRoutes}
+                                                         setCompareRoutes={setCompareRoutes}
                                                          compareRoutesList={compareRoutesList}
-                                                         deleteComparisonById={deleteComparisonById}/>}/>
+                                                         updateComparison={updateComparison}
+                                                         getAllComparisonByUserId={getAllComparisonByUserId}
+                                                         deleteComparisonById={deleteComparisonById}/>}
+                            />
                             <Route path="/routes/details/:id" element={
                                 <RouteDetails setIsEditMode={setIsEditMode}/>}/>
                             <Route path="/compared/details/:id" element={
                                 <CompareRoutesDetails getComparisonById={getComparisonById}
+                                                      user={user}
+                                                      setUser={setUser}
+                                                      updateScore={updateScore}
                                                       compareRoutes={compareRoutes}
-                                                      setIsEditMode={setIsEditMode}/>}/>
+                                                      setCompareRoutes={setCompareRoutes}
+                                                      setIsEditMode={setIsEditMode}
+                                                      updateComparison={updateComparison}
+                                                      getAllComparisonByUserId={getAllComparisonByUserId}
+                                />}/>
+                            <Route path="/account" element={<UserAccount user={user}
+                                                                         setUser={setUser}
+                                                                         updateScore={updateScore}
+                                                                         resetAllUsages={resetAllUsages}/>}/>
 
                         </Route>
                     </Routes>

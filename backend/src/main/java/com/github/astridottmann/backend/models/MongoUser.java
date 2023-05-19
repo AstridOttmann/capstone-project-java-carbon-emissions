@@ -2,8 +2,9 @@ package com.github.astridottmann.backend.models;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.With;
 import org.springframework.data.annotation.Id;
-
+@With
 public record MongoUser(
         @Id
         String id,

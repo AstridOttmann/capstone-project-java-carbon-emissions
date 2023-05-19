@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "axios";
 import {CompareRoutes, NewCompareRoutes} from "../models/CompareRoutesModel";
 import {toast} from "react-toastify";
@@ -49,16 +49,16 @@ export default function useCompareRoutes() {
         comparisonResults: {
             resultRouteOne: 0,
             resultRouteTwo: 0,
-            difference: 0
+            usages: []
         }
     }
 
     const [compareRoutesList, setCompareRoutesList] = useState<CompareRoutes[]>([]);
     const [compareRoutes, setCompareRoutes] = useState<CompareRoutes>(initialStateCompareRoutes);
 
-    useEffect(() => {
+   /* useEffect(() => {
         getAllComparison()
-    }, [])
+    }, [])*/
 
     function getAllComparison() {
         axios.get("/api/compare")
@@ -67,6 +67,12 @@ export default function useCompareRoutes() {
             })
     }
 
+    function getAllComparisonByUserId(userId: string) {
+        axios.get(`/api/compare/userId/${userId}`)
+            .then((response) => {
+                setCompareRoutesList(response.data)
+            })
+    }
     function getComparisonById(id: string) {
         axios.get(`/api/compare/${id}`)
             .then((response) => {
@@ -109,15 +115,26 @@ export default function useCompareRoutes() {
             })
     }
 
+    function resetAllUsages(userId: string){
+        axios.post(`/api/compare/usages/${userId}`)
+            .then((response)=> {
+                setCompareRoutesList(response.data)
+            })
+            .catch((error) =>
+            toast.error("Reset failed!"))
+    }
+
     return {
         compareRoutes,
         setCompareRoutes,
         compareRoutesList,
         setCompareRoutesList,
         getAllComparison,
+        getAllComparisonByUserId,
         getComparisonById,
         addComparison,
         updateComparison,
-        deleteComparisonById
+        deleteComparisonById,
+        resetAllUsages
     }
 }

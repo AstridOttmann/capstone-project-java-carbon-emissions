@@ -3,6 +3,7 @@ package com.github.astridottmann.backend.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
+import com.github.astridottmann.backend.repositories.MongoUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,13 +36,14 @@ class CompareRoutesIntegrationTest {
     @Autowired
     private CompareRoutesRepository compareRoutesRepository;
     @Autowired
+    private MongoUserRepository mongoUserRepository;
+    @Autowired
     private ObjectMapper objectMapper;
     private CompareRoutes testCompareRoutes;
     private String testCompareRoutesJson;
     private String testCompareRoutesDTOJson;
     private CompareRoutesDTO testCompareRoutesDTO;
     private String expectedBodyJson;
-    private String testComparedJson;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -72,7 +75,7 @@ class CompareRoutesIntegrationTest {
                 "999",
                 "a1b2",
                 List.of(routeA, routeB),
-                new ComparisonResults(268.93, 45.26, 223.67)
+                new ComparisonResults(223.67, -223.67, Collections.emptyList())
         );
         testCompareRoutesJson = objectMapper.writeValueAsString(testCompareRoutes);
 
@@ -82,14 +85,6 @@ class CompareRoutesIntegrationTest {
         );
         testCompareRoutesDTOJson = objectMapper.writeValueAsString(testCompareRoutesDTO);
     }
-
-    //List<Route> testCompared = new ArrayList<>(List.of(routeA, routeB));
-    //  testComparedJson = objectMapper.writeValueAsString(testCompared);
-
-      /*  testCompareRoutesDTOJson = """
-                {"userId": "a1b2", "compared": [{"id": "123", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": { "type": "car", "co2Emission": 253.3, "fuel": "petrol", "carSize": "large"}, "co2EmissionRoute": 268.93, "userId: "a1b2"}, {"id": "456", "start": "Hamburg", "destination": "Frankfurt", "distance": 492, "numberOfPersons": 1, "oneWay": false, "vehicle": {"type": "publicTransport", "co2Emission": 46.0, "distanceLevel": "long distance", "meansOfTransport": "train"}, "co2EmissionRoute": 45.26, "userId: "a1b2"}]}
-                """;
-    }*/
 
     @Test
     @WithMockUser
@@ -119,6 +114,20 @@ class CompareRoutesIntegrationTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    @WithMockUser
+    void getAllByUserId_shouldReturnFilteredCompareRoutes() throws Exception {
+        MongoUser testUser = new MongoUser("a1b2", "testUser", "", 0);
+        mongoUserRepository.save(testUser);
+        compareRoutesRepository.save(testCompareRoutes);
+
+        List<CompareRoutes> expectedList = new ArrayList<>(List.of(testCompareRoutes));
+        String expectedListJson = objectMapper.writeValueAsString(expectedList);
+
+        mockMvc.perform(get("/api/compare/userId/" + testCompareRoutes.userId()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedListJson));
+    }
     @Test
     @WithMockUser
     void getCompareRoutesById_shouldReturnRequested() throws Exception {

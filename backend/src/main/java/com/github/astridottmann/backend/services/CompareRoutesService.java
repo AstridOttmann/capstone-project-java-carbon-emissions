@@ -1,13 +1,11 @@
 package com.github.astridottmann.backend.services;
 
-import com.github.astridottmann.backend.models.CompareRoutes;
-import com.github.astridottmann.backend.models.CompareRoutesDTO;
-import com.github.astridottmann.backend.models.ComparisonResults;
-import com.github.astridottmann.backend.models.Route;
+import com.github.astridottmann.backend.models.*;
 import com.github.astridottmann.backend.repositories.CompareRoutesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -16,19 +14,41 @@ import java.util.NoSuchElementException;
 public class CompareRoutesService {
     private final CompareRoutesRepository compareRoutesRepository;
     private final IdService idService;
+    private final MongoUserDetailsService mongoUserDetailsService;
 
-    public ComparisonResults compareEmissions(List<Route> compared) {
+    public ComparisonResults createComparisonResults(List<Route> compared, List<Usage> usages) {
         double emissionRouteOne = compared.get(0).co2EmissionRoute();
         double emissionRouteTwo = compared.get(1).co2EmissionRoute();
 
         double difference = emissionRouteOne - emissionRouteTwo;
-        double differenceRounded = Math.round(difference * 100.0) / 100.0;
 
-        return new ComparisonResults(emissionRouteOne, emissionRouteTwo, differenceRounded);
+        double bonusOne = Math.round(Math.abs(difference) * 100.0) / 100.0;
+        double bonusTwo = Math.round(-Math.abs(difference) * 100.0) / 100.0;
+
+        if (emissionRouteOne < emissionRouteTwo) {
+            double temp = bonusOne;
+            bonusOne = bonusTwo;
+            bonusTwo = temp;
+        }
+
+        return new ComparisonResults(bonusOne, bonusTwo, usages);
     }
 
     public List<CompareRoutes> getAllCompareRoutes() {
         return compareRoutesRepository.findAll();
+    }
+
+    public List<CompareRoutes> getAllByUserId(String userId) {
+        String errorMessage = "Unable to load data. User not found!";
+
+        if (!mongoUserDetailsService.existsById(userId)) {
+            throw new NoSuchElementException(errorMessage);
+        }
+        return compareRoutesRepository.findAllByUserId(userId);
+    }
+
+    public List<CompareRoutes> getAllByRouteId(String id) {
+        return compareRoutesRepository.findAllByComparedId(id);
     }
 
     public CompareRoutes getCompareRoutesById(String id) {
@@ -38,7 +58,10 @@ public class CompareRoutesService {
 
     public CompareRoutes addComparison(CompareRoutesDTO compareRoutesDTO) {
         CompareRoutes compareRoutesToAdd =
-                CompareRoutes.createCompareRoutesFromDTO(compareRoutesDTO, idService.createRandomId(), compareEmissions(compareRoutesDTO.compared()));
+                CompareRoutes.createCompareRoutesFromDTO(
+                        compareRoutesDTO,
+                        idService.createRandomId(),
+                        createComparisonResults(compareRoutesDTO.compared(), Collections.emptyList()));
 
         return compareRoutesRepository.save(compareRoutesToAdd);
     }
@@ -58,6 +81,8 @@ public class CompareRoutesService {
             throw new NoSuchElementException(errorMessage);
         }
 
+        List<Usage> usages = compareRoutes.comparisonResults().usages();
+
         List<Route> routes = List.of(
                 compareRoutes.compared().get(0),
                 compareRoutes.compared().get(1));
@@ -66,7 +91,7 @@ public class CompareRoutesService {
                 compareRoutes.id(),
                 compareRoutes.userId(),
                 routes,
-                compareEmissions(compareRoutes.compared()));
+                createComparisonResults(compareRoutes.compared(), usages));
 
         return compareRoutesRepository.save(updatedCompareRoutes);
     }
@@ -79,10 +104,34 @@ public class CompareRoutesService {
                             .stream()
                             .map(currentRoute -> currentRoute.id().equals(route.id()) ? route : currentRoute)
                             .toList();
-                    return new CompareRoutes(compareRoutes.id(), compareRoutes.userId(), currentCompared, compareEmissions(currentCompared));
+                    return new CompareRoutes(
+                            compareRoutes.id(),
+                            compareRoutes.userId(),
+                            currentCompared,
+                            createComparisonResults(currentCompared, compareRoutes.comparisonResults().usages()));
                 }))
                 .toList();
 
         compareRoutesRepository.saveAll(updatedCompareRoutes);
     }
+
+    public List<CompareRoutes> resetAllUsages(String userId) {
+        List<CompareRoutes> comparesToReset = getAllByUserId(userId);
+        List<CompareRoutes> reseted = comparesToReset
+                .stream()
+                .map(current -> current.withComparisonResults(current.comparisonResults().withUsages(Collections.emptyList())))
+                .toList();
+        return compareRoutesRepository.saveAll(reseted);
+    }
 }
+
+/*
+new CompareRoutes(
+        current.id(),
+        current.userId(),
+        current.compared(),
+        new ComparisonResults(
+        current.comparisonResults().resultRouteOne(),
+        current.comparisonResults().resultRouteTwo(),
+        Collections.emptyList())
+        )*/

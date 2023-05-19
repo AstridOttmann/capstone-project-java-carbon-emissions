@@ -20,6 +20,11 @@ public class RouteController {
         return routeService.getAllRoutes();
     }
 
+    @GetMapping("/userId/{userId}")
+    public List<Route> getAllByUserId(@PathVariable String userId){
+        return routeService.getAllByUserId(userId);
+    }
+
     @GetMapping("/{id}")
     public Route getRouteById(@PathVariable String id) {
         return routeService.getRouteById(id);

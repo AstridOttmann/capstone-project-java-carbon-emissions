@@ -16,6 +16,7 @@ public record RouteDTO(
         int numberOfPersons,
         @NotNull
         boolean oneWay,
+        @NotNull
         Vehicle vehicle,
         String userId
 ) {
