@@ -64,13 +64,13 @@ public class RouteService {
     }
 
     public Route updateRoute(Route route) {
-        List<CompareRoutes> withRoute = compareRoutesService.getAllByRouteId(route.id());
-        List<CompareRoutes> list = withRoute
+        List<CompareRoutes> compareWithRoute = compareRoutesService.getAllByRouteId(route.id());
+        List<CompareRoutes> listWithUsages = compareWithRoute
                 .stream()
-                .map(current -> !current.comparisonResults().usages().isEmpty() ? current : null)
+                .filter(current -> !current.comparisonResults().usages().isEmpty())
                 .toList();
 
-        if (routeRepository.existsById(route.id()) && list.isEmpty()) {
+        if (routeRepository.existsById(route.id()) && listWithUsages.isEmpty()) {
             RouteDTO toUpdate = new RouteDTO(route);
             double co2EmissionRoute = calculateCo2EmissionService.calculateCo2EmissionRoute(toUpdate);
 
