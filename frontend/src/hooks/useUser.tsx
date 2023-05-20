@@ -75,27 +75,10 @@ export default function useUser() {
             .catch(error => console.log(error))
     }
 
-    /* function updateScore(id: string, userDTO: User) {
-         axios.put(`/api/user/score/${id}`, userDTO)
-             .then((response) => {
-                 const updatedUser = response.data;
-                 setUser((user) => {
-                     if (id === updatedUser.id) {
-                         return updatedUser;
-                     }
-                     return userDTO;
-                 });
-                 return updatedUser;
-             })
-             .catch((error) =>
-                 toast.error("error", error))
-     }*/
-
     function updateScore(id: string, bonus: number) {
         axios.put(`/api/user/score/${id}?bonus=${bonus}`)
             .then((response) => {
                 const updatedUser = response.data;
-                console.log("Updated", updatedUser)
                 setUser((user) => {
                     if (id === updatedUser.id) {
                         return updatedUser;
