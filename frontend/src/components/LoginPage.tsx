@@ -45,6 +45,7 @@ export default function LoginPage(props: LoginPageProps) {
         <form onSubmit={handleLoginOnSubmit}>
             <Box sx={sxStyleBox}>
                 <TextField required variant="standard"
+                           color="secondary"
                            type="text"
                            label="User name"
                            id="username"

@@ -1,5 +1,5 @@
 import Form from "./Form";
-import {Button, ButtonGroup, Paper, Typography} from "@mui/material";
+import {Button, ButtonGroup, Box, Typography} from "@mui/material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 import React, {useState} from "react";
@@ -11,11 +11,24 @@ import CompareRoutesCard from "./compare/CompareRoutesCard";
 import {User} from "../models/MongoUserModel";
 import {useNavigate} from "react-router-dom";
 
+const sxStyleBox = {
+    position: "relative",
+    top: "5rem",
+    pb: "4rem",
+    pt: "1rem"
+}
 const sxStyleTitle = {
-    fontSize: "2rem",
     p: "1rem",
-    color: "#3fd44d",
+    color: "primary",
     textAlign: "center"
+}
+const sxStyleButtonGroup = {
+    fontSize: "large",
+    display: "block",
+
+    justifyContent: "space-evenly",
+    gap: "0.5rem",
+    m: "1rem"
 }
 
 type HomePageProps = {
@@ -47,27 +60,21 @@ export default function HomePage(props: HomePageProps) {
     }
 
     return (
-        <Paper sx={{
-            pb: "4rem",
-            pt: "1rem",
-            backgroundColor: "#282c34"
-        }}>
+        <Box sx={sxStyleBox}>
             {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
                 <>
-                    <Typography variant="h4" sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
+                    <Typography variant="h4" component="h2"
+                                sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
                     <ButtonGroup
-                        sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-evenly",
-                            gap: "0.5rem",
-                            m: "1rem"
-                        }}
+                        sx={sxStyleButtonGroup}
                         variant="text"
                         aria-label="text button group">
-                        <Button variant="outlined"
-                                onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
-                            Add Route
+                        <Button> <AddLocationIcon sx={{fontSize: 70}}/></Button>
+                        <Button variant="text"
+                                size="large"
+                                onClick={() => setAddMode(!addMode)}>
+
+                            <Typography variant="body1" sx={{fontSize: "1.5rem"}}>Add Route</Typography>
                         </Button>
                     </ButtonGroup>
                 </>}
@@ -116,5 +123,5 @@ export default function HomePage(props: HomePageProps) {
                       getAllComparisonByUserId={props.getAllComparisonByUserId}
                 /> : null
             }
-        </Paper>)
+        </Box>)
 }
