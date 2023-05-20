@@ -7,6 +7,7 @@ import com.github.astridottmann.backend.services.MongoUserDetailsService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class MongoUserController {
     public MongoUserDTO updateScore(@PathVariable String id, @RequestParam("bonus") double bonus) {
         if (!id.equals(login().id())) {
             String errorMessage = "Not allowed!";
-            throw new IllegalArgumentException(errorMessage);
+            throw new AccessDeniedException(errorMessage);
         }
         MongoUser updated = mongoUserDetailsService.updateScore(id, bonus);
         return new MongoUserDTO(id, updated.username(), updated.co2Score());
@@ -71,7 +72,7 @@ public class MongoUserController {
     public MongoUserDTO resetScore(@PathVariable String id){
         if (!id.equals(login().id())) {
             String errorMessage = "Not allowed!";
-            throw new IllegalArgumentException(errorMessage);
+            throw new AccessDeniedException(errorMessage);
         }
         MongoUser reseted = mongoUserDetailsService.resetScore(id);
         return new MongoUserDTO(id, reseted.username(), reseted.co2Score());

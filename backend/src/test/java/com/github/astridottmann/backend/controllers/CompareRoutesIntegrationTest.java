@@ -243,4 +243,19 @@ class CompareRoutesIntegrationTest {
                 .andExpect(content().json(expectedBody))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
+
+    @Test
+    @WithMockUser
+    void resetAllUsages_shouldResetAllUsages() throws Exception {
+        compareRoutesRepository.save(testCompareRoutes);
+        List<CompareRoutes> expectedBody = new ArrayList<>(List.of(testCompareRoutes));
+        expectedBodyJson = objectMapper.writeValueAsString(expectedBody);
+        MongoUser testUser = new MongoUser("a1b2", "testUser", "", 0);
+
+        mockMvc.perform(post("/api/compare/usages/" + testUser.id())
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedBodyJson));
+    }
 }
