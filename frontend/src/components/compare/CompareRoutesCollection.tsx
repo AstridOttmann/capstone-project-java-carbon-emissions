@@ -5,6 +5,8 @@ import {User} from "../../models/MongoUserModel";
 import React from "react";
 
 const sxStylePaper = {
+    position: "relative",
+    top: "5rem",
     p: "1rem",
     pb: "3rem",
     backgroundColor: "#282c34",

@@ -29,10 +29,10 @@ const theme = createTheme({
                 }
             }
         },
-        MuiSvgIcon: {
+        MuiButton: {
             styleOverrides: {
                 root: {
-
+                    textTransform: "none"
                 }
             }
         }

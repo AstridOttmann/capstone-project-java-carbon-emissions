@@ -4,6 +4,8 @@ import ForestIcon from '@mui/icons-material/Forest';
 import {User} from "../models/MongoUserModel";
 
 const sxStylePaper = {
+    position: "relative",
+    top: "5rem",
     p: "1rem",
     pb: "4rem",
     backgroundColor: "#282c34",

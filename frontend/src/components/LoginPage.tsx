@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 import {User} from "../models/MongoUserModel";
 
 const sxStyleBox = {
+    position: "relative",
+    top: "5rem",
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",

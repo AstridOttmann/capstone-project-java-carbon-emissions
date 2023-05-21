@@ -9,6 +9,8 @@ import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
 
 const sxStylePaper = {
+    position: "relative",
+    top: "5rem",
     p: "1rem",
     pb: "3rem",
     backgroundColor: "#282c34",

@@ -1,6 +1,7 @@
-import {Box, Button, createTheme, Divider, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup,  Divider, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {User} from "../models/MongoUserModel";
 import React from "react";
 
@@ -49,7 +50,11 @@ export default function Header(props: HeaderProps) {
                             gutterBottom
                 >Move Green!</Typography>
                 {props.user.id !== "" &&
-                    <Button color="inherit" type="button" onClick={logoutOnClick}><LogoutIcon/></Button>}
+                    <ButtonGroup variant="text" sx={{display: "flex", alignItems: "center"}}>
+                        <PersonOutlineIcon/>
+                        <Button color="inherit" type="button" onClick={logoutOnClick}><LogoutIcon/></Button>
+                    </ButtonGroup>
+                    }
             </Box>
             <Divider variant="middle" sx={{height: "3px", width: "80%",m: "0 auto", p: "0.05rem"}}/>
         </Box>
