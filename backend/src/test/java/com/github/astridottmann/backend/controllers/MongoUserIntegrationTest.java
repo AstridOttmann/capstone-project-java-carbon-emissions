@@ -133,18 +133,18 @@ class MongoUserIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUser")
     void updateScore_shouldThrowStatusIsUnauthorized_whenIdNotUserIdOrUserNotLoggedIn() throws Exception {
         mongoUserRepository.save(testUser);
-       // String expectedMessage = "Not allowed!";
+        String expectedMessage = "Not allowed!";
 
-        mockMvc.perform(put("/api/user/score/" + testUser.id())
+        mockMvc.perform(put("/api/user/score/" + "abc")
                         .param("bonus", "100")
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(csrf()))
-                .andExpect(status().isUnauthorized());
-              /*.andExpect(jsonPath("$.message").value(expectedMessage))
-                .andExpect(jsonPath("$.timestamp").isNotEmpty());*/
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").value(expectedMessage))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 
     @Test
@@ -162,14 +162,17 @@ class MongoUserIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUser")
     void resetScore_shouldThrowStatusIsUnauthorized_whenIdIsNotEqualLoginId() throws Exception {
         mongoUserRepository.save(testUser);
+        String expectedMessage = "Not allowed!";
 
-        mockMvc.perform(post("/api/user/score/reset/" + testUser.id())
+        mockMvc.perform(post("/api/user/score/reset/" + "abc")
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(csrf()))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").value(expectedMessage))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
 
 
     }
