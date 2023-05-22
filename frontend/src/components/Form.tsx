@@ -47,7 +47,7 @@ const sxStyleBox = {
 }
 
 const sxStyleTextField = {
-    mt: "0.3rem"
+    mt: "0.5rem"
 }
 
 type FormProps = {
@@ -188,7 +188,7 @@ export default function Form(props: FormProps) {
                                value={route.destination}
                                onChange={handleChange}
                                sx={sxStyleTextField}/>
-                    <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "1rem", m: "0.5rem"}}>
+                    <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "2rem", m: "1.5rem 1rem 0.2rem 1rem"}}>
                         <FormControl sx={{width: "45%"}}>
                             <Input required
                                    size="small"
@@ -216,7 +216,7 @@ export default function Form(props: FormProps) {
                                    sx={sxStyleTextField}/>
                         </FormControl>
                     </Box>
-                    <FormControl>
+                    <FormControl sx={{m: "0.2rem 1rem 1.5rem 1rem"}}>
                         <RadioGroup
                             sx={{flexDirection: "row", justifyContent: "space-evenly", alignItems: "center"}}
                             id="oneWay"
@@ -224,11 +224,11 @@ export default function Form(props: FormProps) {
                             value={route.oneWay}
                             onChange={handleChange}
                         >
-                            <FormControlLabel value={true} control={<Radio/>} label={<RouteIcon/>}/>
-                            <FormControlLabel value={false} control={<Radio/>} label={<RotateRightIcon/>}/>
+                            <FormControlLabel  value={true} control={<Radio/>} label={<RouteIcon sx={{pl: "0.5rem", fontSize: 35}}/>}/>
+                            <FormControlLabel value={false} control={<Radio/>} label={<RotateRightIcon sx={{pl: "0.5rem", fontSize: 38}}/>}/>
                         </RadioGroup>
                     </FormControl>
-                    <FormControl>
+                    <FormControl sx={{mt: "0.5rem", mb: "0.5rem"}}>
                         <InputLabel id="type-label">Vehicle</InputLabel>
                         <Select
 
@@ -246,7 +246,7 @@ export default function Form(props: FormProps) {
                     </FormControl>
                     {vehicle.type === "car" &&
                         <>
-                            <FormControl>
+                            <FormControl sx={{mt: "0.5rem"}}>
                                 <InputLabel id="fuel-label">Fuel</InputLabel>
                                 <Select
                                     size="small"
@@ -260,7 +260,7 @@ export default function Form(props: FormProps) {
                                     <MenuItem value="diesel">diesel</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl>
+                            <FormControl sx={{mt: "0.5rem"}}>
                                 <InputLabel id="carSize-label">Car Size</InputLabel>
                                 <Select
                                     size="small"
@@ -278,7 +278,7 @@ export default function Form(props: FormProps) {
                         </>}
                     {vehicle.type === "publicTransport" &&
                         <>
-                            <FormControl>
+                            <FormControl sx={{mt: "0.5rem"}}>
                                 <InputLabel id="distanceLevel-label">Distance Level</InputLabel>
                                 <Select
                                     size="small"
@@ -292,7 +292,7 @@ export default function Form(props: FormProps) {
                                     <MenuItem value="long distance">long distance</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl>
+                            <FormControl sx={{mt: "0.5rem"}}>
                                 <InputLabel id="meansOfTransport-label">Means of Transport</InputLabel>
                                 <Select
                                     size="small"
@@ -307,7 +307,7 @@ export default function Form(props: FormProps) {
                                 </Select>
                             </FormControl>
                         </>}
-                    <Button type="submit" variant="text" sx={{width: "fit-content", alignSelf: "self-end"}}>
+                    <Button type="submit" variant="text" sx={{width: "fit-content", alignSelf: "self-end", mt: "0.5rem"}}>
                         <CheckIcon sx={{fontSize: 40}}/>
                     </Button>
                 </form>}

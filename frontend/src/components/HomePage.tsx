@@ -18,7 +18,7 @@ const sxStyleBox = {
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "4rem",
-    top: "5rem",
+    top: "6rem",
     pb: "4rem",
     pt: "1rem"
 }
