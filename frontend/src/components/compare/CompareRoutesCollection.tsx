@@ -1,27 +1,23 @@
-import {Paper, Typography} from "@mui/material";
+import {Container, Paper, Typography} from "@mui/material";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesComponent from "./CompareRoutesComponent";
 import {User} from "../../models/MongoUserModel";
 import React from "react";
 
-const sxStylePaper = {
+const sxStyleContainer = {
     position: "relative",
     top: "5rem",
     p: "1rem",
     pb: "3rem",
-    backgroundColor: "#282c34",
-    elevation: "3"
 }
 
 const sxStyleTitle = {
-    fontSize: "2rem",
     p: "1rem",
-    color: "#3fd44d"
 }
 
 type CompareRoutesCollectionProps = {
     user: User,
-   // setUser: (user: User) => void,
+    // setUser: (user: User) => void,
     updateScore: (id: string, bonus: number) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
@@ -37,8 +33,9 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
     }
 
     return (
-        <Paper sx={sxStylePaper}>
-            <Typography variant="h3" component="h3" sx={sxStyleTitle}>
+        <Container sx={sxStyleContainer}>
+            {/*  <Paper sx={sxStylePaper}>*/}
+            <Typography variant="h5" component="h2" sx={sxStyleTitle}>
                 My Compared Routes
             </Typography>
             {props.compareRoutesList.map((element) => {
@@ -51,6 +48,7 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                getAllComparisonByUserId={props.getAllComparisonByUserId}
                                                deleteComparisonById={props.deleteComparisonById}/>
             })}
-        </Paper>
+            {/*     </Paper>*/}
+        </Container>
     )
 }

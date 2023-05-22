@@ -27,7 +27,6 @@ import RotateRightIcon from '@mui/icons-material/RotateRight';
 import {toast} from "react-toastify";
 import {User} from "../models/MongoUserModel";
 
-
 const sxStylePaper = {
     m: "1rem",
     p: "1rem",
@@ -63,6 +62,7 @@ type FormProps = {
 export default function Form(props: FormProps) {
     const {route, setRoute, resetRoute} = useContext(RouteContext)
     const {addRoute, updateRoute} = useContext(RoutesContext)
+    //const {theme} = createTheme();
 
     const initialStateVehicle = route && props.isEditMode ? route?.vehicle : {
         type: "",
@@ -140,7 +140,8 @@ export default function Form(props: FormProps) {
         <Paper sx={sxStylePaper}>
             <Box sx={sxStyleBox}>
                 {props.isEditMode
-                    ? <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Edit Route</Typography>
+                    ? <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Edit
+                        Route</Typography>
                     : <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}}>Add Route</Typography>
                 }
                 <Button variant="text"
@@ -188,7 +189,14 @@ export default function Form(props: FormProps) {
                                value={route.destination}
                                onChange={handleChange}
                                sx={sxStyleTextField}/>
-                    <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "2rem", m: "1.5rem 1rem 0.2rem 1rem"}}>
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "2rem",
+                        m: "1.5rem 1rem 0.2rem 1rem"
+                    }}>
                         <FormControl sx={{width: "45%"}}>
                             <Input required
                                    size="small"
@@ -224,8 +232,10 @@ export default function Form(props: FormProps) {
                             value={route.oneWay}
                             onChange={handleChange}
                         >
-                            <FormControlLabel  value={true} control={<Radio/>} label={<RouteIcon sx={{pl: "0.5rem", fontSize: 35}}/>}/>
-                            <FormControlLabel value={false} control={<Radio/>} label={<RotateRightIcon sx={{pl: "0.5rem", fontSize: 38}}/>}/>
+                            <FormControlLabel value={true} control={<Radio />}
+                                              label={<RouteIcon sx={{pl: "0.5rem", fontSize: 35}}/>}/>
+                            <FormControlLabel value={false} control={<Radio/>}
+                                              label={<RotateRightIcon sx={{pl: "0.5rem", fontSize: 38}}/>}/>
                         </RadioGroup>
                     </FormControl>
                     <FormControl sx={{mt: "0.5rem", mb: "0.5rem"}}>
@@ -307,7 +317,12 @@ export default function Form(props: FormProps) {
                                 </Select>
                             </FormControl>
                         </>}
-                    <Button type="submit" variant="text" sx={{width: "fit-content", alignSelf: "self-end", mt: "0.5rem"}}>
+                    <Button type="submit" variant="text" sx={{
+                        color: "#00f923",
+                        width: "fit-content",
+                        alignSelf: "self-end",
+                        mt: "0.5rem"
+                    }}>
                         <CheckIcon sx={{fontSize: 40}}/>
                     </Button>
                 </form>}

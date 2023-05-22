@@ -9,14 +9,21 @@ import RouteCard from "./RouteCard";
 import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
 
-const sxStyleBox = {
+
+const sxStylePaper = {
     position: "relative",
-    top: "5rem",
-    p: "1rem",
-    pb: "3rem",
-   zIndex: 0
+    top: "6rem"
+}
+const sxStyleBox = {
+    display: "flex",
+    justifyContent: "flex-start",
+    overflowX: "scroll",
+    position: "relative",
+    pt: "1rem",
+    pb: "3rem"
 }
 const sxStyleTitle = {
+    textAlign: "center",
     p: "1rem",
 }
 
@@ -27,20 +34,20 @@ export default function RouteCollection() {
     }
 
     return (
-      /*  <Paper sx={sxStylePaper}>*/
-        <Box sx={sxStyleBox}>
+        <Paper sx={sxStylePaper}>
             <Typography variant="h5" component="h2" sx={sxStyleTitle}>
                 My Routes
             </Typography>
-            <ul className="route-list">
-                {routes.map((route) => {
-                    return (
-                        <RouteCard key={route.id} route={route}/>
-                    )
-                })}
-            </ul>
-        </Box>
-      /*  </Paper>*/
+            <Box sx={sxStyleBox}>
+                <ul className="route-list">
+                    {routes.map((route) => {
+                        return (
+                            <RouteCard key={route.id} route={route}/>
+                        )
+                    })}
+                </ul>
+            </Box>
+        </Paper>
     )
 }
 

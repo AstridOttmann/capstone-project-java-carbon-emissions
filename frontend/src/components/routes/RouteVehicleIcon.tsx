@@ -9,17 +9,15 @@ type RouteVehicleIconProps = {
     route: Route
 }
 export default function RouteVehicleIcon(props: RouteVehicleIconProps) {
+    const vehicleType = props.route.vehicle.type;
     return (
         <Box sx={{}}>
             <Typography>
-                {props.route.vehicle.type === "car" && <DirectionsCarIcon sx={{fontSize: 40}}/>}
-                {props.route.vehicle.type === "publicTransport" && <TrainIcon sx={{fontSize: 40}}/>}
-                {props.route.vehicle.type === "flight" && <FlightIcon sx={{fontSize: 40}}/>}
-                {props.route.vehicle.type === "bike" && <DirectionsBikeIcon sx={{fontSize: 40}}/>}
+                {vehicleType === "car" && <DirectionsCarIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "publicTransport" && <TrainIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "flight" && <FlightIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "bike" && <DirectionsBikeIcon sx={{fontSize: 50}}/>}
             </Typography>
-            {/*    <Typography>
-                {props.route.start.toUpperCase() + " - " + props.route.destination.toUpperCase()}
-            </Typography>*/}
         </Box>
     )
 }
