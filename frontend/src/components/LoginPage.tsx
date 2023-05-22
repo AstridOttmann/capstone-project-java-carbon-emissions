@@ -1,15 +1,21 @@
-import {Box, Button, TextField, ButtonGroup} from "@mui/material";
+import {Box, Button, TextField, Typography} from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {User} from "../models/MongoUserModel";
 
-const sxStyleBox = {
+
+const sxStyleBox1 = {
     position: "relative",
-    top: "5rem",
+    top: "8rem",
+
+}
+const sxStyleBox2 = {
+    width: "90%",
+    m: "0 auto",
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
-    m: "3rem"
 }
 
 type LoginPageProps = {
@@ -31,6 +37,7 @@ export default function LoginPage(props: LoginPageProps) {
 
     async function handleLoginOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
         if (signUp) {
             try {
                 await props.onSignIn(props.user);
@@ -44,37 +51,43 @@ export default function LoginPage(props: LoginPageProps) {
     }
 
     return (
-        <form onSubmit={handleLoginOnSubmit}>
-            <Box sx={sxStyleBox}>
-                <TextField required variant="standard"
-                           color="secondary"
-                           type="text"
-                           label="User name"
-                           id="username"
-                           name="username"
-                           value={props.user.username}
-                           onChange={handleChange}
-                           InputLabelProps={{sx: {color: "#3fd44d"}}}
-                           InputProps={{sx: {color: "#3fd44d"}}}
-                />
-                <TextField required
-                           variant="standard"
-                           type="password"
-                           label="Password"
-                           id="password"
-                           name="password"
-                           value={props.user.password}
-                           onChange={handleChange}
-                           InputLabelProps={{sx: {color: "#3fd44d"}}}
-                           InputProps={{sx: {color: "#3fd44d"}}}
-                />
-                <ButtonGroup sx={{display: "flex", justifyContent: "center"}}
-                             variant="text"
-                             aria-label="text button group">
-                    <Button type="submit" onClick={() => setSignUp(true)}>Sign Up</Button>
-                    <Button type="submit">Login</Button>
-                </ButtonGroup>
-            </Box>
-        </form>
+        <Box sx={sxStyleBox1}>
+            <form onSubmit={handleLoginOnSubmit}>
+                <Box sx={sxStyleBox2}>
+                    <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}}
+                                gutterBottom>Login</Typography>
+                    <TextField required
+                               size="small"
+                               type="text"
+                               label="username"
+                               id="username"
+                               name="username"
+                               value={props.user.username}
+                               onChange={handleChange}
+                               sx={{mt: "1.2rem"}}
+                               /*InputLabelProps={{sx: {color: "#fff"}}}
+                               InputProps={{sx: {color: "primary"}}}*/
+                    />
+                    <TextField required
+                               size="small"
+                               type="password"
+                               label="password"
+                               id="password"
+                               name="password"
+                               value={props.user.password}
+                               onChange={handleChange}
+                               sx={{mt: "1.2rem"}}
+                             /*  InputLabelProps={{sx: {color: "#fff"}}}
+                               InputProps={{sx: {color: "primary"}}}*/
+                    />
+                    <Box sx={{display: "flex", justifyContent: "space-between", mt: "1.2rem"}}>
+                        <Button type="submit" onClick={() => setSignUp(true)}>
+                            <Typography color="text.primary" sx={{textDecoration: "underline", fontSize: "1rem"}}>Sign
+                                Up?</Typography></Button>
+                        <Button type="submit" color="inherit" size="large"><LoginIcon/></Button>
+                    </Box>
+                </Box>
+            </form>
+        </Box>
     )
 }

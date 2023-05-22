@@ -1,4 +1,4 @@
-import {Box, Button, ButtonGroup,  Divider, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup, Divider, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -15,8 +15,9 @@ import React from "react";
 const sxStyleBox1 = {
     width: "100%",
     position: "fixed",
-    zIndex: 1,
+    zIndex: 1500,
     left: 0,
+    top: 0
 }
 
 const sxStyleBox2 = {
@@ -25,8 +26,7 @@ const sxStyleBox2 = {
     mt: "1.5rem",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
-
+    alignItems: "center",
 }
 
 type HeaderProps = {
@@ -54,9 +54,9 @@ export default function Header(props: HeaderProps) {
                         <PersonOutlineIcon/>
                         <Button color="inherit" type="button" onClick={logoutOnClick}><LogoutIcon/></Button>
                     </ButtonGroup>
-                    }
+                }
             </Box>
-            <Divider variant="middle" sx={{height: "3px", width: "80%",m: "0 auto", p: "0.05rem"}}/>
+            <Divider variant="middle" sx={{height: "3px", width: "80%", m: "0 auto", p: "0.05rem"}}/>
         </Box>
     )
 }

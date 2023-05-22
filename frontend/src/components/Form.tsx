@@ -2,7 +2,7 @@ import {
     Box,
     Button,
     FormControl,
-    FormControlLabel,
+    FormControlLabel, Input, InputAdornment,
     InputLabel,
     MenuItem,
     Paper,
@@ -17,10 +17,13 @@ import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {Route} from "../models/RouteModel";
 import {Vehicle} from "../models/VehicleModel";
 import {useNavigate} from "react-router-dom";
-import EditOffIcon from '@mui/icons-material/EditOff';
+import CheckIcon from '@mui/icons-material/Check';
 import {RoutesContext} from "../contexts/RoutesContextProvider";
 import {RouteContext} from "../contexts/RouteContextProvider";
 import CloseIcon from '@mui/icons-material/Close';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import RouteIcon from '@mui/icons-material/Route';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
 import {toast} from "react-toastify";
 import {User} from "../models/MongoUserModel";
 
@@ -28,9 +31,10 @@ import {User} from "../models/MongoUserModel";
 const sxStylePaper = {
     m: "1rem",
     p: "1rem",
-    pb: "3rem",
+    pb: "2rem",
     textAlign: "center",
-    elevation: "3"
+    elevation: "3",
+
 }
 
 const sxStyleBox = {
@@ -38,8 +42,12 @@ const sxStyleBox = {
     justifyContent: "space-between",
     alignItems: "center",
     gap: "3rem",
-    pb: "0.5rem",
-    m: "0.5rem"
+    pb: "1.2rem",
+
+}
+
+const sxStyleTextField = {
+    mt: "0.3rem"
 }
 
 type FormProps = {
@@ -128,14 +136,24 @@ export default function Form(props: FormProps) {
         props.setAddMode(false)
     }
 
-
     return (
         <Paper sx={sxStylePaper}>
+            <Box sx={sxStyleBox}>
+                {props.isEditMode
+                    ? <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Edit Route</Typography>
+                    : <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}}>Add Route</Typography>
+                }
+                <Button variant="text"
+                        size="small"
+                        color="error"
+                        onClick={props.isEditMode ? handleClick : handleClose}>
+                    <CloseIcon/></Button>
+            </Box>
 
-            {props.isEditMode
+            {/*  {props.isEditMode
                 ? <Box sx={sxStyleBox}>
                     <Typography variant="h2" sx={{fontSize: "2rem"}}>Edit Route</Typography>
-                    <Button variant="contained"
+                    <Button variant="text"
                             sx={{maxHeight: "2.5rem"}}
                             endIcon={<EditOffIcon/>}
                             onClick={handleClick}>
@@ -146,53 +164,74 @@ export default function Form(props: FormProps) {
                             sx={{maxHeight: "2.5rem"}}
                             onClick={handleClose}>
                         <CloseIcon/></Button></Box>
-            }
+            }*/}
             {route &&
                 <form className="form" onSubmit={handleSubmit}>
                     <TextField
                         required
+                        multiline
+                        size="small"
                         type="text"
                         label="Start"
                         id="start"
                         name="start"
                         value={route.start}
-                        onChange={handleChange}/>
+                        onChange={handleChange}
+                        sx={sxStyleTextField}/>
                     <TextField required
+                               multiline
+                               size="small"
                                type="text"
                                label="Destination"
                                id="destination"
                                name="destination"
                                value={route.destination}
-                               onChange={handleChange}/>
-                    <TextField required
-                               type="number"
-                               label="Distance"
-                               id="distance"
-                               name="distance"
-                               value={route.distance}
-                               onChange={handleChange}/>
-                    <TextField required
-                               type="number"
-                               label="Number of persons"
-                               id="numberOfPersons"
-                               name="numberOfPersons"
-                               value={route.numberOfPersons}
-                               onChange={handleChange}/>
+                               onChange={handleChange}
+                               sx={sxStyleTextField}/>
+                    <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "1rem", m: "0.5rem"}}>
+                        <FormControl sx={{width: "45%"}}>
+                            <Input required
+                                   size="small"
+                                   type="number"
+                                   id="distance"
+                                   name="distance"
+                                   value={route.distance}
+                                   onChange={handleChange}
+                                   endAdornment={<InputAdornment position="end">km</InputAdornment>}
+                                   inputProps={{
+                                       'aria-label': 'distance',
+                                   }}
+                                   sx={sxStyleTextField}/>
+                        </FormControl>
+                        <FormControl sx={{width: "45%"}}>
+                            <Input required
+                                   size="small"
+                                   type="number"
+                                   id="numberOfPersons"
+                                   name="numberOfPersons"
+                                   value={route.numberOfPersons}
+                                   onChange={handleChange}
+                                   endAdornment={<InputAdornment
+                                       position="end"><PeopleAltOutlinedIcon/></InputAdornment>}
+                                   sx={sxStyleTextField}/>
+                        </FormControl>
+                    </Box>
                     <FormControl>
                         <RadioGroup
-                            sx={{flexDirection: "row"}}
+                            sx={{flexDirection: "row", justifyContent: "space-evenly", alignItems: "center"}}
                             id="oneWay"
                             name="oneWay"
                             value={route.oneWay}
                             onChange={handleChange}
                         >
-                            <FormControlLabel value={true} control={<Radio/>} label="One Way"/>
-                            <FormControlLabel value={false} control={<Radio/>} label="Round Trip"/>
+                            <FormControlLabel value={true} control={<Radio/>} label={<RouteIcon/>}/>
+                            <FormControlLabel value={false} control={<Radio/>} label={<RotateRightIcon/>}/>
                         </RadioGroup>
                     </FormControl>
                     <FormControl>
                         <InputLabel id="type-label">Vehicle</InputLabel>
                         <Select
+
                             labelId="type-label"
                             id="type"
                             label="Vehicle"
@@ -210,6 +249,7 @@ export default function Form(props: FormProps) {
                             <FormControl>
                                 <InputLabel id="fuel-label">Fuel</InputLabel>
                                 <Select
+                                    size="small"
                                     labelId="fuel-label"
                                     id="fuel"
                                     label="Fuel"
@@ -223,6 +263,7 @@ export default function Form(props: FormProps) {
                             <FormControl>
                                 <InputLabel id="carSize-label">Car Size</InputLabel>
                                 <Select
+                                    size="small"
                                     labelId="carSize-label"
                                     id="carSize"
                                     label="Car Size"
@@ -240,6 +281,7 @@ export default function Form(props: FormProps) {
                             <FormControl>
                                 <InputLabel id="distanceLevel-label">Distance Level</InputLabel>
                                 <Select
+                                    size="small"
                                     labelId="distanceLevel-label"
                                     id="distanceLevel"
                                     label="Distance Level"
@@ -253,6 +295,7 @@ export default function Form(props: FormProps) {
                             <FormControl>
                                 <InputLabel id="meansOfTransport-label">Means of Transport</InputLabel>
                                 <Select
+                                    size="small"
                                     labelId="meansOfTransport-label"
                                     id="meansOfTransport"
                                     label="Means of Transport"
@@ -264,7 +307,9 @@ export default function Form(props: FormProps) {
                                 </Select>
                             </FormControl>
                         </>}
-                    <Button type="submit" variant="outlined">Submit</Button>
+                    <Button type="submit" variant="text" sx={{width: "fit-content", alignSelf: "self-end"}}>
+                        <CheckIcon sx={{fontSize: 40}}/>
+                    </Button>
                 </form>}
         </Paper>
     )

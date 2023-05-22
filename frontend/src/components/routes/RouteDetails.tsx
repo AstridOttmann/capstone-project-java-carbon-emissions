@@ -64,7 +64,6 @@ export default function RouteDetails(props: RouteDetailsProps) {
             {route ? (
                     <Card sx={sxStyleCard} variant="outlined">
                         <Typography variant="overline">Route</Typography>
-                        <p>Id: {route.id}</p>
                         <Stack>
                             <Item><small>FROM:</small> {route.start}</Item>
                             <Item><small>TO:</small> {route.destination}</Item>

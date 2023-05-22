@@ -29,7 +29,6 @@ export default function RouteCard(props: RouteCardProps) {
     return (<>
         {props.route &&
             <Card variant="outlined" sx={sxStyleCard}>
-                <small> ID: {props.route.id}</small>
                 <RouteVehicleIcon route={props.route}/>
                 <RouteInfo route={props.route}/>
                 <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}

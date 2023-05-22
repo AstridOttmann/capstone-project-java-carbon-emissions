@@ -29,10 +29,10 @@ const theme = createTheme({
                 }
             }
         },
-        MuiButton: {
+        MuiSvgIcon: {
             styleOverrides: {
                 root: {
-                    textTransform: "none"
+                    fontSize: "1.7rem"
                 }
             }
         }
@@ -66,6 +66,9 @@ const theme = createTheme({
         fontWeightRegular: 400,
         fontWeightMedium: 500,
         fontWeightBold: 700,
+        button: {
+            textTransform: "none"
+        }
     }
 })
 
