@@ -51,6 +51,9 @@ export default function HomePage(props: HomePageProps) {
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
     const navigate = useNavigate();
 
+    const message: string = "Enter two routes with different options to travel. Co2-emissions for both routes will be calculated and compared.";
+    const buttonText: string = "*click for more infos";
+
     function handleAddComparison() {
         const compareRoutesToAdd = {...props.compareRoutes, userId: props.user.id, compared: routesToCompare}
         props.setCompareRoutes(compareRoutesToAdd)
@@ -82,7 +85,7 @@ export default function HomePage(props: HomePageProps) {
                             <Typography variant="body1" sx={{fontSize: "1.5rem"}}>Add Route</Typography>
                         </Button>
                     </ButtonGroup>
-                    <SnackbarInfo/>
+                    <SnackbarInfo message={message} buttonText={buttonText}/>
                 </>}
 
             {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {

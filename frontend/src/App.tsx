@@ -20,7 +20,7 @@ import UserAccount from "./components/UserAccount";
 import {RoutesContext} from "./contexts/RoutesContextProvider";
 
 
-const theme = createTheme({
+export const theme = createTheme({
     components: {
         MuiDivider: {
             styleOverrides: {

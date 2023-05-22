@@ -1,24 +1,21 @@
-import {Box, Button, ButtonGroup, Paper} from "@mui/material";
+import {Box, Paper} from "@mui/material";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router-dom";
 import CompareRoutesResults from "./CompareRoutesResults";
 import React from "react";
 import {User} from "../../models/MongoUserModel";
-import AccordionComponent from "../AccordionComponent";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Typography from "@mui/material/Typography";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Accordion from '@mui/material/Accordion';
-import CheckIcon from '@mui/icons-material/Check';
+
+import CardButtonGroup from "../CardButtonGroup";
+import SnackbarInfo from "../SnackBarInfo";
+import UsageDialog from "../UsageDialog";
 
 const sxStylePaper = {
     p: "1rem",
-    pb: "2rem",
-    backgroundColor: "#282c34",
-    elevation: "3"
+    pb: "1rem",
+    mb: "2rem",
+    elevation: "3",
+    /*  border: "1px solid #cd5300"*/
 }
 
 type CompareRoutesComponentProps = {
@@ -32,17 +29,25 @@ type CompareRoutesComponentProps = {
 }
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     const navigate = useNavigate();
+    const message: string = "The buttons show the bonus of the respective option. Click the one you use and save the bonus directly to your account";
+    const buttonText: string = "*save Co2-bonus"
 
     function onDeleteClick() {
         props.deleteComparisonById(props.compareRoutes.id);
     }
 
+    function onDetailsClick() {
+        navigate(`/compared/details/${props.compareRoutes.id}`)
+    }
+
     return (
         <Paper sx={sxStylePaper}>
-            {props.compareRoutes.compared.map((route) => {
-                return <CompareRoutesCard key={route.id} route={route}/>
-            })}
-            <AccordionComponent/>
+            <Box sx={{display: "flex", gap: "1rem"}}>
+                {props.compareRoutes.compared.map((route) => {
+                    return <CompareRoutesCard key={route.id} route={route}/>
+                })}
+            </Box>
+            <SnackbarInfo message={message} buttonText={buttonText}/>
             <Box sx={{
                 display: "flex",
                 gap: "1rem",
@@ -55,32 +60,19 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                                       getAllComparisonByUserId={props.getAllComparisonByUserId}/>
             </Box>
 
-            <Accordion disabled={props.compareRoutes.comparisonResults.usages?.length === 0}
-                sx={{backgroundColor: "#454C5A", color: "#3fd44d", mt: "0.5rem"}}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    {props.compareRoutes.comparisonResults.usages?.length > 0 ?
-                        <><CheckIcon/>
-                            <Typography>Usages</Typography></> :
-                        <Typography>No Usages</Typography>}
-                </AccordionSummary>
-                <AccordionDetails>
-                    {props.compareRoutes.comparisonResults.usages?.map((usage) => {
-                        return <Typography key={usage.datetime}>{usage.datetime}: {usage.bonus} kg/CO2</Typography>
-                    })}
-                </AccordionDetails>
-            </Accordion>
-            <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
+            {props.compareRoutes.comparisonResults.usages?.length > 0 ?
+                <UsageDialog compareRoutes={props.compareRoutes}/> : null}
+
+            <CardButtonGroup onDeleteClick={onDeleteClick} onDetailsClick={onDetailsClick}/>
+
+            {/*   <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
                          variant="text"
                          aria-label="text button group">
                 <Button variant="outlined"
                         onClick={() => navigate(`/compared/details/${props.compareRoutes.id}`)}>Details</Button>
                 <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
                         onClick={onDeleteClick}>Delete</Button>
-            </ButtonGroup>
+            </ButtonGroup>*/}
         </Paper>
     )
 }

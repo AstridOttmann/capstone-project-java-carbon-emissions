@@ -1,14 +1,12 @@
-import {Card} from "@mui/material";
+import {Box, Card, Divider} from "@mui/material";
 import {Route} from "../../models/RouteModel";
-import RouteVehicleIcon from "../routes/RouteVehicleIcon";
+import RouteDestination from "../routes/RouteDestination";
+import RouteIconBox from "../routes/RouteIconBox";
 import RouteInfo from "../routes/RouteInfo";
 
 const sxStyleCard = {
     p: "1rem",
     mb: "1rem",
-    backgroundColor: "#282c34",
-    color: "#3fd44d",
-    borderColor: "#3fd44d",
 }
 
 type CompareRoutesCardProps = {
@@ -17,8 +15,12 @@ type CompareRoutesCardProps = {
 export default function CompareRoutesCard(props: CompareRoutesCardProps) {
     return (
         <Card variant="outlined" sx={sxStyleCard}>
-            <RouteVehicleIcon route={props.route}/>
-           <RouteInfo route={props.route}/>
+            <RouteDestination route={props.route}/>
+            <Box sx={{display: "flex", justifyContent: "center", m: "2rem auto"}}>
+                <RouteIconBox route={props.route}/>
+                <Divider orientation="vertical" variant="middle" flexItem sx={{m: "0 0.5rem", width: "3px"}}/>
+                <RouteInfo route={props.route}/>
+            </Box>
         </Card>
     )
 }
