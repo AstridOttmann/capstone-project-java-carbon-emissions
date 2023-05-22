@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST,"/api/user/signin").permitAll()
-                .requestMatchers("/api/user").permitAll()
+                .requestMatchers("/api/user/me").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
                 .and().build();
