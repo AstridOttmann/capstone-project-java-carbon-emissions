@@ -1,4 +1,5 @@
 import {
+    Box,
     Paper,
     Typography
 } from "@mui/material";
@@ -8,18 +9,15 @@ import RouteCard from "./RouteCard";
 import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
 
-const sxStylePaper = {
+const sxStyleBox = {
     position: "relative",
     top: "5rem",
     p: "1rem",
     pb: "3rem",
-    backgroundColor: "#282c34",
-    elevation: "3"
+   zIndex: 0
 }
 const sxStyleTitle = {
-    fontSize: "2rem",
     p: "1rem",
-    color: "#3fd44d"
 }
 
 export default function RouteCollection() {
@@ -29,9 +27,10 @@ export default function RouteCollection() {
     }
 
     return (
-        <Paper sx={sxStylePaper}>
-            <Typography variant="h3" component="h3" sx={sxStyleTitle}>
-                Single Routes
+      /*  <Paper sx={sxStylePaper}>*/
+        <Box sx={sxStyleBox}>
+            <Typography variant="h5" component="h2" sx={sxStyleTitle}>
+                My Routes
             </Typography>
             <ul className="route-list">
                 {routes.map((route) => {
@@ -40,7 +39,8 @@ export default function RouteCollection() {
                     )
                 })}
             </ul>
-        </Paper>
+        </Box>
+      /*  </Paper>*/
     )
 }
 

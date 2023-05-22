@@ -1,4 +1,4 @@
-import {Box, Divider, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {Route} from "../../models/RouteModel";
 
 type RouteInfoProps = {
@@ -7,15 +7,14 @@ type RouteInfoProps = {
 export default function RouteInfo(props: RouteInfoProps) {
     return (
         <>
-            <Box sx={{display: "flex", gap: "2rem", justifyContent: "flex-start"}}>
-                <Typography>{props.route.distance + "km"}</Typography>
-                <Typography> {props.route.oneWay ? "oneWay" : "Round Trip"}</Typography>
-                <Typography>{props.route.numberOfPersons + " person(s)"}</Typography>
+            <Box sx={{width: "50%", display: "block", gap: "2rem", justifyContent: "center"}}>
+                <Typography sx={{mt: "0.3rem", textAlign: "center", fontSize: "0.9rem"}}>{props.route.distance}</Typography>
+                <Typography sx={{textAlign: "center", fontSize: "0.9rem"}}>km</Typography>
+                <Typography
+                    sx={{mt: "0.7rem", mb: "0.5", textAlign: "center", fontSize: "0.9rem"}}>{props.route.numberOfPersons}</Typography>
+                <Typography noWrap sx={{mt: "1.1rem", textAlign: "center", fontSize: "0.9rem"}}>{props.route.co2EmissionRoute}</Typography>
+                <Typography sx={{textAlign: "center", fontSize: "0.9rem"}}>kg/pP</Typography>
             </Box>
-            <Divider sx={{borderColor: "#808080"}}/>
-            <Typography variant="h6"
-                        sx={{textAlign: "center"}}>
-                CO2-Emission: {props.route.co2EmissionRoute} kg/Person</Typography>
         </>
     )
 }
