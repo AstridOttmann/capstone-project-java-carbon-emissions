@@ -25,20 +25,21 @@ export default function UsageDialog(props: UsageDialogProps) {
 
     return (
         <Box>
-            <Button color="inherit" onClick={handleClickOpen}
-                    sx={{display: "block", m: "0 auto", p: "0"}}>
+            <><Button disabled={props.compareRoutes.comparisonResults.usages.length === 0} color="inherit"
+                      onClick={handleClickOpen}
+                      sx={{display: "block", m: "0 auto", p: "0"}}>
                 <CloudDoneIcon sx={{display: "block", fontSize: 60, m: "0 auto", p: "0", alignSelf: "center"}}/>
             </Button>
-            <Dialog onClose={handleClose} open={open}>
-                <DialogTitle>Usages</DialogTitle>
-                <List sx={{pt: 0}}>
-                    {props.compareRoutes.comparisonResults.usages?.map((usage) => {
-                        return <ListItem disableGutters>
-                            <Typography key={usage.datetime}>{usage.datetime}: {usage.bonus} kg/CO2</Typography>
-                        </ListItem>
-                    })}
-                </List>
-            </Dialog>
+                <Dialog onClose={handleClose} open={open}>
+                    <DialogTitle>Usages</DialogTitle>
+                    <List sx={{pt: 0}}>
+                        {props.compareRoutes.comparisonResults.usages?.map((usage) => {
+                            return <ListItem>
+                                <Typography key={usage.datetime} sx={{}}>{usage.datetime}: {usage.bonus} kg/Co2</Typography>
+                            </ListItem>
+                        })}
+                    </List>
+                </Dialog></>
         </Box>
     );
 }

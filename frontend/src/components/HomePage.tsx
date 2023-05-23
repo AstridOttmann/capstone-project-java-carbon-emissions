@@ -1,5 +1,5 @@
 import Form from "./Form";
-import {Button, ButtonGroup, Box, Typography} from "@mui/material";
+import {Button, ButtonGroup, Box, Typography, Container} from "@mui/material";
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 import React, {useState} from "react";
@@ -12,15 +12,16 @@ import {User} from "../models/MongoUserModel";
 import {useNavigate} from "react-router-dom";
 import SnackbarInfo from "./SnackBarInfo";
 
-const sxStyleBox = {
+const sxStyleBox1 = {
     position: "relative",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "4rem",
-    top: "6rem",
+    top: "7rem",
     pb: "4rem",
-    pt: "1rem"
+    pt: "1rem",
+    m: "0 auto"
 }
 const sxStyleTitle = {
     p: "1rem",
@@ -32,7 +33,9 @@ const sxStyleButtonGroup = {
     fontSize: "large",
     gap: "0.5rem",
     mt: "1rem",
-    textAlign: "center"
+    alignSelf: "center",
+    m: "1rem auto"
+
 }
 
 
@@ -68,25 +71,28 @@ export default function HomePage(props: HomePageProps) {
     }
 
     return (
-        <Box sx={sxStyleBox}>
+        <Box sx={sxStyleBox1}>
             {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
-                <>
+                <Container maxWidth="md">
                     <Typography variant="h4" component="h2"
                                 sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
-                    <ButtonGroup
-                        sx={sxStyleButtonGroup}
-                        orientation="vertical"
-                        variant="text"
-                        aria-label="add button group">
-                        <Button>
-                            <AddLocationAltIcon sx={{fontSize: 70}} onClick={() => setAddMode(!addMode)}/>
-                        </Button>
-                        <Button variant="text" size="large" onClick={() => setAddMode(!addMode)}>
-                            <Typography variant="body1" sx={{fontSize: "1.5rem"}}>Add Route</Typography>
-                        </Button>
-                    </ButtonGroup>
-                    <SnackbarInfo message={message} buttonText={buttonText}/>
-                </>}
+                    <Box sx={{display: "flex", flexDirection: "column", gap: "2rem", mt: "4rem"}}>
+                        <ButtonGroup
+                            sx={sxStyleButtonGroup}
+                            orientation="vertical"
+                            variant="text"
+                            aria-label="add button group"
+                        >
+                            <Button>
+                                <AddLocationAltIcon sx={{fontSize: 70}} onClick={() => setAddMode(!addMode)}/>
+                            </Button>
+                            <Button variant="text" size="large" onClick={() => setAddMode(!addMode)}>
+                                <Typography variant="body1" sx={{fontSize: "1.5rem"}}>Add Route</Typography>
+                            </Button>
+                        </ButtonGroup>
+                        <SnackbarInfo message={message} buttonText={buttonText}/>
+                    </Box>
+                </Container>}
 
             {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {
                 return (

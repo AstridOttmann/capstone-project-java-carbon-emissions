@@ -1,4 +1,4 @@
-import {Container, Paper, Typography} from "@mui/material";
+import {Container, Typography} from "@mui/material";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesComponent from "./CompareRoutesComponent";
 import {User} from "../../models/MongoUserModel";
@@ -33,8 +33,7 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
     }
 
     return (
-        <Container sx={sxStyleContainer}>
-            {/*  <Paper sx={sxStylePaper}>*/}
+        <Container maxWidth="md" sx={sxStyleContainer}>
             <Typography variant="h5" component="h2" sx={sxStyleTitle}>
                 My Compared Routes
             </Typography>
@@ -48,7 +47,6 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                getAllComparisonByUserId={props.getAllComparisonByUserId}
                                                deleteComparisonById={props.deleteComparisonById}/>
             })}
-            {/*     </Paper>*/}
         </Container>
     )
 }

@@ -11,11 +11,12 @@ import SnackbarInfo from "../SnackBarInfo";
 import UsageDialog from "../UsageDialog";
 
 const sxStylePaper = {
+    textAlign: "center",
     p: "1rem",
     pb: "1rem",
     mb: "2rem",
     elevation: "3",
-    /*  border: "1px solid #cd5300"*/
+    borderBottom: "2px solid #cd5300"
 }
 
 type CompareRoutesComponentProps = {
@@ -42,30 +43,28 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
 
     return (
         <Paper sx={sxStylePaper}>
-            <Box sx={{display: "flex", gap: "1rem"}}>
+            <Box sx={{display: "flex", gap: "1rem", m: "0 auto"}}>
                 {props.compareRoutes.compared.map((route) => {
                     return <CompareRoutesCard key={route.id} route={route}/>
                 })}
             </Box>
-            <SnackbarInfo message={message} buttonText={buttonText}/>
-            <Box sx={{
-                display: "flex",
-                gap: "1rem",
-                borderRadius: 1,
-                mt: "0.5rem"
-            }}>
-                <CompareRoutesResults user={props.user} updateScore={props.updateScore}
-                                      compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}
-                                      updateComparison={props.updateComparison}
-                                      getAllComparisonByUserId={props.getAllComparisonByUserId}/>
-            </Box>
+            <Box>
+                <SnackbarInfo message={message} buttonText={buttonText}/>
+                <Box sx={{
+                    display: "flex",
+                    gap: "1rem",
+                    borderRadius: 1,
+                    mt: "0.5rem"
+                }}>
+                    <CompareRoutesResults user={props.user} updateScore={props.updateScore}
+                                          compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}
+                                          updateComparison={props.updateComparison}
+                                          getAllComparisonByUserId={props.getAllComparisonByUserId}/>
+                </Box>
+                <UsageDialog compareRoutes={props.compareRoutes}/>
 
-            {props.compareRoutes.comparisonResults.usages?.length > 0 ?
-                <UsageDialog compareRoutes={props.compareRoutes}/> : null}
-
-            <CardButtonGroup onDeleteClick={onDeleteClick} onDetailsClick={onDetailsClick}/>
-
-            {/*   <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
+                <CardButtonGroup onDeleteClick={onDeleteClick} onDetailsClick={onDetailsClick}/>
+                {/*   <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
                          variant="text"
                          aria-label="text button group">
                 <Button variant="outlined"
@@ -73,6 +72,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
                         onClick={onDeleteClick}>Delete</Button>
             </ButtonGroup>*/}
+            </Box>
         </Paper>
     )
 }

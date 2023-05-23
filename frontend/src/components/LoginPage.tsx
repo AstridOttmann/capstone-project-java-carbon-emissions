@@ -1,14 +1,13 @@
-import {Box, Button, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {User} from "../models/MongoUserModel";
 
 
-const sxStyleBox1 = {
+const sxStyleContainer = {
     position: "relative",
-    top: "8rem",
-
+    top: "10rem",
 }
 const sxStyleBox2 = {
     width: "90%",
@@ -51,7 +50,7 @@ export default function LoginPage(props: LoginPageProps) {
     }
 
     return (
-        <Box sx={sxStyleBox1}>
+        <Container maxWidth="sm" sx={sxStyleContainer}>
             <form onSubmit={handleLoginOnSubmit}>
                 <Box sx={sxStyleBox2}>
                     <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}}
@@ -65,8 +64,8 @@ export default function LoginPage(props: LoginPageProps) {
                                value={props.user.username}
                                onChange={handleChange}
                                sx={{mt: "1.2rem"}}
-                               /*InputLabelProps={{sx: {color: "#fff"}}}
-                               InputProps={{sx: {color: "primary"}}}*/
+                        /*InputLabelProps={{sx: {color: "#fff"}}}
+                        InputProps={{sx: {color: "primary"}}}*/
                     />
                     <TextField required
                                size="small"
@@ -77,8 +76,8 @@ export default function LoginPage(props: LoginPageProps) {
                                value={props.user.password}
                                onChange={handleChange}
                                sx={{mt: "1.2rem"}}
-                             /*  InputLabelProps={{sx: {color: "#fff"}}}
-                               InputProps={{sx: {color: "primary"}}}*/
+                        /*  InputLabelProps={{sx: {color: "#fff"}}}
+                          InputProps={{sx: {color: "primary"}}}*/
                     />
                     <Box sx={{display: "flex", justifyContent: "space-between", mt: "1.2rem"}}>
                         <Button type="submit" onClick={() => setSignUp(true)}>
@@ -88,6 +87,6 @@ export default function LoginPage(props: LoginPageProps) {
                     </Box>
                 </Box>
             </form>
-        </Box>
+        </Container>
     )
 }

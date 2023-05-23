@@ -6,7 +6,7 @@ import RouteInfo from "../routes/RouteInfo";
 
 const sxStyleCard = {
     p: "1rem",
-    mb: "1rem",
+    m: "1rem auto"
 }
 
 type CompareRoutesCardProps = {
