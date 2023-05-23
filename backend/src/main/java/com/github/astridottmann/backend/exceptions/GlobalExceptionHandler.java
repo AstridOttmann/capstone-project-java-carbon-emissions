@@ -2,7 +2,6 @@ package com.github.astridottmann.backend.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -24,8 +23,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException e) {
+    @ExceptionHandler(IllegalCallerException.class)
+    public ResponseEntity<ApiError> handleIllegalCallerException(IllegalCallerException e) {
         ApiError apiError = new ApiError(e.getMessage(), Instant.now());
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
