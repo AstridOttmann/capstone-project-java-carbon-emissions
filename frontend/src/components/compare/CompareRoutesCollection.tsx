@@ -45,7 +45,8 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                setCompareRoutes={props.setCompareRoutes}
                                                updateComparison={props.updateComparison}
                                                getAllComparisonByUserId={props.getAllComparisonByUserId}
-                                               deleteComparisonById={props.deleteComparisonById}/>
+                                               deleteComparisonById={props.deleteComparisonById}
+                />
             })}
         </Container>
     )

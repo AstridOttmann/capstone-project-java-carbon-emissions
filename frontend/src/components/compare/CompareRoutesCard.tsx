@@ -6,13 +6,14 @@ import RouteInfo from "../routes/RouteInfo";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const sxStyleCard = {
+    textAlign: "center",
     p: "1rem",
     m: "1rem auto"
 }
 
 type CompareRoutesCardProps = {
     route: Route,
-    onClick: ()=> void
+    onClick: () => void
 }
 export default function CompareRoutesCard(props: CompareRoutesCardProps) {
     return (

@@ -6,12 +6,12 @@ import CompareRoutesResults from "./CompareRoutesResults";
 import React from "react";
 import {User} from "../../models/MongoUserModel";
 
-import CardButtonGroup from "../CardButtonGroup";
 import SnackbarInfo from "../SnackBarInfo";
 import UsageDialog from "../UsageDialog";
+import DeleteDialog from "../DeleteDialog";
 
 const sxStylePaper = {
-    textAlign: "center",
+
     p: "1rem",
     pb: "1rem",
     mb: "2rem",
@@ -33,19 +33,12 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
     const message: string = "The buttons show the bonus of the respective option. Click the one you use and save the bonus directly to your account";
     const buttonText: string = "*save Co2-bonus"
 
-    function onDeleteClick() {
-        props.deleteComparisonById(props.compareRoutes.id);
-    }
-
-    function onDetailsClick() {
-        navigate(`/routes/details/${props.compareRoutes.id}`)
-    }
-
     return (
         <Paper sx={sxStylePaper}>
             <Box sx={{display: "flex", gap: "1rem", m: "0 auto"}}>
                 {props.compareRoutes.compared.map((route) => {
-                    return <CompareRoutesCard  onClick={()=> navigate(`/routes/details/${route.id}`)} key={route.id} route={route}/>
+                    return <CompareRoutesCard onClick={() => navigate(`/routes/details/${route.id}`)} key={route.id}
+                                              route={route}/>
                 })}
             </Box>
             <Box>
@@ -62,16 +55,8 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                                           getAllComparisonByUserId={props.getAllComparisonByUserId}/>
                 </Box>
                 <UsageDialog compareRoutes={props.compareRoutes}/>
-
-                <CardButtonGroup onDeleteClick={onDeleteClick} onDetailsClick={onDetailsClick}/>
-                {/*   <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
-                         variant="text"
-                         aria-label="text button group">
-                <Button variant="outlined"
-                        onClick={() => navigate(`/compared/details/${props.compareRoutes.id}`)}>Details</Button>
-                <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                        onClick={onDeleteClick}>Delete</Button>
-            </ButtonGroup>*/}
+                <DeleteDialog compareRoutes={props.compareRoutes}
+                              deleteComparisonById={props.deleteComparisonById}/>
             </Box>
         </Paper>
     )
