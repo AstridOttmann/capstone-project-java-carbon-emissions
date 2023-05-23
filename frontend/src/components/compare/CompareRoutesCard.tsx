@@ -1,8 +1,9 @@
-import {Box, Card, Divider} from "@mui/material";
+import {Box, Button, Card, Divider} from "@mui/material";
 import {Route} from "../../models/RouteModel";
 import RouteDestination from "../routes/RouteDestination";
 import RouteIconBox from "../routes/RouteIconBox";
 import RouteInfo from "../routes/RouteInfo";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const sxStyleCard = {
     p: "1rem",
@@ -10,7 +11,8 @@ const sxStyleCard = {
 }
 
 type CompareRoutesCardProps = {
-    route: Route
+    route: Route,
+    onClick: ()=> void
 }
 export default function CompareRoutesCard(props: CompareRoutesCardProps) {
     return (
@@ -21,6 +23,11 @@ export default function CompareRoutesCard(props: CompareRoutesCardProps) {
                 <Divider orientation="vertical" variant="middle" flexItem sx={{m: "0 0.5rem", width: "3px"}}/>
                 <RouteInfo route={props.route}/>
             </Box>
+            <Button size="small" variant="text"
+                    onClick={props.onClick}
+                    sx={{minWidth: "fit-content", m: "0", p: "0"}}>
+                <EditNoteIcon/>
+            </Button>
         </Card>
     )
 }

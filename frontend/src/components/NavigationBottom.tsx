@@ -53,7 +53,7 @@ export default function NavigationBottom(props: NavigationBottomProps) {
                     disabled={props.user.id === ""}
                     label="compared"
                     value="/compared"
-                    icon={<CompareArrowsIcon/>}
+                    icon={<CompareArrowsIcon sx={{fontSize: 35}}/>}
                 />
                 {props.user.id !== "" &&
                     <BottomNavigationAction

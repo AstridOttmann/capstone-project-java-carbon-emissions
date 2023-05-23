@@ -47,10 +47,6 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
         getAllRoutesByUserId
     }
 
-    /* useEffect(() => {
-         getAllRoutes()
-     }, [])*/
-
     function getAllRoutes() {
         axios.get("/api/routes")
             .then((response) => {

@@ -1,16 +1,16 @@
 import Form from "./Form";
-import {Button, ButtonGroup, Box, Typography, Container} from "@mui/material";
+import {Button, ButtonGroup, Box, Typography, Container, Paper} from "@mui/material";
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 import React, {useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {CompareRoutes} from "../models/CompareRoutesModel";
-import CompareRoutesCard from "./compare/CompareRoutesCard";
 import {User} from "../models/MongoUserModel";
 import {useNavigate} from "react-router-dom";
 import SnackbarInfo from "./SnackBarInfo";
 import CheckIcon from "@mui/icons-material/Check";
+import NewRouteCard from "./routes/NewRouteCard";
 
 const sxStyleBox1 = {
     position: "relative",
@@ -22,16 +22,26 @@ const sxStyleBox1 = {
     pb: "4rem",
     m: "0 auto"
 }
+const sxStylePaper = {
+    m: "1rem 3rem",
+    p: "2rem 1rem 2rem 1rem",
+    position: "relative",
+    /*   top: "4rem",
+       p: "1rem",
+       pb: "3rem",*/
+    elevation: "10"
+}
+
 const sxStyleTitle = {
     p: "1rem",
     color: "primary",
     textAlign: "center"
 }
 const sxStyleButtonGroup = {
-    width: "50%",
+
     fontSize: "large",
     gap: "0.5rem",
-    alignSelf: "center",
+    /*alignSelf: "center",*/
     m: "3rem auto"
 
 }
@@ -96,7 +106,7 @@ export default function HomePage(props: HomePageProps) {
                 return (
                     <>
                         <Box sx={{display: "flex", flexDirection: "column"}}>
-                            <CompareRoutesCard key={route.id} route={route}/>
+                            <NewRouteCard key={route.id} route={route}/>
                             <ButtonGroup
                                 sx={{display: "flex", gap: "9rem", justifyContent: "space-between", p: "1rem"}}>
                                 <Button variant="text" color="error" onClick={onCancelClick}>
@@ -110,21 +120,26 @@ export default function HomePage(props: HomePageProps) {
                     </>
                 )
             })}
-
-            {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
-                return <CompareRoutesCard key={route.id} route={route}/>
-            })}
-
             {!addMode && routesToCompare.length === 2 &&
-                <ButtonGroup sx={{display: "flex", justifyContent: "space-between", gap: "9rem"}}>
-                    <Button variant="text" color="error" onClick={onCancelClick}>
-                        <DeleteIcon/>
-                    </Button>
-                    <Button variant="text" onClick={handleAddComparison}>
-                        <CheckIcon sx={{fontSize: 60, color: "#00f923"}}/>
-                    </Button>
-                </ButtonGroup>}
-
+                <Paper sx={sxStylePaper}>
+                    <Box sx={{display: "flex", flexWrap: "noWrap", gap: "1rem", m: "0 auto"}}>
+                        {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
+                            return (
+                                /* <Box sx={{display: "flex", flexWrap: "noWrap", gap: "1rem", m: "0 auto"}}>*/
+                                <NewRouteCard key={route.id} route={route}/>
+                                /*   </Box>*/
+                            )
+                        })}
+                    </Box>
+                    <ButtonGroup sx={{display: "flex", justifyContent: "space-between", gap: "9rem"}}>
+                        <Button variant="text" color="error" onClick={onCancelClick}>
+                            <DeleteIcon/>
+                        </Button>
+                        <Button variant="text" onClick={handleAddComparison}>
+                            <CheckIcon sx={{fontSize: 60, color: "#00f923"}}/>
+                        </Button>
+                    </ButtonGroup>
+                </Paper>}
             {addMode || props.isEditMode ?
                 <Form user={props.user}
                       isEditMode={props.isEditMode}
@@ -135,5 +150,6 @@ export default function HomePage(props: HomePageProps) {
                       getAllComparisonByUserId={props.getAllComparisonByUserId}
                 /> : null
             }
-        </Box>)
+        </Box>
+    )
 }

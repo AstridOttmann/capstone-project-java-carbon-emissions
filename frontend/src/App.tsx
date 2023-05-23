@@ -100,7 +100,6 @@ function App() {
     console.log("app", user)
     return (
         <ThemeProvider theme={theme}>
-            <body>
             <Container maxWidth="lg">
                 <main className="App">
                     <BrowserRouter>
@@ -151,6 +150,8 @@ function App() {
                                                           setIsEditMode={setIsEditMode}
                                                           updateComparison={updateComparison}
                                                           getAllComparisonByUserId={getAllComparisonByUserId}
+                                                          onClick={() => {
+                                                          }}
                                     />}/>
                                 <Route path="/account" element={<UserAccount user={user}
                                                                              resetScore={resetScore}
@@ -162,7 +163,6 @@ function App() {
                     </BrowserRouter>
                 </main>
             </Container>
-            </body>
         </ThemeProvider>
     );
 }

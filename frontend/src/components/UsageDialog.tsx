@@ -34,8 +34,8 @@ export default function UsageDialog(props: UsageDialogProps) {
                     <DialogTitle>Usages</DialogTitle>
                     <List sx={{pt: 0}}>
                         {props.compareRoutes.comparisonResults.usages?.map((usage) => {
-                            return <ListItem>
-                                <Typography key={usage.datetime} sx={{}}>{usage.datetime}: {usage.bonus} kg/Co2</Typography>
+                            return <ListItem key={usage.datetime}>
+                                <Typography  sx={{}}>{usage.datetime}: {usage.bonus} kg/Co2</Typography>
                             </ListItem>
                         })}
                     </List>

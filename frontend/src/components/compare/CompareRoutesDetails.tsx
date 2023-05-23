@@ -30,7 +30,8 @@ type CompareRoutesDetailsProps = {
     getComparisonById: (id: string) => void,
     getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
-    updateScore: (id: string, bonus: number) => void
+    updateScore: (id: string, bonus: number) => void,
+    onClick: ()=> void
 }
 export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
     const {setRoute} = useContext(RouteContext);
@@ -62,7 +63,7 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
                     <> <Card sx={sxStyleCard}>
                         <Typography>Option </Typography>
                         <Box sx={{p: "1rem 0", borderColor: "#3fd44d"}}>
-                            <CompareRoutesCard key={route.id} route={route}/>
+                            <CompareRoutesCard onClick={props.onClick} key={route.id} route={route}/>
                             <RouteVehicleDetails route={route}/>
                             <Button variant="contained" endIcon={<EditIcon/>}
                                     onClick={() => editOnClick(route)}>Edit</Button>

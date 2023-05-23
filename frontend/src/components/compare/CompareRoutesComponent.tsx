@@ -38,14 +38,14 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
     }
 
     function onDetailsClick() {
-        navigate(`/compared/details/${props.compareRoutes.id}`)
+        navigate(`/routes/details/${props.compareRoutes.id}`)
     }
 
     return (
         <Paper sx={sxStylePaper}>
             <Box sx={{display: "flex", gap: "1rem", m: "0 auto"}}>
                 {props.compareRoutes.compared.map((route) => {
-                    return <CompareRoutesCard key={route.id} route={route}/>
+                    return <CompareRoutesCard  onClick={()=> navigate(`/routes/details/${route.id}`)} key={route.id} route={route}/>
                 })}
             </Box>
             <Box>
