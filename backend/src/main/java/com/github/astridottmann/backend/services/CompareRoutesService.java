@@ -116,7 +116,7 @@ public class CompareRoutesService {
     }
 
     public List<CompareRoutes> resetAllUsages(String userId) {
-        List<CompareRoutes> comparesToReset = getAllByUserId(userId);
+        List<CompareRoutes> comparesToReset = compareRoutesRepository.findAllByUserId(userId);
         List<CompareRoutes> reseted = comparesToReset
                 .stream()
                 .map(current -> current.withComparisonResults(current.comparisonResults().withUsages(Collections.emptyList())))

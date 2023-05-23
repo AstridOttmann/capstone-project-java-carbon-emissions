@@ -67,7 +67,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         <p>Id: {route.id}</p>
                         <Stack>
                             <Item><small>FROM:</small> {route.start}</Item>
-                            <Item><small>TO.</small> {route.destination}</Item>
+                            <Item><small>TO:</small> {route.destination}</Item>
                             <Item><small>DISTANCE:</small> {route.distance} km</Item>
                             <Item><small>NUMBER OF PERSONS:</small> {route.numberOfPersons}</Item>
                             <Item>{route.oneWay ? "ONEWAY" : "ROUND TRIP"}</Item>

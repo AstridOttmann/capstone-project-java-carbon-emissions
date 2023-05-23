@@ -23,8 +23,7 @@ const sxStylePaper = {
 
 type CompareRoutesComponentProps = {
     user: User,
-    setUser: (user: User) => void,
-    updateScore: (id: string, user: User) => void,
+    updateScore: (id: string, bonus: number) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     deleteComparisonById: (id: string) => void,
@@ -50,7 +49,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 borderRadius: 1,
                 mt: "0.5rem"
             }}>
-                <CompareRoutesResults user={props.user} setUser={props.setUser} updateScore={props.updateScore}
+                <CompareRoutesResults user={props.user} updateScore={props.updateScore}
                                       compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}
                                       updateComparison={props.updateComparison}
                                       getAllComparisonByUserId={props.getAllComparisonByUserId}/>

@@ -75,15 +75,15 @@ export default function useUser() {
             .catch(error => console.log(error))
     }
 
-    function updateScore(id: string, userDTO: User) {
-        axios.put(`/api/user/score/${id}`, userDTO)
+    function updateScore(id: string, bonus: number) {
+        axios.put(`/api/user/score/${id}?bonus=${bonus}`)
             .then((response) => {
                 const updatedUser = response.data;
                 setUser((user) => {
                     if (id === updatedUser.id) {
                         return updatedUser;
                     }
-                    return userDTO;
+                    return user;
                 });
                 return updatedUser;
             })
@@ -91,7 +91,14 @@ export default function useUser() {
                 toast.error("error", error))
     }
 
+    function resetScore(id: string) {
+        axios.post(`/api/user/score/reset/${id}`)
+            .then((response) =>
+                setUser(response.data))
+            .catch((error) =>
+                toast.error("Reset failed!", error))
+    }
 
 
-    return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore}
+    return {user, setUser, isLoading, setIsLoading, login, logout, signIn, updateScore, resetScore}
 }

@@ -20,16 +20,12 @@ const sxStyleCard = {
 }
 type UserAccountProps = {
     user: User,
-    setUser: (user: User) => void,
-    updateScore: (id: string, user: User) => void,
-    resetAllUsages: (userId: string)=> void
+    resetAllUsages: (userId: string) => void,
+    resetScore: (userId: string) => void
 }
 export default function UserAccount(props: UserAccountProps) {
-    function resetScore(){
-        const updatedUser =
-            {...props.user, co2Score: 0};
-        props.setUser(updatedUser);
-        props.updateScore(updatedUser.id, updatedUser)
+    function resetScore() {
+        props.resetScore(props.user.id)
         props.resetAllUsages(props.user.id)
     }
 
@@ -42,7 +38,7 @@ export default function UserAccount(props: UserAccountProps) {
                     <Typography>{props.user.co2Score.toFixed(2)} kg/CO2</Typography>
                 </CardContent>
             </Card>
-            <Button variant="outlined" onClick={resetScore}>Reset Score</Button>
+            <Button variant="outlined" color="error" onClick={resetScore}>Reset Score</Button>
         </Paper>
     )
 }

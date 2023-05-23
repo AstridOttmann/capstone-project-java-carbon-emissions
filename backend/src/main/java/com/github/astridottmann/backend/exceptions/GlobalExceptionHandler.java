@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+
 import java.time.Instant;
 import java.util.NoSuchElementException;
 
@@ -20,5 +21,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleIllegalArgumentException(IllegalArgumentException e) {
         ApiError apiError = new ApiError(e.getMessage(), Instant.now());
         return new ResponseEntity<>(apiError, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(IllegalCallerException.class)
+    public ResponseEntity<ApiError> handleIllegalCallerException(IllegalCallerException e) {
+        ApiError apiError = new ApiError(e.getMessage(), Instant.now());
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 }
