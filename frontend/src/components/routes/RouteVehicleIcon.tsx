@@ -10,6 +10,7 @@ type RouteVehicleIconProps = {
 }
 export default function RouteVehicleIcon(props: RouteVehicleIconProps) {
     const vehicleType = props.route.vehicle.type;
+
     return (
         <Box sx={{}}>
             <Typography>

@@ -5,22 +5,21 @@ import AltRouteIcon from '@mui/icons-material/AltRoute';
 import React, {useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from '@mui/icons-material/Save';
 import {CompareRoutes} from "../models/CompareRoutesModel";
 import CompareRoutesCard from "./compare/CompareRoutesCard";
 import {User} from "../models/MongoUserModel";
 import {useNavigate} from "react-router-dom";
 import SnackbarInfo from "./SnackBarInfo";
+import CheckIcon from "@mui/icons-material/Check";
 
 const sxStyleBox1 = {
     position: "relative",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    gap: "4rem",
-    top: "7rem",
+    gap: "1rem",
+    top: "8rem",
     pb: "4rem",
-    pt: "1rem",
     m: "0 auto"
 }
 const sxStyleTitle = {
@@ -32,9 +31,8 @@ const sxStyleButtonGroup = {
     width: "50%",
     fontSize: "large",
     gap: "0.5rem",
-    mt: "1rem",
     alignSelf: "center",
-    m: "1rem auto"
+    m: "3rem auto"
 
 }
 
@@ -76,7 +74,7 @@ export default function HomePage(props: HomePageProps) {
                 <Container maxWidth="md">
                     <Typography variant="h4" component="h2"
                                 sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
-                    <Box sx={{display: "flex", flexDirection: "column", gap: "2rem", mt: "4rem"}}>
+                    <Box sx={{display: "flex", flexDirection: "column", gap: "1rem"}}>
                         <ButtonGroup
                             sx={sxStyleButtonGroup}
                             orientation="vertical"
@@ -97,18 +95,18 @@ export default function HomePage(props: HomePageProps) {
             {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {
                 return (
                     <>
-                        <CompareRoutesCard key={route.id} route={route}/>
-                        <ButtonGroup sx={{display: "flex", gap: "1rem", justifyContent: "space-between", p: "1rem"}}>
-                            <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                                    onClick={onCancelClick}>
-                                Discard
-                            </Button>
-
-                            <Button variant="outlined"
-                                    onClick={() => setAddMode(!addMode)}><AltRouteIcon/>
-                                Add Route To Compare
-                            </Button>
-                        </ButtonGroup>
+                        <Box sx={{display: "flex", flexDirection: "column"}}>
+                            <CompareRoutesCard key={route.id} route={route}/>
+                            <ButtonGroup
+                                sx={{display: "flex", gap: "9rem", justifyContent: "space-between", p: "1rem"}}>
+                                <Button variant="text" color="error" onClick={onCancelClick}>
+                                    <DeleteIcon sx={{fontSize: 30}}/>
+                                </Button>
+                                <Button variant="text" onClick={() => setAddMode(!addMode)}>
+                                    <AltRouteIcon sx={{fontSize: 50, color: "#00f923"}}/>
+                                </Button>
+                            </ButtonGroup>
+                        </Box>
                     </>
                 )
             })}
@@ -118,13 +116,12 @@ export default function HomePage(props: HomePageProps) {
             })}
 
             {!addMode && routesToCompare.length === 2 &&
-                <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}>
-                    <Button variant="outlined" endIcon={<SaveIcon/>} onClick={handleAddComparison}>
-                        Compare & Save
+                <ButtonGroup sx={{display: "flex", justifyContent: "space-between", gap: "9rem"}}>
+                    <Button variant="text" color="error" onClick={onCancelClick}>
+                        <DeleteIcon/>
                     </Button>
-                    <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                            onClick={onCancelClick}>
-                        Discard
+                    <Button variant="text" onClick={handleAddComparison}>
+                        <CheckIcon sx={{fontSize: 60, color: "#00f923"}}/>
                     </Button>
                 </ButtonGroup>}
 

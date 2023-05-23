@@ -12,18 +12,18 @@ import RouteVehicleIcon from "../routes/RouteVehicleIcon";
 
 const sxStyleBox1 = {
     display: "flex",
-
     borderRadius: 1,
     width: "48%",
+    p: "0.3rem",
     backgroundColor: "#00f923",
     color: "#fff",
 }
 
 const sxStyleBox2 = {
     display: "flex",
-
     borderRadius: 1,
     width: "48%",
+    p: "0.3rem",
     backgroundColor: "#ff0000",
     color: "#fff",
 }
