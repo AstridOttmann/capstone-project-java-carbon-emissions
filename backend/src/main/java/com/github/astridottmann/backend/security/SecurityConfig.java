@@ -32,20 +32,28 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(requestHandler))
-
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/routes/**").authenticated()
+                        .requestMatchers("/api/compare/**").authenticated()
+                        .requestMatchers("/api/user/score/**").authenticated()
+                        .anyRequest().permitAll()
+                )
                 .httpBasic()
                 .and()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .httpBasic()
                 .authenticationEntryPoint((request, response, authException)
                         -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()))
                 .and()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST,"/api/user/signin").permitAll()
-                .requestMatchers("/api/user").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
-                .and().build();
+                .build();
+
+                /*  .and()*/
+                /*  .authorizeHttpRequests()
+                  .requestMatchers("/api/user/**").permitAll()
+                  .requestMatchers("/api/routes/**").authenticated()
+                  .requestMatchers("/api/compare/**").authenticated()
+                  .anyRequest().permitAll()*/
+
     }
 
 }
