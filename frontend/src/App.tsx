@@ -29,10 +29,11 @@ export const theme = createTheme({
                 }
             }
         },
-        MuiSvgIcon: {
+        MuiBadge: {
             styleOverrides: {
-                root: {
-                    fontSize: "1.7rem"
+                badge: {
+                    fontSize: "1rem",
+                    minWidth: "25px",
                 }
             }
         }
@@ -97,7 +98,6 @@ function App() {
         //eslint-disable-next-line
     }, [user.id])
 
-    console.log("app", user)
     return (
         <ThemeProvider theme={theme}>
             <Container maxWidth="lg">

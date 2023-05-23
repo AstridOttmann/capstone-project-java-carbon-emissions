@@ -23,6 +23,7 @@ type CompareRoutesComponentProps = {
     user: User,
     updateScore: (id: string, bonus: number) => void,
     compareRoutes: CompareRoutes,
+    compareRoutesList: CompareRoutes[],
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     deleteComparisonById: (id: string) => void,
     getAllComparisonByUserId: (userId: string) => void,
@@ -54,7 +55,8 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                                           updateComparison={props.updateComparison}
                                           getAllComparisonByUserId={props.getAllComparisonByUserId}/>
                 </Box>
-                <UsageDialog compareRoutes={props.compareRoutes}/>
+                <UsageDialog compareRoutes={props.compareRoutes}
+                             compareRoutesList={props.compareRoutesList}/>
                 <DeleteDialog compareRoutes={props.compareRoutes}
                               deleteComparisonById={props.deleteComparisonById}/>
             </Box>

@@ -42,6 +42,7 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                user={props.user}
                                                updateScore={props.updateScore}
                                                compareRoutes={element}
+                                               compareRoutesList={props.compareRoutesList}
                                                setCompareRoutes={props.setCompareRoutes}
                                                updateComparison={props.updateComparison}
                                                getAllComparisonByUserId={props.getAllComparisonByUserId}
