@@ -1,5 +1,5 @@
 import {NewRoute, Route} from "../models/RouteModel";
-import React, {createContext, ReactElement, useMemo, useState} from "react";
+import React, {createContext, ReactElement, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
 
@@ -7,7 +7,7 @@ export type RoutesContextType = {
     routes: Route[],
     setRoutes: React.Dispatch<React.SetStateAction<Route[]>>,
     getAllRoutes: () => void,
-    getAllRoutesByUserId:(userId: string)=> void,
+    getAllRoutesByUserId: (userId: string) => void,
     addRoute: (route: NewRoute) => Promise<Route>,
     deleteRoute: (id: string) => void,
     updateRoute: (id: string, route: Route) => Promise<Route>,
@@ -27,7 +27,7 @@ export const RoutesContext = createContext<RoutesContextType>({
     ,
     getAllRoutes: () => {
     },
-    getAllRoutesByUserId:()=> {
+    getAllRoutesByUserId: () => {
     }
 })
 
@@ -37,8 +37,7 @@ type RoutesContextProps = {
 export default function RoutesContextProvider(props: RoutesContextProps) {
     const [routes, setRoutes] = useState<Route[]>([])
 
-
-    const contextValue = useMemo(() => ({
+    const contextValue = {
         routes,
         setRoutes,
         addRoute,
@@ -46,12 +45,11 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
         updateRoute,
         getAllRoutes,
         getAllRoutesByUserId
-        //eslint-disable-next-line
-    }), [routes]);
+    }
 
-   /* useEffect(() => {
-        getAllRoutes()
-    }, [])*/
+    /* useEffect(() => {
+         getAllRoutes()
+     }, [])*/
 
     function getAllRoutes() {
         axios.get("/api/routes")
@@ -63,15 +61,16 @@ export default function RoutesContextProvider(props: RoutesContextProps) {
             })
     }
 
-    function getAllRoutesByUserId(userId: string){
+    function getAllRoutesByUserId(userId: string) {
         axios.get(`/api/routes/userId/${userId}`)
-            .then((response)=> {
+            .then((response) => {
                 setRoutes(response.data)
             })
-            .catch((error)=> {
+            .catch((error) => {
                 toast.error("No Data available! Logged in? " + error)
             })
     }
+
     function addRoute(route: NewRoute) {
         return axios.post("/api/routes", route)
             .then((response) => {
