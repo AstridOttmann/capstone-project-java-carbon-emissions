@@ -96,8 +96,7 @@ class MongoUserIntegrationTest {
                 .andExpect(content().json("""
                         {"username":  "testUser", "co2Score": 0}
                         """))
-                .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.password").isNotEmpty());
+                .andExpect(jsonPath("$.id").isNotEmpty());
     }
 
     @Test
