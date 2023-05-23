@@ -8,6 +8,8 @@ import RouteVehicleIcon from "./RouteVehicleIcon";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const sxStylePaper = {
+    maxWidth: "sm",
+    m: "0 auto",
     position: "relative",
     top: "4rem",
     p: "1rem",
@@ -24,14 +26,6 @@ const sxStyleTitle = {
     p: "1rem",
     color: "primary"
 }
-const Item = styled('div')(({theme}) => ({
-    backgroundColor: "#B3BDB3",
-    border: "1",
-
-    padding: "1rem",
-    borderRadius: 4,
-    marginBottom: "0.5rem",
-}));
 
 type RouteDetailsProps = {
     setIsEditMode: (arg0: boolean) => void
@@ -75,10 +69,10 @@ export default function RouteDetails(props: RouteDetailsProps) {
                             <Typography><small>DISTANCE:</small> {route.distance} km</Typography>
                             <Typography><small>NUMBER OF PERSONS:</small> {route.numberOfPersons}</Typography>
                             <Typography
-                                sx={{textAlign: "center"}}><small> - {route.oneWay ? "one way" : "round trip"} - </small></Typography>
+                                sx={{}}><small> - {route.oneWay ? "one way" : "round trip"} - </small></Typography>
                         </Box>
                         <Box sx={{backgroundColor: "#008d0d", borderRadius: "10px", p: "1rem", mb: "1rem"}}>
-                            <Typography color="#B3BDB3" sx={{fontSize: "1.2rem"}}>Vehicle</Typography>
+                            <Typography color="#B3BDB3" sx={{fontSize: "1.2rem"}}>Vehicle Info</Typography>
                             <RouteVehicleIcon route={route}/>
                             <RouteVehicleDetails route={route}/>
                         </Box>
