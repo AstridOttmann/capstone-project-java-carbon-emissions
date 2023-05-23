@@ -142,7 +142,7 @@ export default function Form(props: FormProps) {
                 {props.isEditMode
                     ? <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Edit
                         Route</Typography>
-                    : <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}}>Add Route</Typography>
+                    : <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Add Route</Typography>
                 }
                 <Button variant="text"
                         size="small"
@@ -151,21 +151,6 @@ export default function Form(props: FormProps) {
                     <CloseIcon/></Button>
             </Box>
 
-            {/*  {props.isEditMode
-                ? <Box sx={sxStyleBox}>
-                    <Typography variant="h2" sx={{fontSize: "2rem"}}>Edit Route</Typography>
-                    <Button variant="text"
-                            sx={{maxHeight: "2.5rem"}}
-                            endIcon={<EditOffIcon/>}
-                            onClick={handleClick}>
-                        Cancel</Button>
-                </Box>
-                : <Box sx={sxStyleBox}><Typography variant="h2" sx={{fontSize: "2rem"}}>Add Route</Typography>
-                    <Button variant="outlined"
-                            sx={{maxHeight: "2.5rem"}}
-                            onClick={handleClose}>
-                        <CloseIcon/></Button></Box>
-            }*/}
             {route &&
                 <form className="form" onSubmit={handleSubmit}>
                     <TextField

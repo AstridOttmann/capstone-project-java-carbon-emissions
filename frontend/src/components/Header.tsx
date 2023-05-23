@@ -5,13 +5,6 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {User} from "../models/MongoUserModel";
 import React from "react";
 
-/*const sxStyleTypo = {
-    color: "primary",
-    flexGrow: "3",
-    textAlign: "center",
-    p: "1rem"
-}*/
-
 const sxStyleBox1 = {
     width: "100%",
     position: "fixed",

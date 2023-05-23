@@ -1,4 +1,4 @@
-import {Box, Button, ButtonGroup, Card, Paper, styled, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup, Card, Paper, Typography} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import {useContext, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -22,6 +22,10 @@ const sxStyleCard = {
     border: "1",
 
 }
+const sxStyleBox1And4 = {
+    backgroundColor: "#B3BDB3", borderRadius: "10px", p: "1rem", mb: "1rem"
+}
+
 const sxStyleTitle = {
     p: "1rem",
     color: "primary"
@@ -59,7 +63,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
             </Typography>
             {route ? (
                     <Card sx={sxStyleCard} variant="outlined">
-                        <Box sx={{backgroundColor: "#B3BDB3", borderRadius: "10px", p: "1rem", mb: "1rem"}}>
+                        <Box sx={sxStyleBox1And4}>
                             <Typography color="primary" sx={{fontSize: "1.2rem"}}>Route</Typography>
                             <Typography><small>FROM:</small> {route.start}</Typography>
                             <Typography><small>TO:</small> {route.destination}</Typography>
@@ -76,7 +80,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
                             <RouteVehicleIcon route={route}/>
                             <RouteVehicleDetails route={route}/>
                         </Box>
-                        <Box sx={{backgroundColor: "#B3BDB3", borderRadius: "10px", p: "1rem", mb: "1rem"}}>
+                        <Box sx={sxStyleBox1And4}>
                             <Typography color="secondary" sx={{fontSize: "1.2rem"}}>Result</Typography>
                             <Typography color="secondary">Co2-Emission Route</Typography>
                             <Typography><small>PRO PERSON IN KG: </small> {route.co2EmissionRoute}</Typography>

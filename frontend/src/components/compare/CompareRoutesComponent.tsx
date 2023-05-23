@@ -1,14 +1,14 @@
-import {Box, Paper} from "@mui/material";
+import {Box, Button, Paper} from "@mui/material";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import {useNavigate} from "react-router-dom";
 import CompareRoutesResults from "./CompareRoutesResults";
-import React from "react";
+import React, {useState} from "react";
 import {User} from "../../models/MongoUserModel";
-
 import SnackbarInfo from "../SnackBarInfo";
 import UsageDialog from "../UsageDialog";
-import DeleteDialog from "../DeleteDialog";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ResetDialog from "../ResetDialog";
 
 const sxStylePaper = {
 
@@ -31,8 +31,25 @@ type CompareRoutesComponentProps = {
 }
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     const navigate = useNavigate();
+
     const message: string = "The buttons show the bonus of the respective option. Click the one you use and save the bonus directly to your account";
     const buttonText: string = "*save Co2-bonus"
+
+    const [open, setOpen] = useState(false);
+    const dialogContent: string = "Deleting the comparison is final and cannot be reversed. Do you want to continue?"
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    function handleDelete() {
+        props.deleteComparisonById(props.compareRoutes.id);
+        setOpen(false);
+    }
 
     return (
         <Paper sx={sxStylePaper}>
@@ -57,8 +74,17 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                 </Box>
                 <UsageDialog compareRoutes={props.compareRoutes}
                              compareRoutesList={props.compareRoutesList}/>
-                <DeleteDialog compareRoutes={props.compareRoutes}
-                              deleteComparisonById={props.deleteComparisonById}/>
+                <Button size="small" variant="text" color="error" onClick={handleClickOpen}
+                        sx={{alignSelf: "start", minWidth: "fit-content", m: "0", p: "0"}}>
+                    <DeleteIcon sx={{fontSize: 25}}/>
+                </Button>
+                <ResetDialog dialogContent={dialogContent}
+                                  open={open}
+                                  handleClose={handleClose}
+                                  onReset={handleDelete}
+                                  buttonAgreeText={"Yes, delete!"}
+                                  buttonDisagreeText={"No, keep it!"}
+                />
             </Box>
         </Paper>
     )
