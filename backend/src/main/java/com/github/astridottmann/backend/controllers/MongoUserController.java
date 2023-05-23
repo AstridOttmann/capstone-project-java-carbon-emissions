@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -46,14 +48,17 @@ public class MongoUserController {
     }
 
     @PostMapping("/signin")
-    public MongoUser signIn(@RequestBody @Valid MongoUser user) {
+    public MongoUserDTO signIn(@RequestBody @Valid MongoUser user) {
         if (mongoUserRepository.findMongoUserByUsername(user.username()).isPresent()) {
             String errorMessage = "Username already exists!";
             throw new IllegalArgumentException(errorMessage);
         }
         String encodedPassword = passwordEncoder.encode(user.password());
         MongoUser newUser = new MongoUser(null, user.username(), encodedPassword, user.co2Score());
-        return mongoUserRepository.save(newUser);
+        mongoUserRepository.save(newUser);
+        MongoUser returnedUser =  mongoUserRepository.findMongoUserByUsername(newUser.username())
+                .orElseThrow(()-> new NoSuchElementException("Username not foundt!"));
+        return new MongoUserDTO(returnedUser.id(), returnedUser.username(), returnedUser.co2Score());
     }
 
     @PutMapping("/score/{id}")
