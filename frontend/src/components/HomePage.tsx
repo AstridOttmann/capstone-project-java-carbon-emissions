@@ -59,7 +59,7 @@ export default function HomePage(props: HomePageProps) {
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
     const navigate = useNavigate();
 
-    const message: string = "Enter two routes with different options to travel. CO2-emissions for both routes will be calculated and compared.";
+    const message: string = "Enter two routes with different options to travel. CO₂-emissions for both routes will be calculated and compared.";
     const buttonText: string = "*click for more infos";
 
     function handleAddComparison() {

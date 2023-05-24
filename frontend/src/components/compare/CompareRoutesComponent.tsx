@@ -23,7 +23,7 @@ type CompareRoutesComponentProps = {
     user: User,
     updateScore: (id: string, bonus: number) => void,
     compareRoutes: CompareRoutes,
-    compareRoutesList: CompareRoutes[],
+   // compareRoutesList: CompareRoutes[],
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     deleteComparisonById: (id: string) => void,
     getAllComparisonByUserId: (userId: string) => void,
@@ -33,7 +33,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
     const navigate = useNavigate();
 
     const message: string = "The buttons show the bonus of the respective option. Click the one you use and save the bonus directly to your account";
-    const buttonText: string = "*save CO2-bonus"
+    const buttonText: string = "*save CO₂-bonus"
 
     const [open, setOpen] = useState(false);
     const dialogContent: string = "Deleting the comparison is final and cannot be reversed. Do you want to continue?"
@@ -72,18 +72,17 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
                                           updateComparison={props.updateComparison}
                                           getAllComparisonByUserId={props.getAllComparisonByUserId}/>
                 </Box>
-                <UsageDialog compareRoutes={props.compareRoutes}
-                             compareRoutesList={props.compareRoutesList}/>
+                <UsageDialog compareRoutes={props.compareRoutes}/>
                 <Button size="small" variant="text" color="error" onClick={handleClickOpen}
                         sx={{alignSelf: "start", minWidth: "fit-content", m: "0", p: "0"}}>
                     <DeleteIcon sx={{fontSize: 25}}/>
                 </Button>
                 <ResetDialog dialogContent={dialogContent}
-                                  open={open}
-                                  handleClose={handleClose}
-                                  onReset={handleDelete}
-                                  buttonAgreeText={"Yes, delete!"}
-                                  buttonDisagreeText={"No, keep it!"}
+                             open={open}
+                             handleClose={handleClose}
+                             onReset={handleDelete}
+                             buttonAgreeText={"Yes, delete!"}
+                             buttonDisagreeText={"No, keep it!"}
                 />
             </Box>
         </Paper>

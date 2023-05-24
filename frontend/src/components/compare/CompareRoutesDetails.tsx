@@ -1,3 +1,4 @@
+/*
 import {Box, Button, ButtonGroup, Card, Paper, Typography} from "@mui/material";
 import CompareRoutesResults from "./CompareRoutesResults";
 import EditIcon from "@mui/icons-material/Edit";
@@ -74,14 +75,14 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
             })}
 
             <Box sx={{display: "flex", gap: "1rem", borderRadius: 1}}>
-                {/*   {props.compareRoutes.compared.map((route) => {*/}
+                {/!*   {props.compareRoutes.compared.map((route) => {*!/}
                 <CompareRoutesResults user={props.user}
                                       updateScore={props.updateScore}
                                       compareRoutes={props.compareRoutes}
                                       setCompareRoutes={props.setCompareRoutes}
                                       updateComparison={props.updateComparison}
                                       getAllComparisonByUserId={props.getAllComparisonByUserId}/>
-                {/*   })}*/}
+                {/!*   })}*!/}
             </Box>
 
             <Box>
@@ -98,4 +99,4 @@ export default function CompareRoutesDetails(props: CompareRoutesDetailsProps) {
             </ButtonGroup>
         </Paper>
     )
-}
+}*/

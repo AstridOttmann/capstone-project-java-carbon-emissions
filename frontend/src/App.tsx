@@ -12,7 +12,7 @@ import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/routes/RouteDetails";
 import useCompareRoutes from "./hooks/useCompareRoutes";
 import CompareRoutesCollection from "./components/compare/CompareRoutesCollection";
-import CompareRoutesDetails from "./components/compare/CompareRoutesDetails";
+
 import LoginPage from "./components/LoginPage";
 import useUser from "./hooks/useUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -142,7 +142,7 @@ function App() {
                                 />
                                 <Route path="/routes/details/:id" element={
                                     <RouteDetails setIsEditMode={setIsEditMode}/>}/>
-                                <Route path="/compared/details/:id" element={
+                             {/*   <Route path="/compared/details/:id" element={
                                     <CompareRoutesDetails getComparisonById={getComparisonById}
                                                           user={user}
                                                           updateScore={updateScore}
@@ -153,7 +153,7 @@ function App() {
                                                           getAllComparisonByUserId={getAllComparisonByUserId}
                                                           onClick={() => {
                                                           }}
-                                    />}/>
+                                    />}/>*/}
                                 <Route path="/account" element={<UserAccount user={user}
                                                                              resetScore={resetScore}
                                                                              resetAllUsages={resetAllUsages}/>}/>

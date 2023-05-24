@@ -14,7 +14,6 @@ const sxStyleContainer = {
     p: "1rem",
     pb: "3rem",
 }
-
 const sxStyleTitle = {
     p: "1rem 1rem 2rem 1rem",
 }
@@ -23,10 +22,23 @@ const sxStyleCard = {
     m: "1rem",
     borderRadius: "15px"
 }
-const sxStyleCardMiddle = {
-    backgroundColor: "#B3BDB3",
+const sxStyleBox1 = {
+    display: "flex",
+    gap: "1rem",
+    justifyContent: "space-evenly",
+    alignItems: "center"
+}
+const sxStyleBox2 = {
+    backgroundColor: "#008d0d",
+    p: "0.4rem",
     m: "1rem",
-    borderRadius: "15px"
+    borderRadius: "10px"
+}
+const sxStyleBox3 = {
+    backgroundColor: "#cd5300",
+    m: "1rem",
+    p: "1rem",
+    borderRadius: "10px"
 }
 type UserAccountProps = {
     user: User,
@@ -54,15 +66,26 @@ export default function UserAccount(props: UserAccountProps) {
 
     return (
         <Container maxWidth="sm" sx={sxStyleContainer}>
-            <Typography variant="h5" component="h2" sx={sxStyleTitle}>My CO<sub>2</sub>-Bonus-Account</Typography>
+            <Typography variant="h5" component="h2" sx={sxStyleTitle}>
+                My CO<sub>2</sub>-Bonus-Account
+            </Typography>
             <Card sx={sxStyleCard}>
-                <Typography variant="h6" sx={{p: "1rem"}}>CO<sub>2</sub> emission saved</Typography>
-                <Box sx={{display: "flex", gap: "1rem", justifyContent: "space-evenly", alignItems: "center"}}>
-                    <ForestIcon color={"primary"} fontSize="large" sx={{fontSize: 60}}/>
+                <Typography variant="h6" sx={{p: "1rem"}}>
+                    CO<sub>2</sub> emission saved
+                </Typography>
+                <Box sx={sxStyleBox1}>
+                    <ForestIcon color={"primary"} sx={{fontSize: 60}}/>
                     <Typography color={props.user.co2Score < 0 ? "primary" : "error"}
-                                sx={{fontSize: "1.5rem"}}>{props.user.co2Score.toFixed(2)} kg</Typography>
+                                sx={{fontSize: "1.5rem"}}>
+                        {props.user.co2Score.toFixed(2)} kg
+                    </Typography>
                 </Box>
-                <Button variant="text" color="error" onClick={handleClickOpen} sx={{pl: "2rem"}}>Reset Score</Button>
+                <Button variant="text"
+                        color="error"
+                        onClick={handleClickOpen}
+                        sx={{pl: "2rem"}}>
+                    Reset Score
+                </Button>
                 <ResetDialog open={open}
                              handleClose={handleClose}
                              onReset={handleReset}
@@ -71,23 +94,28 @@ export default function UserAccount(props: UserAccountProps) {
                              dialogContent={dialogContent}
                 />
             </Card>
-            <Card sx={sxStyleCardMiddle}>
-                <Typography variant="h6" sx={{p: "1rem", pb: 0}}>My CO<sub>2</sub>-footprint</Typography>
+            <Card sx={sxStyleCard}>
+                <Typography variant="h6" sx={{p: "1rem", pb: 0}}>
+                    My CO<sub>2</sub>-footprint
+                </Typography>
                 <Box sx={{display: "flex", alignItems: "center"}}>
                     <Box sx={{p: "0.6rem", m: "1rem", borderRadius: "10px"}}>
                         <CircularProgressWithLabel size="5.5rem" value={percentage}/>
                     </Box>
-                    <Box sx={{backgroundColor: "#008d0d", p: "0.4rem", m: "1rem", borderRadius: "10px", flexGrow: "3"}}>
+                    <Box sx={sxStyleBox2}>
                         <Typography>Percentage caused by mobility (2.2 t = 100 %)</Typography>
                     </Box>
                 </Box>
-
             </Card>
             <Card sx={sxStyleCard}>
-                <Box sx={{backgroundColor: "#cd5300", m: "1rem", p: "1rem", borderRadius: "10px"}}>
-                    <Typography gutterBottom>Average CO<sub>2</sub>-footprint per person in Germany: 10.8 t /
-                        CO<sub>2</sub>-e</Typography>
-                    <Typography color={"info.dark"}>2.2 t of this is attributable to mobility</Typography>
+                <Box sx={sxStyleBox3}>
+                    <Typography>
+                        Average CO<sub>2</sub>-footprint per person in Germany: 10.8
+                        t CO<sub>2</sub>-e
+                    </Typography>
+                    <Typography color={"info.dark"}>
+                        2.2 t of this is attributable to mobility
+                    </Typography>
                 </Box>
                 <Box sx={{display: "flex", justifyContent: "center", alignItems: "end"}}>
                     <Box>

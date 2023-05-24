@@ -17,7 +17,6 @@ const sxStyleTitle = {
 
 type CompareRoutesCollectionProps = {
     user: User,
-    // setUser: (user: User) => void,
     updateScore: (id: string, bonus: number) => void,
     compareRoutes: CompareRoutes,
     setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
@@ -27,7 +26,6 @@ type CompareRoutesCollectionProps = {
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
-    console.log("compare", props.compareRoutesList)
     if (!Array.isArray(props.compareRoutesList)) {
         return null; // Oder  Meldung rendern
     }
@@ -42,7 +40,7 @@ export default function CompareRoutesCollection(props: CompareRoutesCollectionPr
                                                user={props.user}
                                                updateScore={props.updateScore}
                                                compareRoutes={element}
-                                               compareRoutesList={props.compareRoutesList}
+                    /* compareRoutesList={props.compareRoutesList}*/
                                                setCompareRoutes={props.setCompareRoutes}
                                                updateComparison={props.updateComparison}
                                                getAllComparisonByUserId={props.getAllComparisonByUserId}

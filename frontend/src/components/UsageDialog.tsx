@@ -11,7 +11,7 @@ import {Badge, Box, Button} from "@mui/material";
 
 export interface UsageDialogProps {
     compareRoutes: CompareRoutes,
-    compareRoutesList: CompareRoutes[]
+   // compareRoutesList: CompareRoutes[]
 }
 
 export default function UsageDialog(props: UsageDialogProps) {
