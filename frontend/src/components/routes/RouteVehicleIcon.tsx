@@ -8,16 +8,20 @@ import {Route} from "../../models/RouteModel";
 type RouteVehicleIconProps = {
     route: Route
 }
-export default function RouteVehicleIcon(props: RouteVehicleIconProps){
+export default function RouteVehicleIcon(props: RouteVehicleIconProps) {
+    const vehicleType = props.route.vehicle.type;
+
     return (
-        <Box sx={{display: "flex", gap: "2rem", justifyContent: "flex-start"}}>
-            <Typography>{props.route.vehicle.type === "car" && <DirectionsCarIcon/>}
-                {props.route.vehicle.type === "publicTransport" && <TrainIcon/>}
-                {props.route.vehicle.type === "flight" && <FlightIcon/>}
-                {props.route.vehicle.type === "bike" && <DirectionsBikeIcon/>}
-            </Typography>
-            <Typography>
-                {props.route.start.toUpperCase() + " - " + props.route.destination.toUpperCase()}
+        <Box sx={{}}>
+            <Typography component="div">
+                {vehicleType === "car" &&
+                    <DirectionsCarIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "publicTransport" &&
+                    <TrainIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "flight" &&
+                    <FlightIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "bike" &&
+                    <DirectionsBikeIcon sx={{fontSize: 50}}/>}
             </Typography>
         </Box>
     )

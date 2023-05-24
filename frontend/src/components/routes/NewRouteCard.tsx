@@ -1,36 +1,20 @@
 import {Box, Card, Divider} from "@mui/material";
-import {useNavigate} from "react-router-dom";
-import {useContext} from "react";
-import {RoutesContext} from "../../contexts/RoutesContextProvider";
-import {Route} from "../../models/RouteModel";
-import RouteInfo from "./RouteInfo";
 import RouteDestination from "./RouteDestination";
 import RouteIconBox from "./RouteIconBox";
-import CardButtonGroup from "../CardButtonGroup";
+import RouteInfo from "./RouteInfo";
+import {Route} from "../../models/RouteModel";
 
 const sxStyleCard = {
     textAlign: "center",
-    width: "48%",
     p: "1rem",
     mb: "1rem",
     border: "4px solid #fff",
 }
 
-type RouteCardProps = {
+type NewRouteCardProps = {
     route: Route,
 }
-export default function RouteCard(props: RouteCardProps) {
-    const {deleteRoute} = useContext(RoutesContext)
-    const navigate = useNavigate();
-
-    function onDeleteClick() {
-        deleteRoute(props.route.id)
-    }
-
-    function onDetailsClick() {
-        navigate(`/routes/details/${props.route.id}`)
-    }
-
+export default function NewRouteCard(props: NewRouteCardProps) {
     return (
         <>
             {props.route &&
@@ -44,8 +28,6 @@ export default function RouteCard(props: RouteCardProps) {
                                  sx={{m: "0 0.5rem", width: "3px"}}/>
                         <RouteInfo route={props.route}/>
                     </Box>
-                    <CardButtonGroup onDeleteClick={onDeleteClick}
-                                     onDetailsClick={onDetailsClick}/>
                 </Card>}
         </>
     )

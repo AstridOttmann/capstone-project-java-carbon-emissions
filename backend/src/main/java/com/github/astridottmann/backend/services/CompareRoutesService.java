@@ -99,7 +99,8 @@ public class CompareRoutesService {
     public void updateAllComparisonContainingRoute(Route route) {
         List<CompareRoutes> compareRoutesWithRoute = compareRoutesRepository.findAllByComparedId(route.id());
 
-        List<CompareRoutes> updatedCompareRoutes = compareRoutesWithRoute.stream().map((compareRoutes -> {
+        List<CompareRoutes> updatedCompareRoutes = compareRoutesWithRoute.stream()
+                .map((compareRoutes -> {
                     List<Route> currentCompared = compareRoutes.compared()
                             .stream()
                             .map(currentRoute -> currentRoute.id().equals(route.id()) ? route : currentRoute)
@@ -124,14 +125,3 @@ public class CompareRoutesService {
         return compareRoutesRepository.saveAll(reseted);
     }
 }
-
-/*
-new CompareRoutes(
-        current.id(),
-        current.userId(),
-        current.compared(),
-        new ComparisonResults(
-        current.comparisonResults().resultRouteOne(),
-        current.comparisonResults().resultRouteTwo(),
-        Collections.emptyList())
-        )*/

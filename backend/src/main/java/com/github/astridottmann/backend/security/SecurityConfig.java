@@ -2,7 +2,6 @@ package com.github.astridottmann.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -46,14 +45,6 @@ public class SecurityConfig {
                         -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()))
                 .and()
                 .build();
-
-                /*  .and()*/
-                /*  .authorizeHttpRequests()
-                  .requestMatchers("/api/user/**").permitAll()
-                  .requestMatchers("/api/routes/**").authenticated()
-                  .requestMatchers("/api/compare/**").authenticated()
-                  .anyRequest().permitAll()*/
-
     }
 
 }

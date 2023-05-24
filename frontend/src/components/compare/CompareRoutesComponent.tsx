@@ -1,31 +1,28 @@
-import {Box, Button, ButtonGroup, Paper} from "@mui/material";
+import {Box, Button, Paper} from "@mui/material";
 import CompareRoutesCard from "./CompareRoutesCard";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router-dom";
 import CompareRoutesResults from "./CompareRoutesResults";
-import React from "react";
+import React, {useState} from "react";
 import {User} from "../../models/MongoUserModel";
-import AccordionComponent from "../AccordionComponent";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Typography from "@mui/material/Typography";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Accordion from '@mui/material/Accordion';
-import CheckIcon from '@mui/icons-material/Check';
+import SnackbarInfo from "../SnackBarInfo";
+import UsageDialog from "../UsageDialog";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ResetDialog from "../ResetDialog";
 
 const sxStylePaper = {
+
     p: "1rem",
-    pb: "2rem",
-    backgroundColor: "#282c34",
-    elevation: "3"
+    pb: "1rem",
+    mb: "2rem",
+    elevation: "3",
+    borderBottom: "2px solid #cd5300"
 }
 
 type CompareRoutesComponentProps = {
     user: User,
     updateScore: (id: string, bonus: number) => void,
     compareRoutes: CompareRoutes,
-    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     deleteComparisonById: (id: string) => void,
     getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
@@ -33,54 +30,59 @@ type CompareRoutesComponentProps = {
 export default function CompareRoutesComponent(props: CompareRoutesComponentProps) {
     const navigate = useNavigate();
 
-    function onDeleteClick() {
+    const message: string = "The buttons show the bonus of the respective option. Click the one you use and save the bonus directly to your account";
+    const buttonText: string = "*save CO₂-bonus"
+
+    const [open, setOpen] = useState(false);
+    const dialogContent: string = "Deleting the comparison is final and cannot be reversed. Do you want to continue?"
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    function handleDelete() {
         props.deleteComparisonById(props.compareRoutes.id);
+        setOpen(false);
     }
 
     return (
         <Paper sx={sxStylePaper}>
-            {props.compareRoutes.compared.map((route) => {
-                return <CompareRoutesCard key={route.id} route={route}/>
-            })}
-            <AccordionComponent/>
-            <Box sx={{
-                display: "flex",
-                gap: "1rem",
-                borderRadius: 1,
-                mt: "0.5rem"
-            }}>
-                <CompareRoutesResults user={props.user} updateScore={props.updateScore}
-                                      compareRoutes={props.compareRoutes} setCompareRoutes={props.setCompareRoutes}
-                                      updateComparison={props.updateComparison}
-                                      getAllComparisonByUserId={props.getAllComparisonByUserId}/>
+            <Box sx={{display: "flex", gap: "1rem", m: "0 auto"}}>
+                {props.compareRoutes.compared.map((route) => {
+                    return <CompareRoutesCard onClick={() => navigate(`/routes/details/${route.id}`)} key={route.id}
+                                              route={route}/>
+                })}
             </Box>
-
-            <Accordion disabled={props.compareRoutes.comparisonResults.usages?.length === 0}
-                sx={{backgroundColor: "#454C5A", color: "#3fd44d", mt: "0.5rem"}}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    {props.compareRoutes.comparisonResults.usages?.length > 0 ?
-                        <><CheckIcon/>
-                            <Typography>Usages</Typography></> :
-                        <Typography>No Usages</Typography>}
-                </AccordionSummary>
-                <AccordionDetails>
-                    {props.compareRoutes.comparisonResults.usages?.map((usage) => {
-                        return <Typography key={usage.datetime}>{usage.datetime}: {usage.bonus} kg/CO2</Typography>
-                    })}
-                </AccordionDetails>
-            </Accordion>
-            <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}
-                         variant="text"
-                         aria-label="text button group">
-                <Button variant="outlined"
-                        onClick={() => navigate(`/compared/details/${props.compareRoutes.id}`)}>Details</Button>
-                <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                        onClick={onDeleteClick}>Delete</Button>
-            </ButtonGroup>
+            <Box>
+                <SnackbarInfo message={message} buttonText={buttonText}/>
+                <Box sx={{
+                    display: "flex",
+                    gap: "1rem",
+                    borderRadius: 1,
+                    mt: "0.5rem"
+                }}>
+                    <CompareRoutesResults user={props.user} updateScore={props.updateScore}
+                                          compareRoutes={props.compareRoutes}
+                                          updateComparison={props.updateComparison}
+                                          getAllComparisonByUserId={props.getAllComparisonByUserId}/>
+                </Box>
+                <UsageDialog compareRoutes={props.compareRoutes}/>
+                <Button size="small" variant="text" color="error" onClick={handleClickOpen}
+                        sx={{alignSelf: "start", minWidth: "fit-content", m: "0", p: "0"}}>
+                    <DeleteIcon sx={{fontSize: 25}}/>
+                </Button>
+                <ResetDialog dialogContent={dialogContent}
+                             open={open}
+                             handleClose={handleClose}
+                             onReset={handleDelete}
+                             buttonAgreeText={"Yes, delete!"}
+                             buttonDisagreeText={"No, keep it!"}
+                />
+            </Box>
         </Paper>
     )
 }

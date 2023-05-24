@@ -1,4 +1,28 @@
 .route-list {
-    margin: 0;
     padding: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    gap: 3rem;
+    overflow-x: scroll
 }
+
+.route-list ::-webkit-scrollbar {
+    width: 12px;
+    height: 3px;
+}
+
+.route-list::-webkit-scrollbar-track {
+    border-radius: 10px;
+    margin: 0 30px;
+}
+
+.route-list::-webkit-scrollbar-thumb {
+    border-radius: 200px;
+
+    background: yellowgreen;
+}
+
+

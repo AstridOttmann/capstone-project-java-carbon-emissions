@@ -1,4 +1,5 @@
 import {
+    Box, CircularProgress,
     Paper,
     Typography
 } from "@mui/material";
@@ -9,35 +10,46 @@ import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
 
 const sxStylePaper = {
-    p: "1rem",
-    pb: "3rem",
-    backgroundColor: "#282c34",
-    elevation: "3"
+    position: "relative",
+    top: "7.5rem"
+}
+const sxStyleBox = {
+    display: "flex",
+    justifyContent: "flex-start",
+    overflowX: "scroll",
+    position: "relative",
+    pt: "1rem",
+    pb: "3rem"
 }
 const sxStyleTitle = {
-    fontSize: "2rem",
+    textAlign: "center",
     p: "1rem",
-    color: "#3fd44d"
 }
 
 export default function RouteCollection() {
     const {routes} = useContext(RoutesContext)
     if (!Array.isArray(routes)) {
-        return null; // Oder  Meldung rendern
+        return (
+            <Box sx={{display: "flex"}}>
+                <CircularProgress/>
+            </Box>
+        )
     }
 
     return (
         <Paper sx={sxStylePaper}>
-            <Typography variant="h3" component="h3" sx={sxStyleTitle}>
-                Single Routes
+            <Typography variant="h5" component="h2" sx={sxStyleTitle}>
+                My Routes
             </Typography>
-            <ul className="route-list">
-                {routes.map((route) => {
-                    return (
-                        <RouteCard key={route.id} route={route}/>
-                    )
-                })}
-            </ul>
+            <Box sx={sxStyleBox}>
+                <ul className="route-list">
+                    {routes.map((route) => {
+                        return (
+                            <RouteCard key={route.id} route={route}/>
+                        )
+                    })}
+                </ul>
+            </Box>
         </Paper>
     )
 }

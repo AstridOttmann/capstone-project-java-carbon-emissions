@@ -135,7 +135,7 @@ class MongoUserIntegrationTest {
     @WithMockUser(username = "testUser")
     void updateScore_shouldThrowStatusIsUnauthorized_whenIdNotUserIdOrUserNotLoggedIn() throws Exception {
         mongoUserRepository.save(testUser);
-        String expectedMessage = "Not allowed!";
+         String expectedMessage = "Not allowed!";
 
         mockMvc.perform(put("/api/user/score/" + "abc")
                         .param("bonus", "100")

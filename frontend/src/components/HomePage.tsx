@@ -1,21 +1,43 @@
 import Form from "./Form";
-import {Button, ButtonGroup, Paper, Typography} from "@mui/material";
-import AddLocationIcon from '@mui/icons-material/AddLocation';
+import {Button, ButtonGroup, Box, Typography, Container, Paper} from "@mui/material";
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 import React, {useState} from "react";
 import {Route} from "../models/RouteModel";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from '@mui/icons-material/Save';
 import {CompareRoutes} from "../models/CompareRoutesModel";
-import CompareRoutesCard from "./compare/CompareRoutesCard";
 import {User} from "../models/MongoUserModel";
 import {useNavigate} from "react-router-dom";
+import SnackbarInfo from "./SnackBarInfo";
+import CheckIcon from "@mui/icons-material/Check";
+import NewRouteCard from "./routes/NewRouteCard";
+
+const sxStyleBox1 = {
+    position: "relative",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "1rem",
+    top: "10rem",
+    pb: "4rem",
+    m: "0 auto"
+}
+const sxStylePaper = {
+    m: "1rem 3rem",
+    p: "2rem 1rem 2rem 1rem",
+    position: "relative",
+    elevation: "10"
+}
 
 const sxStyleTitle = {
-    fontSize: "2rem",
     p: "1rem",
-    color: "#3fd44d",
+    color: "primary",
     textAlign: "center"
+}
+const sxStyleButtonGroup = {
+    fontSize: "large",
+    gap: "0.5rem",
+    m: "3rem auto"
 }
 
 type HomePageProps = {
@@ -33,6 +55,9 @@ export default function HomePage(props: HomePageProps) {
     const [routesToCompare, setRoutesToCompare] = useState<Route[]>([])
     const navigate = useNavigate();
 
+    const message: string = "Enter two routes with different options to travel. CO₂-emissions for both routes will be calculated and compared.";
+    const buttonText: string = "*click for more infos";
+
     function handleAddComparison() {
         const compareRoutesToAdd = {...props.compareRoutes, userId: props.user.id, compared: routesToCompare}
         props.setCompareRoutes(compareRoutesToAdd)
@@ -47,65 +72,72 @@ export default function HomePage(props: HomePageProps) {
     }
 
     return (
-        <Paper sx={{
-            pb: "4rem",
-            pt: "1rem",
-            backgroundColor: "#282c34"
-        }}>
+        <Box sx={sxStyleBox1}>
             {!addMode && !props.isEditMode && routesToCompare.length === 0 &&
-                <>
-                    <Typography variant="h4" sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
-                    <ButtonGroup
-                        sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-evenly",
-                            gap: "0.5rem",
-                            m: "1rem"
-                        }}
-                        variant="text"
-                        aria-label="text button group">
-                        <Button variant="outlined"
-                                onClick={() => setAddMode(!addMode)}><AddLocationIcon/>
-                            Add Route
-                        </Button>
-                    </ButtonGroup>
-                </>}
+                <Container maxWidth="md">
+                    <Typography variant="h4" component="h2"
+                                sx={sxStyleTitle}>Welcome {props.user.username}!</Typography>
+                    <Box sx={{display: "flex", flexDirection: "column", gap: "1rem"}}>
+                        <ButtonGroup
+                            sx={sxStyleButtonGroup}
+                            orientation="vertical"
+                            variant="text"
+                            aria-label="add button group"
+                        >
+                            <Button>
+                                <AddLocationAltIcon sx={{fontSize: 70}} onClick={() => setAddMode(!addMode)}/>
+                            </Button>
+                            <Button variant="text" size="large" onClick={() => setAddMode(!addMode)}>
+                                <Typography variant="body1" sx={{fontSize: "1.5rem"}}>
+                                    Add Route
+                                </Typography>
+                            </Button>
+                        </ButtonGroup>
+                        <SnackbarInfo message={message}
+                                      buttonText={buttonText}/>
+                    </Box>
+                </Container>}
 
             {!addMode && routesToCompare.length === 1 && routesToCompare.map((route) => {
                 return (
                     <>
-                        <CompareRoutesCard key={route.id} route={route}/>
-                        <ButtonGroup sx={{display: "flex", gap: "1rem", justifyContent: "space-between", p: "1rem"}}>
-                            <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                                    onClick={onCancelClick}>
-                                Discard
-                            </Button>
-
-                            <Button variant="outlined"
-                                    onClick={() => setAddMode(!addMode)}><AltRouteIcon/>
-                                Add Route To Compare
-                            </Button>
-                        </ButtonGroup>
+                        <Box sx={{display: "flex", flexDirection: "column"}}>
+                            <NewRouteCard key={route.id} route={route}/>
+                            <ButtonGroup
+                                sx={{display: "flex", gap: "9rem", justifyContent: "space-between", p: "1rem"}}>
+                                <Button variant="text"
+                                        color="error"
+                                        onClick={onCancelClick}>
+                                    <DeleteIcon sx={{fontSize: 30}}/>
+                                </Button>
+                                <Button variant="text"
+                                        onClick={() => setAddMode(!addMode)}>
+                                    <AltRouteIcon sx={{fontSize: 50, color: "#00f923"}}/>
+                                </Button>
+                            </ButtonGroup>
+                        </Box>
                     </>
                 )
             })}
-
-            {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
-                return <CompareRoutesCard key={route.id} route={route}/>
-            })}
-
             {!addMode && routesToCompare.length === 2 &&
-                <ButtonGroup sx={{display: "flex", justifyContent: "space-between", p: "1rem"}}>
-                    <Button variant="outlined" endIcon={<SaveIcon/>} onClick={handleAddComparison}>
-                        Compare & Save
-                    </Button>
-                    <Button variant="outlined" color="error" endIcon={<DeleteIcon/>}
-                            onClick={onCancelClick}>
-                        Discard
-                    </Button>
-                </ButtonGroup>}
-
+                <Paper sx={sxStylePaper}>
+                    <Box sx={{display: "flex", flexWrap: "noWrap", gap: "1rem", m: "0 auto"}}>
+                        {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
+                            return <NewRouteCard key={route.id} route={route}/>
+                        })}
+                    </Box>
+                    <ButtonGroup sx={{display: "flex", justifyContent: "space-between", gap: "9rem"}}>
+                        <Button variant="text"
+                                color="error"
+                                onClick={onCancelClick}>
+                            <DeleteIcon/>
+                        </Button>
+                        <Button variant="text"
+                                onClick={handleAddComparison}>
+                            <CheckIcon sx={{fontSize: 60, color: "#00f923"}}/>
+                        </Button>
+                    </ButtonGroup>
+                </Paper>}
             {addMode || props.isEditMode ?
                 <Form user={props.user}
                       isEditMode={props.isEditMode}
@@ -116,5 +148,6 @@ export default function HomePage(props: HomePageProps) {
                       getAllComparisonByUserId={props.getAllComparisonByUserId}
                 /> : null
             }
-        </Paper>)
+        </Box>
+    )
 }

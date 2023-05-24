@@ -56,8 +56,10 @@ public class MongoUserController {
         String encodedPassword = passwordEncoder.encode(user.password());
         MongoUser newUser = new MongoUser(null, user.username(), encodedPassword, user.co2Score());
         mongoUserRepository.save(newUser);
+
         MongoUser returnedUser =  mongoUserRepository.findMongoUserByUsername(newUser.username())
                 .orElseThrow(()-> new NoSuchElementException("Username not foundt!"));
+
         return new MongoUserDTO(returnedUser.id(), returnedUser.username(), returnedUser.co2Score());
     }
 

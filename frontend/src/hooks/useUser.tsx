@@ -22,7 +22,6 @@ export default function useUser() {
                 .then((response) => {
                     if (response.data.username !== "" && response.data.username !== "anonymousUser") {
                         setUser(response.data);
-                        console.log("user1", user)
                     }
                 })
                 .catch(() => {
