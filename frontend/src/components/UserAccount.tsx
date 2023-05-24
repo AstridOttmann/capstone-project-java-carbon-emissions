@@ -1,4 +1,4 @@
-import {Box, Button, Card, Container, Typography} from "@mui/material";
+import {Box, Button, Card, Container, Divider, Typography} from "@mui/material";
 import React, {useState} from "react";
 import ForestIcon from '@mui/icons-material/Forest';
 import {User} from "../models/MongoUserModel";
@@ -6,6 +6,7 @@ import ResetDialog from "./ResetDialog";
 import Icon from '@mdi/react';
 import {mdiFootPrint} from '@mdi/js';
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
+import SnackbarInfo from "./SnackBarInfo";
 
 
 const sxStyleContainer = {
@@ -30,7 +31,7 @@ const sxStyleBox1 = {
 }
 const sxStyleBox2 = {
     backgroundColor: "#008d0d",
-    p: "0.4rem",
+    p: "0.2rem",
     m: "1rem",
     borderRadius: "10px"
 }
@@ -48,6 +49,9 @@ type UserAccountProps = {
 export default function UserAccount(props: UserAccountProps) {
     const [open, setOpen] = useState(false);
     const dialogContent: string = "Resetting the score is final and cannot be reversed. All usages will be resetted, too. Do you want to continue?";
+
+    const buttonText: string = "*mobility-footprint: 2.2 t CO₂e = 100 %"
+    const message: string = "Reduce your mobility-CO₂-footprint by increasing your bonus-score. You start at 100%."
 
     const percentage: number = Math.abs(-100 - (props.user.co2Score / 22));
     const handleClickOpen = () => {
@@ -103,17 +107,17 @@ export default function UserAccount(props: UserAccountProps) {
                         <CircularProgressWithLabel size="5.5rem" value={percentage}/>
                     </Box>
                     <Box sx={sxStyleBox2}>
-                        <Typography>Percentage caused by mobility (2.2 t = 100 %)</Typography>
+                        <SnackbarInfo message={message} buttonText={buttonText}/>
                     </Box>
                 </Box>
             </Card>
             <Card sx={sxStyleCard}>
                 <Box sx={sxStyleBox3}>
-                    <Typography>
-                        Average CO<sub>2</sub>-footprint per person in Germany: 10.8
-                        t CO<sub>2</sub>-e
+                    <Typography gutterBottom>
+                        Average CO<sub>2</sub>-footprint per person in Germany: 10.8 t CO<sub>2</sub>e
                     </Typography>
-                    <Typography color={"info.dark"}>
+                    <Divider/>
+                    <Typography color={"info.dark"} sx={{textAlign: "end", pt: "0.3rem"}}>
                         2.2 t of this is attributable to mobility
                     </Typography>
                 </Box>
