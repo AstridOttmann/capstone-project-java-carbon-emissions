@@ -45,8 +45,11 @@ export default function CompareRoutesResults(props: CompareRoutesResultsProps) {
     function handleSelectOption(bonus: number) {
         props.updateScore(props.user.id, bonus);
 
+        const timestamp = new Date().toLocaleString("en-EN");
+        const date = timestamp.split(",")[0].trim();
+
         const newUsage = {
-            datetime: new Date().toLocaleString("en-EN"),
+            datetime: date,
             bonus: bonus
         };
 

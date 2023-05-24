@@ -37,8 +37,6 @@ export default function UserAccount(props: UserAccountProps) {
     const [open, setOpen] = useState(false);
     const dialogContent: string = "Resetting the score is final and cannot be reversed. All usages will be resetted, too. Do you want to continue?";
 
-    // const userScoreAbsolute = Math.abs(props.user.co2Score);
-    //const percentage: number = 100 - (userScoreAbsolute / 22);
     const percentage: number = Math.abs(-100 - (props.user.co2Score / 22));
     const handleClickOpen = () => {
         setOpen(true);
@@ -56,10 +54,9 @@ export default function UserAccount(props: UserAccountProps) {
 
     return (
         <Container maxWidth="sm" sx={sxStyleContainer}>
-            {/*   <Paper sx={sxStylePaper}>*/}
-            <Typography variant="h5" component="h2" sx={sxStyleTitle}>My Co2-Bonus-Score</Typography>
+            <Typography variant="h5" component="h2" sx={sxStyleTitle}>My CO<sub>2</sub>-Bonus-Account</Typography>
             <Card sx={sxStyleCard}>
-                <Typography variant="h6" sx={{p: "1rem"}}>Co2 emission saved</Typography>
+                <Typography variant="h6" sx={{p: "1rem"}}>CO<sub>2</sub> emission saved</Typography>
                 <Box sx={{display: "flex", gap: "1rem", justifyContent: "space-evenly", alignItems: "center"}}>
                     <ForestIcon color={"primary"} fontSize="large" sx={{fontSize: 60}}/>
                     <Typography color={props.user.co2Score < 0 ? "primary" : "error"}
@@ -75,20 +72,21 @@ export default function UserAccount(props: UserAccountProps) {
                 />
             </Card>
             <Card sx={sxStyleCardMiddle}>
-                <Typography variant="h6" sx={{p: "1rem", pb: 0}}>My Co2-footprint</Typography>
-                <Box sx={{display: "flex"}}>
-                    <Box sx={{p: "0.5rem", m: "1rem", borderRadius: "10px"}}>
-                        <CircularProgressWithLabel size="5rem" value={percentage}/>
+                <Typography variant="h6" sx={{p: "1rem", pb: 0}}>My CO<sub>2</sub>-footprint</Typography>
+                <Box sx={{display: "flex", alignItems: "center"}}>
+                    <Box sx={{p: "0.6rem", m: "1rem", borderRadius: "10px"}}>
+                        <CircularProgressWithLabel size="5.5rem" value={percentage}/>
                     </Box>
-                    <Box sx={{backgroundColor: "#008d0d", p: "0.5rem", m: "1rem", borderRadius: "10px"}}>
-                        <Typography>of the 2.2 t caused by mobility</Typography>
+                    <Box sx={{backgroundColor: "#008d0d", p: "0.3rem", m: "1rem", borderRadius: "10px", flexGrow: "3"}}>
+                        <Typography>Percentage caused by mobility (2.2 t = 100 %)</Typography>
                     </Box>
                 </Box>
 
             </Card>
             <Card sx={sxStyleCard}>
                 <Box sx={{backgroundColor: "#cd5300", m: "1rem", p: "1rem", borderRadius: "10px"}}>
-                    <Typography gutterBottom>Average Co2 footprint per capita in Germany: 10.8 t/Co2-e pP</Typography>
+                    <Typography gutterBottom>Average CO<sub>2</sub>-footprint per person in Germany: 10.8 t /
+                        CO<sub>2</sub>-e</Typography>
                     <Typography color={"info.dark"}>2.2 t of this is attributable to mobility</Typography>
                 </Box>
                 <Box sx={{display: "flex", justifyContent: "center", alignItems: "end"}}>
@@ -96,13 +94,12 @@ export default function UserAccount(props: UserAccountProps) {
                         <Typography>10.8 t</Typography>
                         <Icon path={mdiFootPrint} size={6}/>
                     </Box>
-                    <Box>
+                    <Box sx={{pb: "1rem"}}>
                         <Typography color={"primary"}>2.2 t </Typography>
                         <Icon path={mdiFootPrint} size={3} color="#008d0d"/>
                     </Box>
                 </Box>
             </Card>
         </Container>
-
     )
 }

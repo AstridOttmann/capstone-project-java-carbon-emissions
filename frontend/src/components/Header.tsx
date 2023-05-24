@@ -10,7 +10,9 @@ const sxStyleBox1 = {
     position: "fixed",
     zIndex: 1500,
     left: 0,
-    top: 0
+    top: 0,
+    backgroundColor: "#000"
+
 }
 
 const sxStyleBox2 = {

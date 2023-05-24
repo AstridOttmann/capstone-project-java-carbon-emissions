@@ -9,6 +9,7 @@ import RouteIconBox from "./RouteIconBox";
 import CardButtonGroup from "../CardButtonGroup";
 
 const sxStyleCard = {
+    textAlign: "center",
     width: "48%",
     p: "1rem",
     mb: "1rem",

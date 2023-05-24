@@ -5,6 +5,7 @@ import RouteInfo from "./RouteInfo";
 import {Route} from "../../models/RouteModel";
 
 const sxStyleCard = {
+    textAlign: "center",
     p: "1rem",
     mb: "1rem",
     border: "4px solid #fff",

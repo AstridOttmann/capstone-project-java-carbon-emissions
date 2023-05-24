@@ -39,7 +39,7 @@ export default function UsageDialog(props: UsageDialogProps) {
                 <List sx={{pt: 0}}>
                     {props.compareRoutes.comparisonResults.usages?.map((usage) => {
                         return <ListItem key={usage.datetime}>
-                            <Typography>{usage.datetime}: {usage.bonus} kg/Co2</Typography>
+                            <Typography>{usage.datetime}: {usage.bonus} kg/CO<sub>2</sub></Typography>
                         </ListItem>
                     })}
                 </List>

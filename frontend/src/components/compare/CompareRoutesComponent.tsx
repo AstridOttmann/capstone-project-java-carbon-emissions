@@ -33,7 +33,7 @@ export default function CompareRoutesComponent(props: CompareRoutesComponentProp
     const navigate = useNavigate();
 
     const message: string = "The buttons show the bonus of the respective option. Click the one you use and save the bonus directly to your account";
-    const buttonText: string = "*save Co2-bonus"
+    const buttonText: string = "*save CO2-bonus"
 
     const [open, setOpen] = useState(false);
     const dialogContent: string = "Deleting the comparison is final and cannot be reversed. Do you want to continue?"

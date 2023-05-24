@@ -85,7 +85,7 @@ export default function RouteDetails(props: RouteDetailsProps) {
                         </Box>
                         <Box sx={sxStyleBox1And4}>
                             <Typography color="secondary" sx={{fontSize: "1.2rem"}}>Result</Typography>
-                            <Typography color="secondary">Co2-Emission Route</Typography>
+                            <Typography color="secondary">CO<sub>2</sub>-emission Route</Typography>
                             <Typography><small>PRO PERSON IN KG: </small> {route.co2EmissionRoute}</Typography>
                         </Box>
                         <ButtonGroup sx={{display: "flex", justifyContent: "space-between"}}
