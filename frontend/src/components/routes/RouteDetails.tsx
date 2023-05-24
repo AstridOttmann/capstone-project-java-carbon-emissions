@@ -23,7 +23,10 @@ const sxStyleCard = {
 
 }
 const sxStyleBox1And4 = {
-    backgroundColor: "#B3BDB3", borderRadius: "10px", p: "1rem", mb: "1rem"
+    backgroundColor: "#B3BDB3",
+    borderRadius: "10px",
+    p: "1rem",
+    mb: "1rem"
 }
 
 const sxStyleTitle = {

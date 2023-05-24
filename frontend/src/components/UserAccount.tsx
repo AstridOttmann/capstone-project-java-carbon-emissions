@@ -3,6 +3,9 @@ import React, {useState} from "react";
 import ForestIcon from '@mui/icons-material/Forest';
 import {User} from "../models/MongoUserModel";
 import ResetDialog from "./ResetDialog";
+/*import Icon from '@mdi/react';
+import { mdiFootPrint } from '@mdi/js';*/
+
 
 const sxStylePaper = {
     position: "relative",
@@ -23,7 +26,8 @@ const sxStyleTitle = {
     p: "1rem 1rem 2rem 1rem",
 }
 const sxStyleCard = {
-    m: "1rem"
+    m: "1rem",
+    borderRadius: "10px"
 }
 type UserAccountProps = {
     user: User,
@@ -54,7 +58,7 @@ export default function UserAccount(props: UserAccountProps) {
             <Typography variant="h5" component="h2" sx={sxStyleTitle}>My Co2-Bonus-Score</Typography>
             <Card sx={sxStyleCard}>
                 <CardContent>
-                    <Typography>Co2 emission saved</Typography>
+                    <Typography sx={{pb: "1.5rem"}}>Co2 emission saved</Typography>
                     <Box sx={{display: "flex", gap: "1rem", justifyContent: "space-evenly", alignItems: "center"}}>
                         <ForestIcon color={"primary"} fontSize="large" sx={{fontSize: 60}}/>
                         <Typography color={props.user.co2Score < 0 ? "primary" : "error"}
@@ -62,7 +66,7 @@ export default function UserAccount(props: UserAccountProps) {
                     </Box>
                 </CardContent>
             </Card>
-            <Button variant="text" color="error" onClick={handleClickOpen}>Reset Score</Button>
+            <Button variant="text" color="error" onClick={handleClickOpen} sx={{pl: "2rem"}}>Reset Score</Button>
             <ResetDialog open={open}
                          handleClose={handleClose}
                          onReset={handleReset}
@@ -70,6 +74,8 @@ export default function UserAccount(props: UserAccountProps) {
                          buttonDisagreeText={"Don't reset."}
                          dialogContent={dialogContent}
             />
+          {/*  <Icon path={mdiFootPrint} size={1} />*/}
         </Container>
+
     )
 }
