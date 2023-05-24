@@ -45,14 +45,6 @@ public class SecurityConfig {
                         -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()))
                 .and()
                 .build();
-
-                /*  .and()*/
-                /*  .authorizeHttpRequests()
-                  .requestMatchers("/api/user/**").permitAll()
-                  .requestMatchers("/api/routes/**").authenticated()
-                  .requestMatchers("/api/compare/**").authenticated()
-                  .anyRequest().permitAll()*/
-
     }
 
 }

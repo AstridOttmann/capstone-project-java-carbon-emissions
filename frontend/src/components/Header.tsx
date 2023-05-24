@@ -45,13 +45,19 @@ export default function Header(props: HeaderProps) {
                             gutterBottom
                 >Move Green!</Typography>
                 {props.user.id !== "" &&
-                    <ButtonGroup variant="text" sx={{display: "flex", alignItems: "center"}}>
+                    <ButtonGroup variant="text"
+                                 sx={{display: "flex", alignItems: "center"}}>
                         <PersonOutlineIcon/>
-                        <Button color="inherit" type="button" onClick={logoutOnClick}><LogoutIcon/></Button>
+                        <Button color="inherit"
+                                type="button"
+                                onClick={logoutOnClick}>
+                            <LogoutIcon/>
+                        </Button>
                     </ButtonGroup>
                 }
             </Box>
-            <Divider variant="middle" sx={{height: "3px", width: "80%", m: "0 auto", p: "0.05rem"}}/>
+            <Divider variant="middle"
+                     sx={{height: "3px", width: "80%", m: "0 auto", p: "0.05rem"}}/>
         </Box>
     )
 }

@@ -22,7 +22,10 @@ export default function NewRouteCard(props: NewRouteCardProps) {
                     <RouteDestination route={props.route}/>
                     <Box sx={{display: "flex", justifyContent: "center", m: "2rem auto"}}>
                         <RouteIconBox route={props.route}/>
-                        <Divider orientation="vertical" variant="middle" flexItem sx={{m: "0 0.5rem", width: "3px"}}/>
+                        <Divider orientation="vertical"
+                                 variant="middle"
+                                 flexItem
+                                 sx={{m: "0 0.5rem", width: "3px"}}/>
                         <RouteInfo route={props.route}/>
                     </Box>
                 </Card>}

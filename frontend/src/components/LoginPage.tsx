@@ -53,7 +53,8 @@ export default function LoginPage(props: LoginPageProps) {
         <Container maxWidth="sm" sx={sxStyleContainer}>
             <form onSubmit={handleLoginOnSubmit}>
                 <Box sx={sxStyleBox2}>
-                    <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}}
+                    <Typography variant="h6" component="h2"
+                                sx={{textDecoration: "underline"}}
                                 gutterBottom>Login</Typography>
                     <TextField required
                                size="small"
@@ -64,8 +65,6 @@ export default function LoginPage(props: LoginPageProps) {
                                value={props.user.username}
                                onChange={handleChange}
                                sx={{mt: "1.2rem"}}
-                        /*InputLabelProps={{sx: {color: "#fff"}}}
-                        InputProps={{sx: {color: "primary"}}}*/
                     />
                     <TextField required
                                size="small"
@@ -76,14 +75,20 @@ export default function LoginPage(props: LoginPageProps) {
                                value={props.user.password}
                                onChange={handleChange}
                                sx={{mt: "1.2rem"}}
-                        /*  InputLabelProps={{sx: {color: "#fff"}}}
-                          InputProps={{sx: {color: "primary"}}}*/
                     />
                     <Box sx={{display: "flex", justifyContent: "space-between", mt: "1.2rem"}}>
-                        <Button type="submit" onClick={() => setSignUp(true)}>
-                            <Typography color="text.primary" sx={{textDecoration: "underline", fontSize: "1rem"}}>Sign
-                                Up?</Typography></Button>
-                        <Button type="submit" color="inherit" size="large"><LoginIcon/></Button>
+                        <Button type="submit"
+                                onClick={() => setSignUp(true)}>
+                            <Typography color="text.primary"
+                                        sx={{textDecoration: "underline", fontSize: "1rem"}}>
+                                Sign Up?
+                            </Typography>
+                        </Button>
+                        <Button type="submit"
+                                color="inherit"
+                                size="large">
+                            <LoginIcon/>
+                        </Button>
                     </Box>
                 </Box>
             </form>

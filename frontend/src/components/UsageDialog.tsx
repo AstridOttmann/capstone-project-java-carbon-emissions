@@ -11,7 +11,6 @@ import {Badge, Box, Button} from "@mui/material";
 
 export interface UsageDialogProps {
     compareRoutes: CompareRoutes,
-   // compareRoutesList: CompareRoutes[]
 }
 
 export default function UsageDialog(props: UsageDialogProps) {
@@ -27,19 +26,28 @@ export default function UsageDialog(props: UsageDialogProps) {
 
     return (
         <Box>
-            <Button disabled={props.compareRoutes.comparisonResults.usages.length === 0} color="inherit"
+            <Button disabled={props.compareRoutes.comparisonResults.usages.length === 0}
+                    color="inherit"
                     onClick={handleClickOpen}
                     sx={{display: "block", m: "0 auto", p: "0"}}>
-                <Badge badgeContent={count} color="secondary" overlap="circular" sx={{width: "3.3rem"}}>
+                <Badge badgeContent={count}
+                       color="secondary"
+                       overlap="circular"
+                       sx={{width: "3.3rem"}}>
                     <CloudDoneIcon sx={{display: "block", fontSize: 60, m: "0 auto", p: "0", alignSelf: "center"}}/>
                 </Badge>
             </Button>
-            <Dialog onClose={handleClose} open={open}>
-                <DialogTitle>Usages</DialogTitle>
+            <Dialog onClose={handleClose}
+                    open={open}>
+                <DialogTitle>
+                    Usages
+                </DialogTitle>
                 <List sx={{pt: 0}}>
                     {props.compareRoutes.comparisonResults.usages?.map((usage) => {
                         return <ListItem key={usage.datetime}>
-                            <Typography>{usage.datetime}: {usage.bonus} kg/CO<sub>2</sub></Typography>
+                            <Typography>
+                                {usage.datetime}: {usage.bonus} kg/CO<sub>2</sub>
+                            </Typography>
                         </ListItem>
                     })}
                 </List>

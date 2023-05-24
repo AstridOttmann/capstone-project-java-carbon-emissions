@@ -67,24 +67,32 @@ export default function RouteDetails(props: RouteDetailsProps) {
             {route ? (
                     <Card sx={sxStyleCard} variant="outlined">
                         <Box sx={sxStyleBox1And4}>
-                            <Typography color="primary" sx={{fontSize: "1.2rem"}}>Route</Typography>
+                            <Typography color="primary" sx={{fontSize: "1.2rem"}}>
+                                Route
+                            </Typography>
                             <Typography><small>FROM:</small> {route.start}</Typography>
                             <Typography><small>TO:</small> {route.destination}</Typography>
                         </Box>
                         <Box sx={{backgroundColor: "#cd5300", borderRadius: "10px", p: "1rem", mb: "1rem"}}>
-                            <Typography color="#B3BDB3" sx={{fontSize: "1.2rem"}}>Route Info</Typography>
+                            <Typography color="#B3BDB3" sx={{fontSize: "1.2rem"}}>
+                                Route Info
+                            </Typography>
                             <Typography><small>DISTANCE:</small> {route.distance} km</Typography>
                             <Typography><small>NUMBER OF PERSONS:</small> {route.numberOfPersons}</Typography>
                             <Typography
                                 sx={{}}><small> - {route.oneWay ? "one way" : "round trip"} - </small></Typography>
                         </Box>
                         <Box sx={{backgroundColor: "#008d0d", borderRadius: "10px", p: "1rem", mb: "1rem"}}>
-                            <Typography color="#B3BDB3" sx={{fontSize: "1.2rem"}}>Vehicle Info</Typography>
+                            <Typography color="#B3BDB3" sx={{fontSize: "1.2rem"}}>
+                                Vehicle Info
+                            </Typography>
                             <RouteVehicleIcon route={route}/>
                             <RouteVehicleDetails route={route}/>
                         </Box>
                         <Box sx={sxStyleBox1And4}>
-                            <Typography color="secondary" sx={{fontSize: "1.2rem"}}>Result</Typography>
+                            <Typography color="secondary" sx={{fontSize: "1.2rem"}}>
+                                Result
+                            </Typography>
                             <Typography color="secondary">CO<sub>2</sub>-emission Route</Typography>
                             <Typography><small>PRO PERSON IN KG: </small> {route.co2EmissionRoute}</Typography>
                         </Box>

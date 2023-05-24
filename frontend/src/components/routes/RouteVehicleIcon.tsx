@@ -14,10 +14,14 @@ export default function RouteVehicleIcon(props: RouteVehicleIconProps) {
     return (
         <Box sx={{}}>
             <Typography component="div">
-                {vehicleType === "car" && <DirectionsCarIcon sx={{fontSize: 50}}/>}
-                {vehicleType === "publicTransport" && <TrainIcon sx={{fontSize: 50}}/>}
-                {vehicleType === "flight" && <FlightIcon sx={{fontSize: 50}}/>}
-                {vehicleType === "bike" && <DirectionsBikeIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "car" &&
+                    <DirectionsCarIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "publicTransport" &&
+                    <TrainIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "flight" &&
+                    <FlightIcon sx={{fontSize: 50}}/>}
+                {vehicleType === "bike" &&
+                    <DirectionsBikeIcon sx={{fontSize: 50}}/>}
             </Typography>
         </Box>
     )

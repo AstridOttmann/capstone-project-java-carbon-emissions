@@ -33,7 +33,6 @@ const sxStylePaper = {
     pb: "2rem",
     textAlign: "center",
     elevation: "3",
-
 }
 
 const sxStyleBox = {
@@ -42,7 +41,6 @@ const sxStyleBox = {
     alignItems: "center",
     gap: "3rem",
     pb: "1.2rem",
-
 }
 
 const sxStyleTextField = {
@@ -92,6 +90,7 @@ export default function Form(props: FormProps) {
         props.setAddMode(false)
         props.setIsEditMode(false)
     }
+
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
@@ -138,9 +137,16 @@ export default function Form(props: FormProps) {
         <Paper sx={sxStylePaper}>
             <Box sx={sxStyleBox}>
                 {props.isEditMode
-                    ? <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Edit
-                        Route</Typography>
-                    : <Typography variant="h6" component="h2" sx={{textDecoration: "underline"}} gutterBottom>Add Route</Typography>
+                    ? <Typography variant="h6" component="h2"
+                                  sx={{textDecoration: "underline"}}
+                                  gutterBottom>
+                        Edit Route
+                    </Typography>
+                    : <Typography variant="h6" component="h2"
+                                  sx={{textDecoration: "underline"}}
+                                  gutterBottom>
+                        Add Route
+                    </Typography>
                 }
                 <Button variant="text"
                         size="small"
@@ -215,7 +221,7 @@ export default function Form(props: FormProps) {
                             value={route.oneWay}
                             onChange={handleChange}
                         >
-                            <FormControlLabel value={true} control={<Radio />}
+                            <FormControlLabel value={true} control={<Radio/>}
                                               label={<RouteIcon sx={{pl: "0.5rem", fontSize: 35}}/>}/>
                             <FormControlLabel value={false} control={<Radio/>}
                                               label={<RotateRightIcon sx={{pl: "0.5rem", fontSize: 38}}/>}/>

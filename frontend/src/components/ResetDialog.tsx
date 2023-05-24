@@ -30,10 +30,14 @@ export default function ResetDialog(props: ResetScoreDialogProps) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions sx={{display: "flex", justifyContent: "space-between"}}>
-                    <Button size="large" onClick={props.handleClose} sx={{fontSize: "1rem", color: "secondary.main"}}>
+                    <Button size="large"
+                            onClick={props.handleClose}
+                            sx={{fontSize: "1rem", color: "secondary.main"}}>
                         {props.buttonDisagreeText}
                     </Button>
-                    <Button onClick={props.onReset} autoFocus sx={{fontSize: "1rem", color: "primary.light"}}>
+                    <Button onClick={props.onReset}
+                            autoFocus
+                            sx={{fontSize: "1rem", color: "primary.light"}}>
                         {props.buttonAgreeText}
                     </Button>
                 </DialogActions>

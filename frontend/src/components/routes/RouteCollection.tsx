@@ -1,5 +1,5 @@
 import {
-    Box,
+    Box, CircularProgress,
     Paper,
     Typography
 } from "@mui/material";
@@ -9,10 +9,9 @@ import RouteCard from "./RouteCard";
 import {useContext} from "react";
 import {RoutesContext} from "../../contexts/RoutesContextProvider";
 
-
 const sxStylePaper = {
     position: "relative",
-    top: "6rem"
+    top: "7.5rem"
 }
 const sxStyleBox = {
     display: "flex",
@@ -30,7 +29,11 @@ const sxStyleTitle = {
 export default function RouteCollection() {
     const {routes} = useContext(RoutesContext)
     if (!Array.isArray(routes)) {
-        return null; // Oder  Meldung rendern
+        return (
+            <Box sx={{display: "flex"}}>
+                <CircularProgress/>
+            </Box>
+        )
     }
 
     return (

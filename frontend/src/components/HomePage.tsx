@@ -18,7 +18,7 @@ const sxStyleBox1 = {
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "1rem",
-    top: "9rem",
+    top: "10rem",
     pb: "4rem",
     m: "0 auto"
 }
@@ -35,14 +35,10 @@ const sxStyleTitle = {
     textAlign: "center"
 }
 const sxStyleButtonGroup = {
-
     fontSize: "large",
     gap: "0.5rem",
-    /*alignSelf: "center",*/
     m: "3rem auto"
-
 }
-
 
 type HomePageProps = {
     user: User,
@@ -92,10 +88,13 @@ export default function HomePage(props: HomePageProps) {
                                 <AddLocationAltIcon sx={{fontSize: 70}} onClick={() => setAddMode(!addMode)}/>
                             </Button>
                             <Button variant="text" size="large" onClick={() => setAddMode(!addMode)}>
-                                <Typography variant="body1" sx={{fontSize: "1.5rem"}}>Add Route</Typography>
+                                <Typography variant="body1" sx={{fontSize: "1.5rem"}}>
+                                    Add Route
+                                </Typography>
                             </Button>
                         </ButtonGroup>
-                        <SnackbarInfo message={message} buttonText={buttonText}/>
+                        <SnackbarInfo message={message}
+                                      buttonText={buttonText}/>
                     </Box>
                 </Container>}
 
@@ -106,10 +105,13 @@ export default function HomePage(props: HomePageProps) {
                             <NewRouteCard key={route.id} route={route}/>
                             <ButtonGroup
                                 sx={{display: "flex", gap: "9rem", justifyContent: "space-between", p: "1rem"}}>
-                                <Button variant="text" color="error" onClick={onCancelClick}>
+                                <Button variant="text"
+                                        color="error"
+                                        onClick={onCancelClick}>
                                     <DeleteIcon sx={{fontSize: 30}}/>
                                 </Button>
-                                <Button variant="text" onClick={() => setAddMode(!addMode)}>
+                                <Button variant="text"
+                                        onClick={() => setAddMode(!addMode)}>
                                     <AltRouteIcon sx={{fontSize: 50, color: "#00f923"}}/>
                                 </Button>
                             </ButtonGroup>
@@ -121,18 +123,17 @@ export default function HomePage(props: HomePageProps) {
                 <Paper sx={sxStylePaper}>
                     <Box sx={{display: "flex", flexWrap: "noWrap", gap: "1rem", m: "0 auto"}}>
                         {!addMode && routesToCompare.length === 2 && routesToCompare.map((route) => {
-                            return (
-                                /* <Box sx={{display: "flex", flexWrap: "noWrap", gap: "1rem", m: "0 auto"}}>*/
-                                <NewRouteCard key={route.id} route={route}/>
-                                /*   </Box>*/
-                            )
+                            return <NewRouteCard key={route.id} route={route}/>
                         })}
                     </Box>
                     <ButtonGroup sx={{display: "flex", justifyContent: "space-between", gap: "9rem"}}>
-                        <Button variant="text" color="error" onClick={onCancelClick}>
+                        <Button variant="text"
+                                color="error"
+                                onClick={onCancelClick}>
                             <DeleteIcon/>
                         </Button>
-                        <Button variant="text" onClick={handleAddComparison}>
+                        <Button variant="text"
+                                onClick={handleAddComparison}>
                             <CheckIcon sx={{fontSize: 60, color: "#00f923"}}/>
                         </Button>
                     </ButtonGroup>

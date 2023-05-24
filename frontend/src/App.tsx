@@ -112,7 +112,8 @@ function App() {
                                    />}
                             />
 
-                            <Route element={<ProtectedRoutes user={user} isLoading={isLoading}/>}>
+                            <Route element={<ProtectedRoutes user={user}
+                                                             isLoading={isLoading}/>}>
                                 <Route element={<Navigate to="/"/>}/>
                                 <Route path="/" element={
                                     <HomePage
