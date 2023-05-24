@@ -1,4 +1,4 @@
-import {Container, Typography} from "@mui/material";
+import {Box, CircularProgress, Container, Typography} from "@mui/material";
 import {CompareRoutes} from "../../models/CompareRoutesModel";
 import CompareRoutesComponent from "./CompareRoutesComponent";
 import {User} from "../../models/MongoUserModel";
@@ -26,7 +26,11 @@ type CompareRoutesCollectionProps = {
 }
 export default function CompareRoutesCollection(props: CompareRoutesCollectionProps) {
     if (!Array.isArray(props.compareRoutesList)) {
-        return null; // Oder  Meldung rendern
+        return (
+            <Box sx={{display: "flex"}}>
+                <CircularProgress/>
+            </Box>
+        )
     }
 
     return (
