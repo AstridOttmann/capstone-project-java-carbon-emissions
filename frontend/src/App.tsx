@@ -52,6 +52,7 @@ export const theme = createTheme({
         },
         info: {
             main: '#fff',
+            dark: '#B3BDB3'
         },
         text: {
             primary: '#fff'
