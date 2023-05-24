@@ -62,7 +62,6 @@ type FormProps = {
 export default function Form(props: FormProps) {
     const {route, setRoute, resetRoute} = useContext(RouteContext)
     const {addRoute, updateRoute} = useContext(RoutesContext)
-    //const {theme} = createTheme();
 
     const initialStateVehicle = route && props.isEditMode ? route?.vehicle : {
         type: "",
@@ -93,7 +92,6 @@ export default function Form(props: FormProps) {
         props.setAddMode(false)
         props.setIsEditMode(false)
     }
-
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 

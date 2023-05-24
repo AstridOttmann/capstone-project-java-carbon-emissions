@@ -77,7 +77,7 @@ export default function UserAccount(props: UserAccountProps) {
                     <Box sx={{p: "0.6rem", m: "1rem", borderRadius: "10px"}}>
                         <CircularProgressWithLabel size="5.5rem" value={percentage}/>
                     </Box>
-                    <Box sx={{backgroundColor: "#008d0d", p: "0.3rem", m: "1rem", borderRadius: "10px", flexGrow: "3"}}>
+                    <Box sx={{backgroundColor: "#008d0d", p: "0.4rem", m: "1rem", borderRadius: "10px", flexGrow: "3"}}>
                         <Typography>Percentage caused by mobility (2.2 t = 100 %)</Typography>
                     </Box>
                 </Box>
@@ -95,7 +95,7 @@ export default function UserAccount(props: UserAccountProps) {
                         <Icon path={mdiFootPrint} size={6}/>
                     </Box>
                     <Box sx={{pb: "1rem"}}>
-                        <Typography color={"primary"}>2.2 t </Typography>
+                        <Typography color={"primary"}>2.2 t</Typography>
                         <Icon path={mdiFootPrint} size={3} color="#008d0d"/>
                     </Box>
                 </Box>
