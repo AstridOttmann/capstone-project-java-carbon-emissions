@@ -37,7 +37,6 @@ const sxStyleBox2 = {
 type CompareRoutesResultsProps = {
     user: User,
     compareRoutes: CompareRoutes,
-    setCompareRoutes: React.Dispatch<React.SetStateAction<CompareRoutes>>,
     getAllComparisonByUserId: (userId: string) => void,
     updateComparison: (id: string, comparedRoutes: CompareRoutes) => void,
     updateScore: (id: string, bonus: number) => void

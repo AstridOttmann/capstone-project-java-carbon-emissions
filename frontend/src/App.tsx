@@ -12,13 +12,11 @@ import NavigationBottom from "./components/NavigationBottom";
 import RouteDetails from "./components/routes/RouteDetails";
 import useCompareRoutes from "./hooks/useCompareRoutes";
 import CompareRoutesCollection from "./components/compare/CompareRoutesCollection";
-
 import LoginPage from "./components/LoginPage";
 import useUser from "./hooks/useUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import UserAccount from "./components/UserAccount";
 import {RoutesContext} from "./contexts/RoutesContextProvider";
-
 
 export const theme = createTheme({
     components: {
@@ -74,7 +72,6 @@ export const theme = createTheme({
     }
 })
 
-
 function App() {
     const {user, setUser, isLoading, login, logout, signIn, updateScore, resetScore} = useUser()
     const {getAllRoutesByUserId} = useContext(RoutesContext)
@@ -83,7 +80,6 @@ function App() {
         compareRoutesList,
         setCompareRoutes,
         getAllComparisonByUserId,
-        getComparisonById,
         addComparison,
         updateComparison,
         deleteComparisonById,
@@ -134,7 +130,6 @@ function App() {
                                     <CompareRoutesCollection user={user}
                                                              updateScore={updateScore}
                                                              compareRoutes={compareRoutes}
-                                                             setCompareRoutes={setCompareRoutes}
                                                              compareRoutesList={compareRoutesList}
                                                              updateComparison={updateComparison}
                                                              getAllComparisonByUserId={getAllComparisonByUserId}
@@ -142,18 +137,6 @@ function App() {
                                 />
                                 <Route path="/routes/details/:id" element={
                                     <RouteDetails setIsEditMode={setIsEditMode}/>}/>
-                             {/*   <Route path="/compared/details/:id" element={
-                                    <CompareRoutesDetails getComparisonById={getComparisonById}
-                                                          user={user}
-                                                          updateScore={updateScore}
-                                                          compareRoutes={compareRoutes}
-                                                          setCompareRoutes={setCompareRoutes}
-                                                          setIsEditMode={setIsEditMode}
-                                                          updateComparison={updateComparison}
-                                                          getAllComparisonByUserId={getAllComparisonByUserId}
-                                                          onClick={() => {
-                                                          }}
-                                    />}/>*/}
                                 <Route path="/account" element={<UserAccount user={user}
                                                                              resetScore={resetScore}
                                                                              resetAllUsages={resetAllUsages}/>}/>
