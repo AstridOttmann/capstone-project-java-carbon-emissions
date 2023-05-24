@@ -56,27 +56,10 @@ export default function useCompareRoutes() {
     const [compareRoutesList, setCompareRoutesList] = useState<CompareRoutes[]>([]);
     const [compareRoutes, setCompareRoutes] = useState<CompareRoutes>(initialStateCompareRoutes);
 
-    function getAllComparison() {
-        axios.get("/api/compare")
-            .then((response) => {
-                setCompareRoutesList(response.data)
-            })
-    }
-
     function getAllComparisonByUserId(userId: string) {
         axios.get(`/api/compare/userId/${userId}`)
             .then((response) => {
                 setCompareRoutesList(response.data)
-            })
-    }
-
-    function getComparisonById(id: string) {
-        axios.get(`/api/compare/${id}`)
-            .then((response) => {
-                setCompareRoutes(response.data)
-            })
-            .catch((error) => {
-                toast.error("404 " + error)
             })
     }
 
@@ -118,7 +101,7 @@ export default function useCompareRoutes() {
                 setCompareRoutesList(response.data)
             })
             .catch((error) =>
-                toast.error("Reset failed!"))
+                toast.error("Reset failed!", error))
     }
 
     return {
